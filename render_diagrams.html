@@ -11,6 +11,7 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
+            background-color: white; /* Ensure white background */
         }
         h1 {
             color: #333;
@@ -23,7 +24,7 @@
         }
         .mermaid {
             margin: 20px 0;
-            background-color: #f9f9f9;
+            background-color: white; /* Force white background */
             padding: 20px;
             border-radius: 5px;
             font-weight: bold;
@@ -53,6 +54,7 @@
             border: 1px solid #ddd;
             padding: 20px;
             border-radius: 0 5px 5px 5px;
+            background-color: white; /* Force white background */
         }
         .tab-content.active {
             display: block;
@@ -66,17 +68,21 @@
             cursor: pointer;
             margin: 20px 0;
         }
+        /* Force light mode for mermaid */
+        .dark-mode-toggle {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>LayerLens Sequence Diagrams</h1>
     
+    <button class="print-button" onclick="window.print()">Save as PDF</button>
+
     <div class="tabs">
         <div class="tab active" onclick="switchTab('evaluation-avs')">Evaluation AVS</div>
         <div class="tab" onclick="switchTab('atlas-app')">Atlas App</div>
     </div>
-    
-    <button class="print-button" onclick="window.print()">Save as PDF</button>
     
     <div id="evaluation-avs" class="tab-content active">
         <h2>1. Task Creation and Assignment Flow</h2>
@@ -216,36 +222,36 @@ sequenceDiagram
         
         <h2>4. Complete System Architecture</h2>
         <div class="mermaid">
-%%{init: { 'fontFamily': 'Arial', 'fontSize': 14, 'fontWeight': 600, 'theme': 'base', 'themeVariables': { 'primaryColor': '#f9d', 'primaryTextColor': '#000', 'primaryBorderColor': '#333', 'lineColor': '#333', 'secondaryColor': '#bbf', 'secondaryTextColor': '#000', 'secondaryBorderColor': '#333', 'tertiaryColor': '#bfb', 'tertiaryTextColor': '#000', 'tertiaryBorderColor': '#333', 'noteTextColor': '#000' } } }%%
+%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 700, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#c4ffad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000' } } }%%
 flowchart TB
-    subgraph Blockchain[<b>Blockchain</b>]
-        TaskManager["<b>EvalAvsTaskManager Contract</b>"]
-        ServiceManager["<b>EvalAvsServiceManager Contract</b>"]
-        EigenLayer["<b>EigenLayer Contracts</b>"]
+    subgraph Blockchain["BLOCKCHAIN"]
+        TaskManager["TASK MANAGER CONTRACT"]
+        ServiceManager["SERVICE MANAGER CONTRACT"]
+        EigenLayer["EIGENLAYER CONTRACTS"]
     end
     
-    subgraph OperatorNode[<b>Operator Node</b>]
-        OpMain["<b>Operator Main</b>"]
-        AvsReader["<b>AVS Reader</b>"]
-        AvsWriter["<b>AVS Writer</b>"]
-        AvsSubscriber["<b>AVS Subscriber</b>"]
-        Registration["<b>Registration</b>"]
+    subgraph OperatorNode["OPERATOR NODE"]
+        OpMain["OPERATOR MAIN"]
+        AvsReader["AVS READER"]
+        AvsWriter["AVS WRITER"]
+        AvsSubscriber["AVS SUBSCRIBER"]
+        Registration["REGISTRATION"]
     end
     
-    subgraph EvalEngine[<b>Evaluation Engine</b>]
-        GoEval["<b>Go-Evaluator</b>"]
-        Extractor["<b>Response Extractor</b>"]
-        Scoring["<b>Scoring Module</b>"]
-        PythonExec["<b>Python Executor</b>"]
+    subgraph EvalEngine["EVALUATION ENGINE"]
+        GoEval["GO-EVALUATOR"]
+        Extractor["RESPONSE EXTRACTOR"]
+        Scoring["SCORING MODULE"]
+        PythonExec["PYTHON EXECUTOR"]
     end
     
-    subgraph ExternalServices[<b>External Services</b>]
-        S3["<b>Dataset Registry (S3)</b>"]
-        LLMAPI["<b>LLM Provider API</b>"]
-        Results["<b>LayerLens Results API</b>"]
+    subgraph ExternalServices["EXTERNAL SERVICES"]
+        S3["DATASET REGISTRY (S3)"]
+        LLMAPI["LLM PROVIDER API"]
+        Results["LAYERLENS RESULTS API"]
     end
     
-    %% Connections
+    %% Connections with thicker lines
     TaskManager <--> ServiceManager
     ServiceManager <--> EigenLayer
     
@@ -267,11 +273,11 @@ flowchart TB
     GoEval --> LLMAPI
     GoEval --> Results
     
-    %% Classification styling
-    classDef blockchain fill:#f9d,stroke:#333,stroke-width:2px,color:#000
-    classDef operator fill:#bbf,stroke:#333,stroke-width:1px,color:#000
-    classDef evaluator fill:#bfb,stroke:#333,stroke-width:1px,color:#000
-    classDef external fill:#fbb,stroke:#333,stroke-width:1px,color:#000
+    %% Classification styling with darker colors and thicker borders
+    classDef blockchain fill:#ffadce,stroke:#000000,stroke-width:3px,color:#000000
+    classDef operator fill:#adc8ff,stroke:#000000,stroke-width:3px,color:#000000
+    classDef evaluator fill:#c4ffad,stroke:#000000,stroke-width:3px,color:#000000
+    classDef external fill:#ffbbad,stroke:#000000,stroke-width:3px,color:#000000
     
     class TaskManager,ServiceManager,EigenLayer blockchain
     class OpMain,AvsReader,AvsWriter,AvsSubscriber,Registration operator
@@ -502,79 +508,79 @@ sequenceDiagram
         
         <h2>5. Complete System Architecture</h2>
         <div class="mermaid">
-%%{init: { 'fontFamily': 'Arial', 'fontSize': 14, 'fontWeight': 600, 'theme': 'base', 'themeVariables': { 'primaryColor': '#bbf', 'primaryTextColor': '#000', 'primaryBorderColor': '#333', 'lineColor': '#333', 'secondaryColor': '#bfb', 'secondaryTextColor': '#000', 'secondaryBorderColor': '#333', 'tertiaryColor': '#fbb', 'tertiaryTextColor': '#000', 'tertiaryBorderColor': '#333', 'noteTextColor': '#000' } } }%%
+%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 700, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#ffbbad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000' } } }%%
 flowchart TB
-    subgraph FrontendGroup[<b>Frontend</b>]
-        NextApp["<b>Next.js App</b>"]
-        ReactQuery["<b>React Query</b>"]
-        Components["<b>UI Components</b>"]
-        Hooks["<b>Custom Hooks</b>"]
-        Auth["<b>Next Auth</b>"]
+    subgraph FrontendGroup["FRONTEND"]
+        NextApp["NEXT.JS APP"]
+        ReactQuery["REACT QUERY"]
+        Components["UI COMPONENTS"]
+        Hooks["CUSTOM HOOKS"]
+        Auth["NEXT AUTH"]
     end
     
-    subgraph BackendGroup[<b>Backend Services</b>]
-        API["<b>Atlas API</b>"]
-        Worker["<b>Evaluation Worker</b>"]
-        ResultsWorker["<b>Results Worker</b>"]
-        Scheduler["<b>Task Scheduler</b>"]
+    subgraph BackendGroup["BACKEND SERVICES"]
+        API["ATLAS API"]
+        Worker["EVALUATION WORKER"]
+        ResultsWorker["RESULTS WORKER"]
+        Scheduler["TASK SCHEDULER"]
     end
     
-    subgraph StorageGroup[<b>Data Storage</b>]
-        MongoDB["<b>MongoDB</b>"]
-        MariaDB["<b>MariaDB</b>"]
-        S3["<b>AWS S3</b>"]
+    subgraph StorageGroup["DATA STORAGE"]
+        MongoDB["MONGODB"]
+        MariaDB["MARIADB"]
+        S3["AWS S3"]
     end
     
-    subgraph InfraGroup[<b>Infrastructure</b>]
-        Kafka["<b>Kafka Message Queue</b>"]
-        Cognito["<b>AWS Cognito</b>"]
-        CDK["<b>AWS CDK Infrastructure</b>"]
+    subgraph InfraGroup["INFRASTRUCTURE"]
+        Kafka["KAFKA MESSAGE QUEUE"]
+        Cognito["AWS COGNITO"]
+        CDK["AWS CDK INFRASTRUCTURE"]
     end
     
-    subgraph BlockchainGroup[<b>Blockchain Integration</b>]
-        Contract["<b>Smart Contract</b>"]
-        AVS["<b>Evaluation AVS</b>"]
+    subgraph BlockchainGroup["BLOCKCHAIN INTEGRATION"]
+        Contract["SMART CONTRACT"]
+        AVS["EVALUATION AVS"]
     end
     
-    %% Frontend connections
-    NextApp --> ReactQuery
-    NextApp --> Components
-    NextApp --> Hooks
-    NextApp --> Auth
-    Auth <--> Cognito
-    ReactQuery <--> API
+    %% Frontend connections with thicker lines
+    NextApp ---> ReactQuery
+    NextApp ---> Components
+    NextApp ---> Hooks
+    NextApp ---> Auth
+    Auth <---> Cognito
+    ReactQuery <---> API
     
     %% Backend connections
-    API <--> MongoDB
-    API <--> MariaDB
-    API <--> S3
-    API <--> Kafka
-    API <--> Cognito
+    API <---> MongoDB
+    API <---> MariaDB
+    API <---> S3
+    API <---> Kafka
+    API <---> Cognito
     
-    Kafka --> Worker
-    Kafka --> ResultsWorker
+    Kafka ---> Worker
+    Kafka ---> ResultsWorker
     
-    Worker <--> MongoDB
-    Worker <--> S3
-    Worker <--> Contract
+    Worker <---> MongoDB
+    Worker <---> S3
+    Worker <---> Contract
     
-    ResultsWorker <--> MongoDB
-    ResultsWorker <--> MariaDB
-    ResultsWorker <--> S3
+    ResultsWorker <---> MongoDB
+    ResultsWorker <---> MariaDB
+    ResultsWorker <---> S3
     
-    Scheduler --> Worker
-    Scheduler --> ResultsWorker
-    Scheduler <--> MongoDB
+    Scheduler ---> Worker
+    Scheduler ---> ResultsWorker
+    Scheduler <---> MongoDB
     
     %% Blockchain connections
-    Contract <--> AVS
+    Contract <---> AVS
     
-    %% Classification styling
-    classDef frontend fill:#bbf,stroke:#333,stroke-width:1px,color:#000
-    classDef backend fill:#bfb,stroke:#333,stroke-width:1px,color:#000
-    classDef storage fill:#fbb,stroke:#333,stroke-width:1px,color:#000
-    classDef infra fill:#fbf,stroke:#333,stroke-width:1px,color:#000
-    classDef blockchain fill:#fdb,stroke:#333,stroke-width:1px,color:#000
+    %% Classification styling with darker colors and thicker borders
+    classDef frontend fill:#adc8ff,stroke:#000000,stroke-width:3px,color:#000000
+    classDef backend fill:#c4ffad,stroke:#000000,stroke-width:3px,color:#000000
+    classDef storage fill:#ffbbad,stroke:#000000,stroke-width:3px,color:#000000
+    classDef infra fill:#e9adff,stroke:#000000,stroke-width:3px,color:#000000
+    classDef blockchain fill:#ffdbad,stroke:#000000,stroke-width:3px,color:#000000
     
     class NextApp,ReactQuery,Components,Hooks,Auth frontend
     class API,Worker,ResultsWorker,Scheduler backend
@@ -587,14 +593,25 @@ flowchart TB
     </div>
     
     <script>
+        // Force light theme in mermaid
         mermaid.initialize({
             startOnLoad: true,
-            theme: 'default',
+            theme: 'neutral',
             logLevel: 'fatal',
             securityLevel: 'loose',
             fontSize: 16,
             fontFamily: 'Arial',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            themeVariables: {
+                background: '#ffffff',
+                primaryColor: '#adc8ff',
+                primaryTextColor: '#000000', 
+                primaryBorderColor: '#000000',
+                lineColor: '#000000',
+                secondaryColor: '#c4ffad',
+                secondaryTextColor: '#000000',
+                secondaryBorderColor: '#000000'
+            }
         });
         
         function switchTab(tabId) {
