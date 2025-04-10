@@ -215,6 +215,7 @@ sequenceDiagram
         
         <h2>4. Complete System Architecture</h2>
         <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f9d', 'primaryTextColor': '#000', 'primaryBorderColor': '#333', 'lineColor': '#333', 'secondaryColor': '#bbf', 'secondaryTextColor': '#000', 'secondaryBorderColor': '#333', 'tertiaryColor': '#bfb', 'tertiaryTextColor': '#000', 'tertiaryBorderColor': '#333', 'noteTextColor': '#000' }}}%%
 flowchart TB
     subgraph Blockchain
         TaskManager[EvalAvsTaskManager Contract]
@@ -498,6 +499,7 @@ sequenceDiagram
         
         <h2>5. Complete System Architecture</h2>
         <div class="mermaid">
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#bbf', 'primaryTextColor': '#000', 'primaryBorderColor': '#333', 'lineColor': '#333', 'secondaryColor': '#bfb', 'secondaryTextColor': '#000', 'secondaryBorderColor': '#333', 'tertiaryColor': '#fbb', 'tertiaryTextColor': '#000', 'tertiaryBorderColor': '#333', 'noteTextColor': '#000' }}}%%
 flowchart TB
     subgraph "Frontend" 
         NextApp[Next.js App]
@@ -565,11 +567,11 @@ flowchart TB
     Contract <--> AVS
     
     %% Classification styling
-    classDef frontend fill:#bbf,stroke:#333,stroke-width:1px
-    classDef backend fill:#bfb,stroke:#333,stroke-width:1px
-    classDef storage fill:#fbb,stroke:#333,stroke-width:1px
-    classDef infra fill:#fbf,stroke:#333,stroke-width:1px
-    classDef blockchain fill:#fdb,stroke:#333,stroke-width:1px
+    classDef frontend fill:#bbf,stroke:#333,stroke-width:1px,color:#000
+    classDef backend fill:#bfb,stroke:#333,stroke-width:1px,color:#000
+    classDef storage fill:#fbb,stroke:#333,stroke-width:1px,color:#000
+    classDef infra fill:#fbf,stroke:#333,stroke-width:1px,color:#000
+    classDef blockchain fill:#fdb,stroke:#333,stroke-width:1px,color:#000
     
     class NextApp,ReactQuery,Components,Hooks,Auth frontend
     class API,Worker,ResultsWorker,Scheduler backend
