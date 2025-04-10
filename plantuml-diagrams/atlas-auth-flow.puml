@@ -1,23 +1,11 @@
 @startuml atlas-auth-flow
 
-' Basic styling
-!theme plain
-skinparam backgroundColor white
-skinparam defaultTextAlignment center
-
-' Explicitly disable handwritten mode
+skinparam monochrome true
 skinparam handwritten false
 skinparam shadowing false
-skinparam roundCorner 0
-
-' Force straight lines
-skinparam linetype ortho
-skinparam ParticipantPadding 20
-skinparam SequenceBoxPadding 10
-
-' Make sure lines and fonts are crisp
-skinparam ArrowColor black
-skinparam ArrowThickness 1.5
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign center
+skinparam linetype polyline
 
 title User Authentication Flow
 

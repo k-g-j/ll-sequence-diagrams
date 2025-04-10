@@ -1,4 +1,6 @@
-theme: jekyll-theme-minimal
+theme: jekyll-theme-cayman
 title: LayerLens Sequence Diagrams
-description: Architecture and sequence diagrams for LayerLens projects
+description: Architecture and sequence diagrams for LayerLens project
 show_downloads: false
+baseurl: /LayerLens/sequence-diagrams
+url: https://k-g-j.github.io

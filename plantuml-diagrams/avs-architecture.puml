@@ -1,96 +1,80 @@
 @startuml avs-architecture
+!pragma layout smetana
 
-' Basic styling
-!theme plain
-skinparam componentStyle rectangle
-skinparam backgroundColor white
-skinparam defaultTextAlignment center
+!define FONTSIZE 11
+!define FONTFAMILY Helvetica
 
-' Explicitly disable handwritten mode
-skinparam handwritten false
-skinparam shadowing false
-skinparam roundCorner 0
-
-' Set linetype to ortho for straight lines
-skinparam linetype ortho
-skinparam nodesep 50
-skinparam ranksep 50
-
-' Make sure lines and fonts are crisp
-skinparam ArrowColor black
-skinparam ArrowThickness 1.5
-
-' Add spacing to prevent cutoff
-scale 800 width
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
 title Evaluation AVS Architecture
 
-package "Smart Contracts Layer" {
-  [EvalAvsServiceManager] as ServiceManager #lightblue
-  [EvalAvsTaskManager] as TaskManager #lightblue
-  [BlsRegistryCoordinator] as BLSRegistry #lightblue
-  [StakeRegistry] as StakeRegistry #lightblue
+Container_Boundary(smart_contracts, "Smart Contracts Layer") {
+    Component(service_manager, "EvalAvsServiceManager", "Solidity", "Manages AVS")
+    Component(task_manager, "EvalAvsTaskManager", "Solidity", "Manages tasks")
+    Component(bls_registry, "BlsRegistryCoordinator", "Solidity", "BLS key registry")
+    Component(stake_registry, "StakeRegistry", "Solidity", "Stake management")
 }
 
-package "Operator Layer" {
-  [Operator Service] as OpService #lightgreen
-  [Operator CLI] as OpCLI #lightgreen
-  [Task Queue] as TaskQueue #lightgreen
-  [BLS Signing Module] as BlsSigner #lightgreen
-  [Config Manager] as ConfigMgr #lightgreen
-  
-  component "Go Evaluator" as GoEval #lightyellow {
-    [Model Client Factory] as ModelFactory
-    [Response Scorer] as Scorer
-    [Result Processor] as Processor
-    [Metrics Collector] as Metrics
-  }
+Container_Boundary(operator_layer, "Operator Layer") {
+    Component(op_service, "Operator Service", "Go", "Main service")
+    Component(op_cli, "Operator CLI", "Go", "Command interface")
+    Component(task_queue, "Task Queue", "Go", "Task management")
+    Component(bls_signer, "BLS Signing Module", "Go", "Cryptographic signing")
+    Component(config_mgr, "Config Manager", "Go", "Configuration")
+    
+    Container_Boundary(go_eval, "Go Evaluator") {
+        Component(model_factory, "Model Client Factory", "Go", "API Clients")
+        Component(scorer, "Response Scorer", "Go", "Scores responses")
+        Component(processor, "Result Processor", "Go", "Processes results")
+        Component(metrics, "Metrics Collector", "Go", "Collects metrics")
+    }
 }
 
-package "Infrastructure Layer" {
-  [Docker Container] as Docker #pink
-  [Monitoring Agent] as Monitor #pink
-  [Health Checker] as Health #pink
-  [Slashing Detector] as Slashing #pink
+Container_Boundary(infra, "Infrastructure Layer") {
+    Component(docker, "Docker Container", "Docker", "Containerization")
+    Component(monitor, "Monitoring Agent", "Go", "System monitoring")
+    Component(health, "Health Checker", "Go", "Service health")
+    Component(slashing, "Slashing Detector", "Go", "Fault detection")
 }
 
-cloud "External Services" {
-  [EigenLayer Core] as EigenLayer #lavender
-  [Dataset Registry (S3)] as S3 #lavender
-  [LLM API Providers] as LLM #lavender
-  [LayerLens API] as LayerLensAPI #lavender
+Container_Boundary(external, "External Services") {
+    System_Ext(eigenlayer, "EigenLayer Core", "Ethereum-based restaking")
+    System_Ext(s3, "Dataset Registry (S3)", "S3 storage")
+    System_Ext(llm, "LLM API Providers", "Model APIs")
+    System_Ext(api, "LayerLens API", "Main API")
 }
 
 ' Contract interactions
-ServiceManager -- BLSRegistry
-TaskManager -- ServiceManager
-StakeRegistry -- ServiceManager
-BLSRegistry -- EigenLayer
-StakeRegistry -- EigenLayer
+Rel(service_manager, bls_registry, "Manages")
+Rel(task_manager, service_manager, "Uses")
+Rel(stake_registry, service_manager, "Provides stakes")
+Rel(bls_registry, eigenlayer, "Registers with")
+Rel(stake_registry, eigenlayer, "Verifies stakes")
 
 ' Operator components
-OpService -- TaskQueue
-OpService -- BlsSigner
-OpService -- ConfigMgr
-OpService -- GoEval
-OpCLI -- OpService
-OpCLI -- ConfigMgr
-ModelFactory -- LLM
-GoEval -- Processor
-GoEval -- Scorer
-GoEval -- Metrics
-Processor -- LayerLensAPI
+Rel(op_service, task_queue, "Uses")
+Rel(op_service, bls_signer, "Signs with")
+Rel(op_service, config_mgr, "Gets config from")
+Rel(op_service, go_eval, "Executes with")
+Rel(op_cli, op_service, "Manages")
+Rel(op_cli, config_mgr, "Configures")
+Rel(model_factory, llm, "Connects to")
+Rel(go_eval, processor, "Processes with")
+Rel(go_eval, scorer, "Scores with")
+Rel(go_eval, metrics, "Collects with")
+Rel(processor, api, "Reports to")
 
 ' Infrastructure
-Docker -- OpService
-Monitor -- OpService
-Monitor -- Health
-Monitor -- Slashing
-Slashing -- EigenLayer
+Rel(docker, op_service, "Hosts")
+Rel(monitor, op_service, "Monitors")
+Rel(monitor, health, "Checks")
+Rel(monitor, slashing, "Detects")
+Rel(slashing, eigenlayer, "Reports to")
 
 ' External connections
-OpService -- TaskManager
-OpService -- S3
-TaskManager -- LayerLensAPI
+Rel(op_service, task_manager, "Interacts with")
+Rel(op_service, s3, "Retrieves data from")
+Rel(task_manager, api, "Reports to")
 
 @enduml

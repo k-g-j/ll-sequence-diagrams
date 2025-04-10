@@ -1,0 +1,57 @@
+name: Generate Diagrams
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'plantuml-diagrams/**'
+      - 'generate_diagrams.sh'
+      - '.github/workflows/generate-diagrams.yml'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        
+    - name: Install ImageMagick
+      run: sudo apt-get install -y imagemagick
+      
+    - name: Generate diagrams
+      run: |
+        chmod +x ./generate_diagrams.sh
+        ./generate_diagrams.sh
+        
+    - name: Commit and push if changed
+      run: |
+        git config --global user.email "github-actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git add custom-diagrams/v4/
+        git add atlas-app-sequence-diagram.md evaluation-avs-sequence-diagram.md
+        git commit -m "Update diagrams" || exit 0
+        git push
+        
+  deploy:
+    needs: generate
+    runs-on: ubuntu-latest
+    
+    # Deploy to GitHub Pages
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: 'main'
+        
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages
+        folder: .
+        clean: true

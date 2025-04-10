@@ -1,122 +1,90 @@
 @startuml atlas-architecture
+!pragma layout smetana
 
-' Basic styling
-!theme plain
-skinparam componentStyle rectangle
-skinparam backgroundColor white
-skinparam defaultTextAlignment center
+!define FONTSIZE 11
+!define FONTFAMILY Helvetica
 
-' Explicitly disable handwritten mode
-skinparam handwritten false
-skinparam shadowing false
-skinparam roundCorner 0
-
-' Set linetype to ortho for straight lines
-skinparam linetype ortho
-skinparam nodesep 50
-skinparam ranksep 50
-
-' Make sure lines and fonts are crisp
-skinparam ArrowColor black
-skinparam ArrowThickness 1.5
-
-' Add spacing to prevent cutoff
-scale 800 width
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
 title LayerLens Atlas App Architecture
+SHOW_PERSON_OUTLINE()
 
-package "User Interface Layer" {
-  [Atlas Web UI] as WebUI #lightblue
-  [Next.js App] as NextApp #lightblue
-  [Authentication Module] as Auth #lightblue
-  [Results Visualization] as Viz #lightblue
+Person(user, "User", "Application user")
+
+Container_Boundary(atlas_frontend, "Atlas Frontend") {
+    Component(web_ui, "Atlas Web UI", "React", "Web interface")
+    Component(nextjs, "Next.js App", "Node.js", "Application framework")
+    Component(auth, "Authentication Module", "NextAuth", "Auth provider")
+    Component(viz, "Results Visualization", "React", "Charts and dashboards")
 }
 
-package "API Layer" {
-  [API Gateway] as ApiGw #lightgreen
-  [Go Backend API] as GoBackend #lightgreen
-  [WebSocket Service] as WebSocket #lightgreen
-  [Rate Limiter] as RateLim #lightgreen
+Container_Boundary(api_layer, "API Layer") {
+    Component(api_gw, "API Gateway", "Go", "API access control")
+    Component(go_backend, "Go Backend API", "Go", "Business logic")
+    Component(websocket, "WebSocket Service", "Go", "Real-time updates")
+    Component(rate_limiter, "Rate Limiter", "Go", "Request limiting")
 }
 
-package "Core Services" {
-  [Evaluation Manager] as EvalManager #lightyellow
-  [Model Registry] as ModelRegistry #lightyellow
-  [Dataset Manager] as DatasetManager #lightyellow
-  [User Manager] as UserManager #lightyellow
-  [Results Processor] as ResultsProcessor #lightyellow
+Container_Boundary(core_services, "Core Services") {
+    Component(eval_manager, "Evaluation Manager", "Go", "Manages evaluations")
+    Component(model_registry, "Model Registry", "Go", "Tracks models")
+    Component(dataset_manager, "Dataset Manager", "Go", "Manages datasets")
+    Component(user_manager, "User Manager", "Go", "User management")
+    Component(results_processor, "Results Processor", "Go", "Processes results")
 }
 
-package "Integration Layer" {
-  [Evaluation Worker] as Worker #pink
-  [Smart Contract Client] as ContractClient #pink
-  [Metrics Collector] as MetricsCollector #pink
+Container_Boundary(integration, "Integration Layer") {
+    Component(worker, "Evaluation Worker", "Go", "Work processor")
+    Component(contract_client, "Smart Contract Client", "Go", "Blockchain client")
+    Component(metrics, "Metrics Collector", "Go", "Collects metrics")
 }
 
-package "Data Layer" {
-  database "MongoDB" as MongoDB #lightgray {
-    [Evaluations] as MongoEvals
-    [Users] as MongoUsers
-    [Datasets] as MongoDsets
-  }
-  
-  database "MariaDB" as MariaDB #lightgray {
-    [Aggregated Metrics] as MetricsDB
-    [Historical Data] as HistoryDB
-  }
-  
-  database "AWS S3" as S3 #lightgray {
-    [Results Storage] as ResultsS3
-    [Dataset Files] as DatasetsS3
-  }
-  
-  queue "Message Queue" as Queue #lightgray
+Container_Boundary(data_layer, "Data Layer") {
+    ContainerDb(mongodb, "MongoDB", "NoSQL", "Main data store")
+    ContainerDb(mariadb, "MariaDB", "SQL", "Metrics storage")
+    ContainerDb(s3, "AWS S3", "Object Storage", "File storage")
+    ContainerQueue(queue, "Message Queue", "Kafka", "Message passing")
 }
 
-cloud "External Services" {
-  [AWS Cognito] as Cognito #lavender
-  [LayerLens AVS] as AVS #lavender
-  [LLM Providers] as LLMs #lavender
+Container_Boundary(external, "External Services") {
+    Component(cognito, "AWS Cognito", "Auth", "Authentication")
+    Component(avs, "LayerLens AVS", "Service", "Validation service")
+    Component(llms, "LLM Providers", "API", "Model inference")
 }
 
-' User interactions
-WebUI -- NextApp
-NextApp -- Auth
-NextApp -- Viz
-NextApp -- ApiGw
+Rel(user, web_ui, "Uses")
+Rel(web_ui, nextjs, "Renders through")
+Rel(nextjs, auth, "Authenticates with")
+Rel(nextjs, viz, "Displays with")
+Rel(nextjs, api_gw, "Makes requests to")
 
-' API interactions
-Auth -- Cognito
-ApiGw -- GoBackend
-ApiGw -- WebSocket
-ApiGw -- RateLim
+Rel(auth, cognito, "Verifies with")
+Rel(api_gw, go_backend, "Routes to")
+Rel(api_gw, websocket, "Connects to")
+Rel(api_gw, rate_limiter, "Limits through")
 
-' Core service connections
-GoBackend -- EvalManager
-GoBackend -- ModelRegistry
-GoBackend -- DatasetManager
-GoBackend -- UserManager
-GoBackend -- ResultsProcessor
+Rel(go_backend, eval_manager, "Uses")
+Rel(go_backend, model_registry, "Uses")
+Rel(go_backend, dataset_manager, "Uses")
+Rel(go_backend, user_manager, "Uses")
+Rel(go_backend, results_processor, "Uses")
 
-' Data connections
-EvalManager -- MongoEvals
-ModelRegistry -- MongoEvals
-DatasetManager -- MongoDsets
-UserManager -- MongoUsers
-ResultsProcessor -- MetricsDB
-ResultsProcessor -- HistoryDB
+Rel(eval_manager, mongodb, "Stores data in")
+Rel(model_registry, mongodb, "Stores data in")
+Rel(dataset_manager, mongodb, "Stores data in")
+Rel(user_manager, mongodb, "Stores data in")
+Rel(results_processor, mariadb, "Stores metrics in")
 
-' Integration connections
-EvalManager -- Queue
-Queue -- Worker
-Worker -- ContractClient
-Worker -- ResultsProcessor
-ContractClient -- AVS
-MetricsCollector -- LLMs
-MetricsCollector -- MetricsDB
+Rel(eval_manager, queue, "Publishes to")
+Rel(queue, worker, "Consumes from")
+Rel(worker, contract_client, "Calls")
+Rel(worker, results_processor, "Processes with")
+Rel(contract_client, avs, "Interacts with")
+Rel(metrics, llms, "Calls")
+Rel(metrics, mariadb, "Stores in")
 
-' Storage connections
-DatasetManager -- DatasetsS3
-ResultsProcessor -- ResultsS3
+Rel(dataset_manager, s3, "Stores files in")
+Rel(results_processor, s3, "Stores results in")
 
 @enduml
