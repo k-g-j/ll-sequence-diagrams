@@ -1,10 +1,23 @@
 @startuml
-skinparam sequenceMessageAlign center
+' Use improved sequence diagram styling
 skinparam backgroundColor white
 skinparam handwritten false
+skinparam linetype ortho
+
+' Fix arrow styling
 skinparam ArrowColor black
+skinparam ArrowThickness 1.5
 skinparam SequenceArrowThickness 1.5
-skinparam SequenceMessageAlignment left
+
+' Fix message alignment
+skinparam sequenceMessageAlign direction
+skinparam SequenceMessageAlignment center
+
+' Improve participant styling
+skinparam ParticipantBorderThickness 1.5
+skinparam DatabaseBorderThickness 1.5
+skinparam ActorBorderThickness 1.5
+skinparam NoteBorderThickness 1.5
 
 title Evaluation Creation and Processing Flow
 
@@ -48,10 +61,10 @@ Worker -> MongoDB: Update with task ID
 MongoDB --> Worker: Confirm update
 deactivate Worker
 
-Contract ->> Operator: Assign evaluation task
+Contract -> Operator: Assign evaluation task
 activate Operator
 note right of Operator: Operator processes evaluation
-Operator ->> Contract: Submit evaluation results
+Operator -> Contract: Submit evaluation results
 deactivate Operator
 
 Worker -> Contract: Listen for EvalCompleted events

@@ -1,9 +1,16 @@
 @startuml
+' Use modern PlantUML styling with rectangle component style
 skinparam componentStyle rectangle
 skinparam backgroundColor white
-skinparam handwritten false
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
+' Fix arrow styling
 skinparam ArrowColor black
 skinparam ArrowThickness 1.5
+skinparam ArrowFontColor black
+skinparam ArrowFontSize 12
 
 title LayerLens Atlas App Architecture
 
@@ -62,43 +69,43 @@ cloud "External Services" {
 }
 
 ' User interactions
-WebUI -right-> NextApp
-NextApp -down-> Auth
-NextApp -down-> Viz
-NextApp -right-> ApiGw
+WebUI -> NextApp
+NextApp -> Auth
+NextApp -> Viz
+NextApp -> ApiGw
 
 ' API interactions
-Auth -right-> Cognito
-ApiGw -down-> GoBackend
-ApiGw -down-> WebSocket
-ApiGw -down-> RateLim
+Auth -> Cognito
+ApiGw -> GoBackend
+ApiGw -> WebSocket
+ApiGw -> RateLim
 
 ' Core service connections
-GoBackend -down-> EvalManager
-GoBackend -down-> ModelRegistry
-GoBackend -down-> DatasetManager
-GoBackend -down-> UserManager
-GoBackend -down-> ResultsProcessor
+GoBackend -> EvalManager
+GoBackend -> ModelRegistry
+GoBackend -> DatasetManager
+GoBackend -> UserManager
+GoBackend -> ResultsProcessor
 
 ' Data connections
-EvalManager -down-> MongoEvals
-ModelRegistry -down-> MongoEvals
-DatasetManager -down-> MongoDsets
-UserManager -down-> MongoUsers
-ResultsProcessor -down-> MetricsDB
-ResultsProcessor -down-> HistoryDB
+EvalManager -> MongoEvals
+ModelRegistry -> MongoEvals
+DatasetManager -> MongoDsets
+UserManager -> MongoUsers
+ResultsProcessor -> MetricsDB
+ResultsProcessor -> HistoryDB
 
 ' Integration connections
-EvalManager -right-> Queue
-Queue -right-> Worker
-Worker -right-> ContractClient
-Worker -down-> ResultsProcessor
-ContractClient -right-> AVS
-MetricsCollector -right-> LLMs
-MetricsCollector -down-> MetricsDB
+EvalManager -> Queue
+Queue -> Worker
+Worker -> ContractClient
+Worker -> ResultsProcessor
+ContractClient -> AVS
+MetricsCollector -> LLMs
+MetricsCollector -> MetricsDB
 
 ' Storage connections
-DatasetManager -right-> DatasetsS3
-ResultsProcessor -right-> ResultsS3
+DatasetManager -> DatasetsS3
+ResultsProcessor -> ResultsS3
 
 @enduml

@@ -1,10 +1,23 @@
 @startuml
-skinparam sequenceMessageAlign center
+' Use improved sequence diagram styling
 skinparam backgroundColor white
 skinparam handwritten false
+skinparam linetype ortho
+
+' Fix arrow styling
 skinparam ArrowColor black
+skinparam ArrowThickness 1.5
 skinparam SequenceArrowThickness 1.5
-skinparam SequenceMessageAlignment left
+
+' Fix message alignment
+skinparam sequenceMessageAlign direction
+skinparam SequenceMessageAlignment center
+
+' Improve participant styling
+skinparam ParticipantBorderThickness 1.5
+skinparam DatabaseBorderThickness 1.5
+skinparam ActorBorderThickness 1.5
+skinparam NoteBorderThickness 1.5
 
 title Task Creation and Assignment Flow
 
@@ -19,49 +32,49 @@ participant "LayerLens API" as API
 
 note over Admin, API: Task Creation and Assignment
 
-Admin ->> TaskManager: requestEval(modelName, datasetName, subsets)
+Admin -> TaskManager: requestEval(modelName, datasetName, subsets)
 activate TaskManager
-TaskManager ->> Queue: popNextAssignedOperator()
-Queue -->> TaskManager: assignedOperator
+TaskManager -> Queue: popNextAssignedOperator()
+Queue --> TaskManager: assignedOperator
 TaskManager -> TaskManager: Create EvalAvsTask
 TaskManager -> TaskManager: Emit EvalRequested Event
 deactivate TaskManager
 
 Operator -> Operator: Listen for EvalRequested events
-TaskManager ->> Operator: EvalRequested(taskId, task, externalId)
+TaskManager -> Operator: EvalRequested(taskId, task, externalId)
 
 note over Operator, API: Task Execution
 
 Operator -> Operator: Check if assigned to task
 activate Operator
-Operator ->> S3: Fetch dataset files (formatted.jsonl + config)
-S3 -->> Operator: Return dataset files
-Operator ->> API: Request API Key for model provider
-API -->> Operator: Return API Key
-Operator ->> GoEvaluator: Execute evaluation
+Operator -> S3: Fetch dataset files (formatted.jsonl + config)
+S3 --> Operator: Return dataset files
+Operator -> API: Request API Key for model provider
+API --> Operator: Return API Key
+Operator -> GoEvaluator: Execute evaluation
 
 activate GoEvaluator
 loop For each prompt in dataset
-    GoEvaluator ->> LLM: Send prompt
-    LLM -->> GoEvaluator: Return response
+    GoEvaluator -> LLM: Send prompt
+    LLM --> GoEvaluator: Return response
     GoEvaluator -> GoEvaluator: Score response
     GoEvaluator -> GoEvaluator: Hash response (MD5)
 end
 GoEvaluator -> GoEvaluator: Generate combined hash
-GoEvaluator -->> Operator: Return results and hash
+GoEvaluator --> Operator: Return results and hash
 deactivate GoEvaluator
 
-Operator ->> API: Save detailed results
-API -->> Operator: Confirm save
+Operator -> API: Save detailed results
+API --> Operator: Confirm save
 
 note over Operator, API: Result Submission
 
 Operator -> Operator: Generate BLS signature
-Operator ->> TaskManager: respondToEvalRequest(taskId, hash, signature)
+Operator -> TaskManager: respondToEvalRequest(taskId, hash, signature)
 activate TaskManager
 TaskManager -> TaskManager: Verify signature
 TaskManager -> TaskManager: Update task state to SUBMITTED
-TaskManager ->> Queue: Add operator back to queue
+TaskManager -> Queue: Add operator back to queue
 TaskManager -> TaskManager: Emit EvalCompleted Event
 deactivate TaskManager
 deactivate Operator

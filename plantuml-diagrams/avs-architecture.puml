@@ -1,9 +1,16 @@
 @startuml
+' Use modern PlantUML styling with rectangle component style
 skinparam componentStyle rectangle
 skinparam backgroundColor white
-skinparam handwritten false
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+
+' Fix arrow styling
 skinparam ArrowColor black
 skinparam ArrowThickness 1.5
+skinparam ArrowFontColor black
+skinparam ArrowFontSize 12
 
 title Evaluation AVS Architecture
 
@@ -44,35 +51,35 @@ cloud "External Services" {
 }
 
 ' Contract interactions
-ServiceManager -right-> BLSRegistry
-TaskManager -up-> ServiceManager
-StakeRegistry -right-> ServiceManager
-BLSRegistry -up-> EigenLayer
-StakeRegistry -up-> EigenLayer
+ServiceManager -> BLSRegistry
+TaskManager -> ServiceManager
+StakeRegistry -> ServiceManager
+BLSRegistry -> EigenLayer
+StakeRegistry -> EigenLayer
 
 ' Operator components
-OpService -right-> TaskQueue
-OpService -down-> BlsSigner
-OpService -down-> ConfigMgr
-OpService -right-> GoEval
-OpCLI -down-> OpService
-OpCLI -right-> ConfigMgr
-ModelFactory -up-> LLM
-GoEval -down-> Processor
-GoEval -right-> Scorer
-GoEval -up-> Metrics
-Processor -right-> LayerLensAPI
+OpService -> TaskQueue
+OpService -> BlsSigner
+OpService -> ConfigMgr
+OpService -> GoEval
+OpCLI -> OpService
+OpCLI -> ConfigMgr
+ModelFactory -> LLM
+GoEval -> Processor
+GoEval -> Scorer
+GoEval -> Metrics
+Processor -> LayerLensAPI
 
 ' Infrastructure
-Docker -right-> OpService
-Monitor -right-> OpService
-Monitor -down-> Health
-Monitor -down-> Slashing
-Slashing -up-> EigenLayer
+Docker -> OpService
+Monitor -> OpService
+Monitor -> Health
+Monitor -> Slashing
+Slashing -> EigenLayer
 
 ' External connections
-OpService -up-> TaskManager
-OpService -up-> S3
-TaskManager -right-> LayerLensAPI
+OpService -> TaskManager
+OpService -> S3
+TaskManager -> LayerLensAPI
 
 @enduml
