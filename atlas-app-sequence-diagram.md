@@ -223,24 +223,8 @@ sequenceDiagram
 
 ## 5. Complete System Architecture
 
-<style>
-  .mermaid-wrapper svg {
-    background-color: white !important;
-  }
-</style>
-
-<div class="mermaid-wrapper" style="background-color:white !important; padding:20px; margin:0; border-radius:8px;">
-
 ```mermaid
-%%{
-  init: {
-    'theme': 'base',
-    'themeVariables': {
-      'primaryColor': '#adc8ff',
-      'background': '#ffffff'
-    }
-  }
-}%%
+%%{init: { 'theme': 'default' }}%%
 flowchart TB
     %% Setting white backgrounds for all sections
     subgraph FrontendGroup["FRONTEND"]
@@ -314,14 +298,9 @@ flowchart TB
     classDef storage fill:#ffbbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     classDef infra fill:#e9adff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     classDef blockchain fill:#ffdbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
-    classDef section fill:#ffffff,stroke:#000000,color:#000000
-    
     class NextApp,ReactQuery,Components,Hooks,Auth frontend
     class API,Worker,ResultsWorker,Scheduler backend
     class MongoDB,MariaDB,S3 storage
     class Kafka,Cognito,CDK infra
     class Contract,AVS blockchain
-    class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup section
 ```
-
-</div>

@@ -140,24 +140,8 @@ sequenceDiagram
 
 ## 4. Complete System Architecture
 
-<style>
-  .mermaid-wrapper svg {
-    background-color: white !important;
-  }
-</style>
-
-<div class="mermaid-wrapper" style="background-color:white !important; padding:20px; margin:0; border-radius:8px;">
-
 ```mermaid
-%%{
-  init: {
-    'theme': 'base',
-    'themeVariables': {
-      'primaryColor': '#ffadce',
-      'background': '#ffffff'
-    }
-  }
-}%%
+%%{init: { 'theme': 'default' }}%%
 flowchart TB
     %% Setting white backgrounds for all sections
     subgraph Blockchain["BLOCKCHAIN"]
@@ -214,13 +198,8 @@ flowchart TB
     classDef operator fill:#adc8ff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     classDef evaluator fill:#c4ffad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     classDef external fill:#ffbbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
-    classDef section fill:#ffffff,stroke:#000000,color:#000000
-    
     class TaskManager,ServiceManager,EigenLayer blockchain
     class OpMain,AvsReader,AvsWriter,AvsSubscriber,Registration operator
     class GoEval,Extractor,Scoring,PythonExec evaluator
     class S3,LLMAPI,Results external
-    class Blockchain,OperatorNode,EvalEngine,ExternalServices section
 ```
-
-</div>
