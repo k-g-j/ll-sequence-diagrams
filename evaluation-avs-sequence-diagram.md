@@ -141,35 +141,36 @@ sequenceDiagram
 ## 4. Complete System Architecture
 
 ```mermaid
+%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#c4ffad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000', 'nodeBorder': '#000000', 'mainBkg': '#ffffff', 'nodeTextColor': '#000000', 'labelTextColor': '#000000', 'clusterBkg': '#ffffff', 'clusterBorder': '#000000', 'edgeLabelBackground': '#ffffff' } } }%%
 flowchart TB
-    subgraph Blockchain
-        TaskManager[EvalAvsTaskManager Contract]
-        ServiceManager[EvalAvsServiceManager Contract]
-        EigenLayer[EigenLayer Contracts]
+    subgraph Blockchain["BLOCKCHAIN"]
+        TaskManager["TASK MANAGER CONTRACT"]
+        ServiceManager["SERVICE MANAGER CONTRACT"]
+        EigenLayer["EIGENLAYER CONTRACTS"]
     end
     
-    subgraph "Operator Node"
-        OpMain[Operator Main]
-        AvsReader[AVS Reader]
-        AvsWriter[AVS Writer]
-        AvsSubscriber[AVS Subscriber]
-        Registration[Registration]
+    subgraph OperatorNode["OPERATOR NODE"]
+        OpMain["OPERATOR MAIN"]
+        AvsReader["AVS READER"]
+        AvsWriter["AVS WRITER"]
+        AvsSubscriber["AVS SUBSCRIBER"]
+        Registration["REGISTRATION"]
     end
     
-    subgraph "Evaluation Engine"
-        GoEval[Go-Evaluator]
-        Extractor[Response Extractor]
-        Scoring[Scoring Module]
-        PythonExec[Python Executor]
+    subgraph EvalEngine["EVALUATION ENGINE"]
+        GoEval["GO-EVALUATOR"]
+        Extractor["RESPONSE EXTRACTOR"]
+        Scoring["SCORING MODULE"]
+        PythonExec["PYTHON EXECUTOR"]
     end
     
-    subgraph "External Services"
-        S3[(Dataset Registry S3)]
-        LLMAPI[LLM Provider API]
-        Results[LayerLens Results API]
+    subgraph ExternalServices["EXTERNAL SERVICES"]
+        S3[("DATASET REGISTRY (S3)")]
+        LLMAPI["LLM PROVIDER API"]
+        Results["LAYERLENS RESULTS API"]
     end
     
-    %% Connections
+    %% Connections with thicker lines
     TaskManager <--> ServiceManager
     ServiceManager <--> EigenLayer
     
@@ -191,14 +192,16 @@ flowchart TB
     GoEval --> LLMAPI
     GoEval --> Results
     
-    %% Classification styling
-    classDef blockchain fill:#f9d,stroke:#333,stroke-width:2px
-    classDef operator fill:#bbf,stroke:#333,stroke-width:1px
-    classDef evaluator fill:#bfb,stroke:#333,stroke-width:1px
-    classDef external fill:#fbb,stroke:#333,stroke-width:1px
+    %% Classification styling with darker colors and thicker borders
+    classDef blockchain fill:#ffadce,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef operator fill:#adc8ff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef evaluator fill:#c4ffad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef external fill:#ffbbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     
     class TaskManager,ServiceManager,EigenLayer blockchain
     class OpMain,AvsReader,AvsWriter,AvsSubscriber,Registration operator
     class GoEval,Extractor,Scoring,PythonExec evaluator
     class S3,LLMAPI,Results external
+    
+    class Blockchain,OperatorNode,EvalEngine,ExternalServices darkText
 ```

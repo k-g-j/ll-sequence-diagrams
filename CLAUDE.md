@@ -28,6 +28,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Tests: Use testify/suite structure for Go tests
 - Naming: CamelCase for Go, PascalCase for React components, camelCase for variables
 
+## Commit and PR Guidelines
+- NEVER include Claude attribution in commit messages or PRs
+- Do not include phrases like "Generated with Claude Code" or "Co-Authored-By: Claude"
+- Keep commit messages concise and focused on the changes made
+
 ## IMPORTANT: Never commit CLAUDE.md to GitHub
 - This file is for local use only
 - If updated locally, update copy in git@github.com:k-g-j/claude-cli-markdowns.git as well

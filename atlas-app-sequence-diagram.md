@@ -224,82 +224,85 @@ sequenceDiagram
 ## 5. Complete System Architecture
 
 ```mermaid
+%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#ffbbad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000', 'nodeBorder': '#000000', 'mainBkg': '#ffffff', 'nodeTextColor': '#000000', 'labelTextColor': '#000000', 'clusterBkg': '#ffffff', 'clusterBorder': '#000000', 'edgeLabelBackground': '#ffffff' } } }%%
 flowchart TB
-    subgraph "Frontend" 
-        NextApp[Next.js App]
-        ReactQuery[React Query]
-        Components[UI Components]
-        Hooks[Custom Hooks]
-        Auth[Next Auth]
+    subgraph FrontendGroup["FRONTEND"]
+        NextApp["NEXT.JS APP"]
+        ReactQuery["REACT QUERY"]
+        Components["UI COMPONENTS"]
+        Hooks["CUSTOM HOOKS"]
+        Auth["NEXT AUTH"]
     end
     
-    subgraph "Backend Services"
-        API[Atlas API]
-        Worker[Evaluation Worker]
-        ResultsWorker[Results Worker]
-        Scheduler[Task Scheduler]
+    subgraph BackendGroup["BACKEND SERVICES"]
+        API["ATLAS API"]
+        Worker["EVALUATION WORKER"]
+        ResultsWorker["RESULTS WORKER"]
+        Scheduler["TASK SCHEDULER"]
     end
     
-    subgraph "Data Storage"
-        MongoDB[(MongoDB)]
-        MariaDB[(MariaDB)]
-        S3[(AWS S3)]
+    subgraph StorageGroup["DATA STORAGE"]
+        MongoDB[("MONGODB")]
+        MariaDB[("MARIADB")]
+        S3[("AWS S3")]
     end
     
-    subgraph "Infrastructure"
-        Kafka[Kafka Message Queue]
-        Cognito[AWS Cognito]
-        CDK[AWS CDK Infrastructure]
+    subgraph InfraGroup["INFRASTRUCTURE"]
+        Kafka["KAFKA MESSAGE QUEUE"]
+        Cognito["AWS COGNITO"]
+        CDK["AWS CDK INFRASTRUCTURE"]
     end
     
-    subgraph "Blockchain Integration"
-        Contract[Smart Contract]
-        AVS[Evaluation AVS]
+    subgraph BlockchainGroup["BLOCKCHAIN INTEGRATION"]
+        Contract["SMART CONTRACT"]
+        AVS["EVALUATION AVS"]
     end
     
-    %% Frontend connections
-    NextApp --> ReactQuery
-    NextApp --> Components
-    NextApp --> Hooks
-    NextApp --> Auth
-    Auth <--> Cognito
-    ReactQuery <--> API
+    %% Frontend connections with thicker lines
+    NextApp ---> ReactQuery
+    NextApp ---> Components
+    NextApp ---> Hooks
+    NextApp ---> Auth
+    Auth <---> Cognito
+    ReactQuery <---> API
     
     %% Backend connections
-    API <--> MongoDB
-    API <--> MariaDB
-    API <--> S3
-    API <--> Kafka
-    API <--> Cognito
+    API <---> MongoDB
+    API <---> MariaDB
+    API <---> S3
+    API <---> Kafka
+    API <---> Cognito
     
-    Kafka --> Worker
-    Kafka --> ResultsWorker
+    Kafka ---> Worker
+    Kafka ---> ResultsWorker
     
-    Worker <--> MongoDB
-    Worker <--> S3
-    Worker <--> Contract
+    Worker <---> MongoDB
+    Worker <---> S3
+    Worker <---> Contract
     
-    ResultsWorker <--> MongoDB
-    ResultsWorker <--> MariaDB
-    ResultsWorker <--> S3
+    ResultsWorker <---> MongoDB
+    ResultsWorker <---> MariaDB
+    ResultsWorker <---> S3
     
-    Scheduler --> Worker
-    Scheduler --> ResultsWorker
-    Scheduler <--> MongoDB
+    Scheduler ---> Worker
+    Scheduler ---> ResultsWorker
+    Scheduler <---> MongoDB
     
     %% Blockchain connections
-    Contract <--> AVS
+    Contract <---> AVS
     
-    %% Classification styling
-    classDef frontend fill:#bbf,stroke:#333,stroke-width:1px
-    classDef backend fill:#bfb,stroke:#333,stroke-width:1px
-    classDef storage fill:#fbb,stroke:#333,stroke-width:1px
-    classDef infra fill:#fbf,stroke:#333,stroke-width:1px
-    classDef blockchain fill:#fdb,stroke:#333,stroke-width:1px
+    %% Classification styling with darker colors and thicker borders
+    classDef frontend fill:#adc8ff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef backend fill:#c4ffad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef storage fill:#ffbbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef infra fill:#e9adff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef blockchain fill:#ffdbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     
     class NextApp,ReactQuery,Components,Hooks,Auth frontend
     class API,Worker,ResultsWorker,Scheduler backend
     class MongoDB,MariaDB,S3 storage
     class Kafka,Cognito,CDK infra
     class Contract,AVS blockchain
+    
+    class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup darkText
 ```
