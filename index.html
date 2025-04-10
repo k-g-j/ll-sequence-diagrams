@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LayerLens Sequence Diagrams</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .diagram-container {
+            margin-bottom: 40px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #fff;
+            border-bottom: 1px solid #fff;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>LayerLens Sequence Diagrams</h1>
+    
+    <div class="tabs">
+        <div class="tab active" onclick="openTab(event, 'atlas')">Atlas App</div>
+        <div class="tab" onclick="openTab(event, 'avs')">Evaluation AVS</div>
+    </div>
+    
+    <div id="atlas" class="tab-content active">
+        <h2>Atlas App Diagrams</h2>
+        
+        <div class="diagram-container">
+            <h3>1. User Authentication Flow</h3>
+            <img src="./custom-diagrams/v3/atlas-auth-flow.png" alt="User Authentication Flow">
+        </div>
+        
+        <div class="diagram-container">
+            <h3>2. Evaluation Creation and Processing Flow</h3>
+            <img src="./custom-diagrams/v3/atlas-evaluation-flow.png" alt="Evaluation Flow">
+        </div>
+        
+        <div class="diagram-container">
+            <h3>3. Dataset Management Flow</h3>
+            <img src="./custom-diagrams/v3/atlas-dataset-flow.png" alt="Dataset Management Flow">
+        </div>
+        
+        <div class="diagram-container">
+            <h3>4. Results Viewing and Comparison Flow</h3>
+            <img src="./custom-diagrams/v3/atlas-results-flow.png" alt="Results Viewing Flow">
+        </div>
+        
+        <div class="diagram-container">
+            <h3>5. Complete System Architecture</h3>
+            <img src="./custom-diagrams/v3/atlas-architecture-resized.png" alt="Atlas Architecture">
+        </div>
+    </div>
+    
+    <div id="avs" class="tab-content">
+        <h2>Evaluation AVS Diagrams</h2>
+        
+        <div class="diagram-container">
+            <h3>1. Task Creation and Assignment Flow</h3>
+            <img src="./custom-diagrams/v3/avs-task-flow.png" alt="Task Creation Flow">
+        </div>
+        
+        <div class="diagram-container">
+            <h3>2. Operator Registration Flow</h3>
+            <img src="./custom-diagrams/v3/avs-registration-flow.png" alt="Operator Registration Flow">
+        </div>
+        
+        <div class="diagram-container">
+            <h3>3. Task Reassignment Flow</h3>
+            <img src="./custom-diagrams/v3/avs-reassignment-flow.png" alt="Task Reassignment Flow">
+        </div>
+        
+        <div class="diagram-container">
+            <h3>4. Complete System Architecture</h3>
+            <img src="./custom-diagrams/v3/avs-architecture-resized.png" alt="AVS Architecture">
+        </div>
+    </div>
+    
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
