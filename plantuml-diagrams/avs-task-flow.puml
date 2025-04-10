@@ -1,7 +1,8 @@
 @startuml
-' Use handwritten style with improved fonts and spacing
+!option handwritten true
+
+' Use improved fonts and spacing
 skinparam backgroundColor white
-skinparam handwritten true
 skinparam defaultTextAlignment center
 
 ' Fix arrow styling

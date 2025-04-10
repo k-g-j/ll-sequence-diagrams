@@ -1,28 +1,29 @@
 @startuml
-' Use handwritten style with more readable layout
+!option handwritten true
+
+' Use more readable layout with larger size
 skinparam componentStyle rectangle
 skinparam backgroundColor white
-skinparam handwritten true
 skinparam defaultTextAlignment center
 skinparam wrapWidth 200
-skinparam nodesep 120
-skinparam ranksep 130
+skinparam nodesep 150
+skinparam ranksep 150
 
-' Increase overall diagram size
-scale 1.2
+' Make diagram much larger
+scale 2.0
 
 ' Fix arrow styling
 skinparam ArrowColor black
-skinparam ArrowThickness 1.5
+skinparam ArrowThickness 2.0
 skinparam ArrowFontColor black
-skinparam ArrowFontSize 14
+skinparam ArrowFontSize 18
 
 ' Improve fonts and text
-skinparam ComponentFontSize 16
+skinparam ComponentFontSize 20
 skinparam ComponentFontStyle bold
-skinparam PackageFontSize 18
+skinparam PackageFontSize 22
 skinparam PackageFontStyle bold
-skinparam TitleFontSize 24
+skinparam TitleFontSize 28
 skinparam TitleFontStyle bold
 
 title LayerLens Atlas App Architecture
