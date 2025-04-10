@@ -141,29 +141,14 @@ sequenceDiagram
 ## 4. Complete System Architecture
 
 ```mermaid
-%%{
-  init: {
-    'theme': 'base', 
-    'themeVariables': {
-      'primaryColor': '#ffadce',
-      'primaryTextColor': '#000000',
-      'primaryBorderColor': '#000000',
-      'lineColor': '#000000',
-      'secondaryColor': '#adc8ff',
-      'tertiaryColor': '#c4ffad',
-      'background': '#ffffff'
-    },
-    'fontFamily': 'Arial',
-    'fontSize': 16,
-    'fontWeight': 900
-  }
-}%%
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'tertiaryColor': '#c4ffad', 'background': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
 flowchart TB
+    %% Setting white backgrounds for all sections
     subgraph Blockchain["BLOCKCHAIN"]
         TaskManager["TASK MANAGER CONTRACT"]
         ServiceManager["SERVICE MANAGER CONTRACT"]
         EigenLayer["EIGENLAYER CONTRACTS"]
-    end:::whiteStyle
+    end
     
     subgraph OperatorNode["OPERATOR NODE"]
         OpMain["OPERATOR MAIN"]
@@ -171,20 +156,20 @@ flowchart TB
         AvsWriter["AVS WRITER"]
         AvsSubscriber["AVS SUBSCRIBER"]
         Registration["REGISTRATION"]
-    end:::whiteStyle
+    end
     
     subgraph EvalEngine["EVALUATION ENGINE"]
         GoEval["GO-EVALUATOR"]
         Extractor["RESPONSE EXTRACTOR"]
         Scoring["SCORING MODULE"]
         PythonExec["PYTHON EXECUTOR"]
-    end:::whiteStyle
+    end
     
     subgraph ExternalServices["EXTERNAL SERVICES"]
         S3[("DATASET REGISTRY (S3)")]
         LLMAPI["LLM PROVIDER API"]
         Results["LAYERLENS RESULTS API"]
-    end:::whiteStyle
+    end
     
     %% Connections with thicker lines
     TaskManager <--> ServiceManager
@@ -213,14 +198,11 @@ flowchart TB
     classDef operator fill:#adc8ff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     classDef evaluator fill:#c4ffad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     classDef external fill:#ffbbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef section fill:#ffffff,stroke:#000000,color:#000000
     
     class TaskManager,ServiceManager,EigenLayer blockchain
     class OpMain,AvsReader,AvsWriter,AvsSubscriber,Registration operator
     class GoEval,Extractor,Scoring,PythonExec evaluator
     class S3,LLMAPI,Results external
-    
-    class Blockchain,OperatorNode,EvalEngine,ExternalServices darkText
-    
-    %% White style for subgraphs
-    classDef whiteStyle fill:#ffffff,stroke:#000000,color:#000000
+    class Blockchain,OperatorNode,EvalEngine,ExternalServices section
 ```

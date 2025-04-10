@@ -224,55 +224,40 @@ sequenceDiagram
 ## 5. Complete System Architecture
 
 ```mermaid
-%%{
-  init: {
-    'theme': 'base', 
-    'themeVariables': {
-      'primaryColor': '#adc8ff',
-      'primaryTextColor': '#000000',
-      'primaryBorderColor': '#000000',
-      'lineColor': '#000000',
-      'secondaryColor': '#c4ffad',
-      'tertiaryColor': '#ffbbad',
-      'background': '#ffffff'
-    },
-    'fontFamily': 'Arial',
-    'fontSize': 16,
-    'fontWeight': 900
-  }
-}%%
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'tertiaryColor': '#ffbbad', 'background': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
 flowchart TB
+    %% Setting white backgrounds for all sections
     subgraph FrontendGroup["FRONTEND"]
         NextApp["NEXT.JS APP"]
         ReactQuery["REACT QUERY"]
         Components["UI COMPONENTS"]
         Hooks["CUSTOM HOOKS"]
         Auth["NEXT AUTH"]
-    end:::whiteStyle
+    end
     
     subgraph BackendGroup["BACKEND SERVICES"]
         API["ATLAS API"]
         Worker["EVALUATION WORKER"]
         ResultsWorker["RESULTS WORKER"]
         Scheduler["TASK SCHEDULER"]
-    end:::whiteStyle
+    end
     
     subgraph StorageGroup["DATA STORAGE"]
         MongoDB[("MONGODB")]
         MariaDB[("MARIADB")]
         S3[("AWS S3")]
-    end:::whiteStyle
+    end
     
     subgraph InfraGroup["INFRASTRUCTURE"]
         Kafka["KAFKA MESSAGE QUEUE"]
         Cognito["AWS COGNITO"]
         CDK["AWS CDK INFRASTRUCTURE"]
-    end:::whiteStyle
+    end
     
     subgraph BlockchainGroup["BLOCKCHAIN INTEGRATION"]
         Contract["SMART CONTRACT"]
         AVS["EVALUATION AVS"]
-    end:::whiteStyle
+    end
     
     %% Frontend connections with thicker lines
     NextApp ---> ReactQuery
@@ -313,15 +298,12 @@ flowchart TB
     classDef storage fill:#ffbbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     classDef infra fill:#e9adff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     classDef blockchain fill:#ffdbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef section fill:#ffffff,stroke:#000000,color:#000000
     
     class NextApp,ReactQuery,Components,Hooks,Auth frontend
     class API,Worker,ResultsWorker,Scheduler backend
     class MongoDB,MariaDB,S3 storage
     class Kafka,Cognito,CDK infra
     class Contract,AVS blockchain
-    
-    class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup darkText
-    
-    %% White style for subgraphs
-    classDef whiteStyle fill:#ffffff,stroke:#000000,color:#000000
+    class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup section
 ```

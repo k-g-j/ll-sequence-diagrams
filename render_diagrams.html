@@ -240,29 +240,13 @@ sequenceDiagram
         
         <h2>4. Complete System Architecture</h2>
         <div class="mermaid">
-%%{
-  init: {
-    'theme': 'base',
-    'themeVariables': {
-      'primaryColor': '#ffadce',
-      'primaryTextColor': '#000000',
-      'primaryBorderColor': '#000000',
-      'lineColor': '#000000',
-      'secondaryColor': '#adc8ff',
-      'tertiaryColor': '#c4ffad',
-      'background': '#ffffff'
-    },
-    'fontFamily': 'Arial',
-    'fontSize': 16,
-    'fontWeight': 900
-  }
-}%%
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'tertiaryColor': '#c4ffad', 'background': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
 flowchart TB
     subgraph Blockchain["BLOCKCHAIN"]
         TaskManager["TASK MANAGER CONTRACT"]
         ServiceManager["SERVICE MANAGER CONTRACT"]
         EigenLayer["EIGENLAYER CONTRACTS"]
-    end:::whiteStyle
+    end
     
     subgraph OperatorNode["OPERATOR NODE"]
         OpMain["OPERATOR MAIN"]
@@ -270,20 +254,20 @@ flowchart TB
         AvsWriter["AVS WRITER"]
         AvsSubscriber["AVS SUBSCRIBER"]
         Registration["REGISTRATION"]
-    end:::whiteStyle
+    end
     
     subgraph EvalEngine["EVALUATION ENGINE"]
         GoEval["GO-EVALUATOR"]
         Extractor["RESPONSE EXTRACTOR"]
         Scoring["SCORING MODULE"]
         PythonExec["PYTHON EXECUTOR"]
-    end:::whiteStyle
+    end
     
     subgraph ExternalServices["EXTERNAL SERVICES"]
         S3["DATASET REGISTRY (S3)"]
         LLMAPI["LLM PROVIDER API"]
         Results["LAYERLENS RESULTS API"]
-    end:::whiteStyle
+    end
     
     %% Connections with thicker lines
     TaskManager <--> ServiceManager
@@ -318,10 +302,10 @@ flowchart TB
     class GoEval,Extractor,Scoring,PythonExec evaluator
     class S3,LLMAPI,Results external
     
-    class Blockchain,OperatorNode,EvalEngine,ExternalServices darkText
+    class Blockchain,OperatorNode,EvalEngine,ExternalServices section
     
-    %% White style for subgraphs
-    classDef whiteStyle fill:#ffffff,stroke:#000000,color:#000000
+    %% White style for section backgrounds
+    classDef section fill:#ffffff,stroke:#000000,color:#000000
         </div>
     </div>
     
@@ -545,23 +529,7 @@ sequenceDiagram
         
         <h2>5. Complete System Architecture</h2>
         <div class="mermaid">
-%%{
-  init: {
-    'theme': 'base',
-    'themeVariables': {
-      'primaryColor': '#adc8ff',
-      'primaryTextColor': '#000000',
-      'primaryBorderColor': '#000000',
-      'lineColor': '#000000',
-      'secondaryColor': '#c4ffad',
-      'tertiaryColor': '#ffbbad',
-      'background': '#ffffff'
-    },
-    'fontFamily': 'Arial',
-    'fontSize': 16,
-    'fontWeight': 900
-  }
-}%%
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'tertiaryColor': '#ffbbad', 'background': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
 flowchart TB
     subgraph FrontendGroup["FRONTEND"]
         NextApp["NEXT.JS APP"]
@@ -569,31 +537,31 @@ flowchart TB
         Components["UI COMPONENTS"]
         Hooks["CUSTOM HOOKS"]
         Auth["NEXT AUTH"]
-    end:::whiteStyle
+    end
     
     subgraph BackendGroup["BACKEND SERVICES"]
         API["ATLAS API"]
         Worker["EVALUATION WORKER"]
         ResultsWorker["RESULTS WORKER"]
         Scheduler["TASK SCHEDULER"]
-    end:::whiteStyle
+    end
     
     subgraph StorageGroup["DATA STORAGE"]
         MongoDB["MONGODB"]
         MariaDB["MARIADB"]
         S3["AWS S3"]
-    end:::whiteStyle
+    end
     
     subgraph InfraGroup["INFRASTRUCTURE"]
         Kafka["KAFKA MESSAGE QUEUE"]
         Cognito["AWS COGNITO"]
         CDK["AWS CDK INFRASTRUCTURE"]
-    end:::whiteStyle
+    end
     
     subgraph BlockchainGroup["BLOCKCHAIN INTEGRATION"]
         Contract["SMART CONTRACT"]
         AVS["EVALUATION AVS"]
-    end:::whiteStyle
+    end
     
     %% Frontend connections with thicker lines
     NextApp ---> ReactQuery
@@ -641,10 +609,10 @@ flowchart TB
     class Kafka,Cognito,CDK infra
     class Contract,AVS blockchain
     
-    class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup darkText
+    class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup section
     
-    %% White style for subgraphs
-    classDef whiteStyle fill:#ffffff,stroke:#000000,color:#000000
+    %% White style for section backgrounds
+    classDef section fill:#ffffff,stroke:#000000,color:#000000
         </div>
     </div>
     
