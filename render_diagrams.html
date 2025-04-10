@@ -11,7 +11,10 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            background-color: white; /* Ensure white background */
+            background-color: white !important; /* Ensure white background */
+        }
+        div, pre, code {
+            background-color: white !important;
         }
         h1 {
             color: #333;
@@ -30,8 +33,16 @@
             font-weight: bold;
         }
         /* Force white backgrounds on all mermaid elements */
-        .mermaid svg {
+        .mermaid svg, .mermaid div, #container, svg {
             background-color: white !important;
+        }
+        
+        #graphDiv {
+            background-color: white !important;
+        }
+        
+        g[class*="graph"] > polygon {
+            fill: white !important;
         }
         .mermaid .flowchart-horizontal rect,
         .mermaid .flowchart-v2 rect,
@@ -242,6 +253,8 @@ sequenceDiagram
         <div class="mermaid">
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'tertiaryColor': '#c4ffad', 'background': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
 flowchart TB
+    %% Force white background
+    graph[bgcolor="#ffffff"]
     subgraph Blockchain["BLOCKCHAIN"]
         TaskManager["TASK MANAGER CONTRACT"]
         ServiceManager["SERVICE MANAGER CONTRACT"]
@@ -531,6 +544,8 @@ sequenceDiagram
         <div class="mermaid">
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'tertiaryColor': '#ffbbad', 'background': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
 flowchart TB
+    %% Force white background
+    graph[bgcolor="#ffffff"]
     subgraph FrontendGroup["FRONTEND"]
         NextApp["NEXT.JS APP"]
         ReactQuery["REACT QUERY"]

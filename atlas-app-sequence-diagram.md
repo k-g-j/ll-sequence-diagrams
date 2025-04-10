@@ -223,9 +223,13 @@ sequenceDiagram
 
 ## 5. Complete System Architecture
 
+<div style="background-color:white; padding:20px;">
+
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'tertiaryColor': '#ffbbad', 'background': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'tertiaryColor': '#ffbbad', 'background': '#ffffff', 'mainBkg': '#ffffff', 'taskTextColor': '#000000', 'taskTextOutsideColor': '#000000', 'canvasBkg': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
 flowchart TB
+    %% Force white background
+    graph[bgcolor="#ffffff"]
     %% Setting white backgrounds for all sections
     subgraph FrontendGroup["FRONTEND"]
         NextApp["NEXT.JS APP"]
@@ -307,3 +311,5 @@ flowchart TB
     class Contract,AVS blockchain
     class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup section
 ```
+
+</div>
