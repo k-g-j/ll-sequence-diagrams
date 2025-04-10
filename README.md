@@ -13,7 +13,7 @@ The diagrams can be viewed in several ways:
 2. **Markdown Files**:
    - [Atlas App Sequence Diagrams](atlas-app-sequence-diagram.md)
    - [Evaluation AVS Sequence Diagrams](evaluation-avs-sequence-diagram.md)
-3. **Raw Files**: Find individual diagram files in the `custom-diagrams/v4` directory.
+3. **Raw Files**: Find individual diagram files in the `custom-diagrams/diagrams` directory.
 
 ## View Online
 

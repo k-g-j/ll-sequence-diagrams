@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LayerLens Diagrams Viewer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            background-color: rgba(0, 56, 255, 0.02);
+            background-color: rgba(0, 56, 255, 0.05);
         }
         h1 {
             color: #333;
             border-bottom: 1px solid #ddd;
             padding-bottom: 10px;
-            margin-bottom: 20px;
         }
         h2 {
             margin-top: 20px;
@@ -24,227 +24,97 @@
             color: #444;
         }
         .diagram-container {
-            margin: 15px 0 30px 0;
+            margin: 15px 0;
             padding: 15px;
             border-radius: 5px;
             text-align: center;
-            background-color: white;
-            box-shadow: none;
-            border: none;
+            background-color: transparent;
         }
         .diagram-container img {
             max-width: 100%;
             height: auto;
             border: none;
-            margin: 10px auto;
-            display: block;
-            cursor: zoom-in;
-            transition: transform 0.2s;
-            box-shadow: none;
-        }
-        
-        @media (hover: hover) {
-            .diagram-container img:hover {
-                transform: translateY(-2px);
-            }
-        }
-        
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            overflow: auto;
-            cursor: move;
-        }
-        
-        .overlay img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            cursor: grab;
-            transition: transform 0.3s ease-out;
-        }
-        
-        .overlay img:active {
-            cursor: grabbing;
-        }
-        
-        .zoom-controls {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            padding: 5px 10px;
-            display: flex;
-            gap: 15px;
-            z-index: 1001;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-            -webkit-backdrop-filter: blur(5px);
-            backdrop-filter: blur(5px);
-        }
-        
-        .zoom-btn {
-            background-color: #333;
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
             cursor: pointer;
-            transition: all 0.2s;
-            -webkit-tap-highlight-color: transparent;
-            padding: 0;
-            position: relative;
-            overflow: hidden;
-            opacity: 0.9;
-        }
-        
-        .control-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            font-weight: bold;
-            line-height: 1;
-            position: relative;
-        }
-        
-        #zoomReset .control-icon {
-            font-size: 16px;
-        }
-        
-        #zoomClose .control-icon {
-            font-size: 16px;
-        }
-        
-        #zoomIn {
-            background-color: rgba(76, 175, 80, 0.9); /* Green */
-        }
-        
-        #zoomOut {
-            background-color: rgba(244, 67, 54, 0.9); /* Red */
-        }
-        
-        #zoomReset {
-            background-color: rgba(33, 150, 243, 0.9); /* Blue */
-        }
-        
-        #zoomClose {
-            background-color: rgba(117, 117, 117, 0.9); /* Gray */
-        }
-        
-        .control-icon {
-            color: white;
-        }
-        
-        .zoom-btn:hover {
-            opacity: 1;
-            transform: translateY(-2px);
-        }
-        
-        .zoom-btn:active {
-            transform: translateY(1px);
-        }
-        .zoom-level {
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-            min-width: 60px;
-            justify-content: center;
         }
         .tabs {
             display: flex;
-            margin-bottom: 0;
+            margin-bottom: 20px;
         }
         .tab {
             padding: 10px 20px;
             cursor: pointer;
-            background-color: #f8f8f8;
+            background-color: rgba(240, 240, 240, 0.5);
             border: none;
             margin-right: 5px;
             border-radius: 5px 5px 0 0;
+            transition: background-color 0.2s;
         }
         .tab.active {
-            background-color: #fff;
-            border-bottom: none;
+            background-color: rgba(0, 56, 255, 0.1);
             position: relative;
-            top: 1px;
             font-weight: bold;
+        }
+        .tab:hover:not(.active) {
+            background-color: rgba(0, 56, 255, 0.05);
         }
         .tab-content {
             display: none;
             border: none;
             padding: 15px 20px;
             border-radius: 0 5px 5px 5px;
-            background-color: white;
+            background-color: transparent;
         }
         .tab-content.active {
             display: block;
         }
-        .actions {
+        .buttons {
             display: flex;
-            justify-content: space-between;
-            margin: 0 0 15px 0;
-            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
         }
         .button {
             padding: 10px 20px;
             color: white;
-            text-decoration: none;
             border: none;
             border-radius: 5px;
-            font-weight: bold;
-            display: inline-flex;
+            cursor: pointer;
+            display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
             gap: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.1s;
         }
-        
         .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        
         .button:active {
-            transform: translateY(1px);
+            transform: translateY(0);
         }
-        
-        .icon {
-            font-style: normal;
-        }
-        
         .primary {
             background-color: #4CAF50;
         }
-        
+        .primary:hover {
+            background-color: #3d9140;
+        }
         .secondary {
             background-color: #2196F3;
         }
-        
+        .secondary:hover {
+            background-color: #0d8aee;
+        }
+        .warning {
+            background-color: #ff9800;
+        }
+        .warning:hover {
+            background-color: #e68900;
+        }
         .github {
             background-color: #24292e;
         }
-        
-        .buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 0;
+        .github:hover {
+            background-color: #0366d6;
         }
         .download-links {
             margin-top: 10px;
@@ -256,530 +126,377 @@
             padding: 5px 10px;
             text-decoration: none;
             color: #333;
-            background-color: #f8f8f8;
-            border: none;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
             border-radius: 3px;
             font-size: 0.9em;
         }
         .download-link:hover {
-            background-color: #f0f0f0;
+            background-color: #e0e0e0;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .overlay.visible {
+            opacity: 1;
+        }
+        .overlay-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 98%;
+            max-height: 98%;
+            background-color: transparent;
+            overflow: hidden;
+            padding-bottom: 60px;
+            position: relative;
+        }
+        .overlay img {
+            max-width: 100%;
+            max-height: calc(98vh - 80px);
+            object-fit: contain;
+            transform-origin: center;
+            margin-bottom: 15px;
+        }
+        .zoom-controls {
+            display: flex;
+            gap: 8px;
+            padding: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            position: absolute;
+            bottom: 15px;
+        }
+        .zoom-btn {
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: white;
+            transition: background-color 0.2s;
+        }
+        #zoomIn {
+            background-color: rgba(76, 175, 80, 0.9);
+        }
+        #zoomOut {
+            background-color: rgba(244, 67, 54, 0.9);
+        }
+        #zoomReset {
+            background-color: rgba(33, 150, 243, 0.9);
+        }
+        #zoomClose {
+            background-color: rgba(117, 117, 117, 0.9);
+        }
+        .control-icon {
+            pointer-events: none;
+            user-select: none;
+        }
+        .zoom-level {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            padding: 0 8px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            min-width: 50px;
+            height: 36px;
         }
     </style>
 </head>
 <body>
     <h1>LayerLens Sequence Diagrams</h1>
     
-    <div class="actions">
-        <div class="buttons">
-            <button class="button primary" onclick="generatePDF()"><i class="icon" style="opacity:0.9;">📄</i> Save as PDF</button>
-            <a href="https://github.com/k-g-j/ll-sequence-diagrams" class="button github"><i class="icon" style="opacity:0.9;">🔗</i> View on GitHub</a>
-        </div>
+    <div class="buttons">
+        <button class="button primary" onclick="window.print()"><i class="fa fa-file-pdf-o"></i> Save as PDF</button>
+        <button class="button secondary" onclick="downloadAllDiagrams()"><i class="fa fa-download"></i> Download UML</button>
+        <button class="button github" onclick="window.location.href='https://github.com/k-g-j/ll-sequence-diagrams'"><i class="fa fa-github"></i> View on GitHub</button>
+    </div>
+
+    <div class="tabs" style="margin-bottom: 0;">
+        <div class="tab active" onclick="switchTab('evaluation-avs')">Evaluation AVS</div>
+        <div class="tab" onclick="switchTab('atlas-app')">Atlas App</div>
     </div>
     
-    <div class="tabs">
-        <div class="tab active" onclick="openTab(event, 'atlas')">Atlas App</div>
-        <div class="tab" onclick="openTab(event, 'avs')">Evaluation AVS</div>
-    </div>
-    
-    <div id="atlas" class="tab-content active">
-        <h2>1. User Authentication Flow</h2>
-        <div class="diagram-container">
-            <img src="./custom-diagrams/diagrams/atlas-auth-flow.png" alt="User Authentication Flow">
-            <div class="download-links">
-                <a href="./custom-diagrams/diagrams/atlas-auth-flow.png" download class="download-link">Download PNG</a>
-                <a href="./custom-diagrams/diagrams/atlas-auth-flow.svg" download class="download-link">Download SVG</a>
-                <a href="./plantuml-diagrams/atlas-auth-flow.puml" download class="download-link">Source PUML</a>
-            </div>
-        </div>
-        
-        <h2>2. Evaluation Creation and Processing Flow</h2>
-        <div class="diagram-container">
-            <img src="./custom-diagrams/diagrams/atlas-evaluation-flow.png" alt="Evaluation Flow">
-            <div class="download-links">
-                <a href="./custom-diagrams/diagrams/atlas-evaluation-flow.png" download class="download-link">Download PNG</a>
-                <a href="./custom-diagrams/diagrams/atlas-evaluation-flow.svg" download class="download-link">Download SVG</a>
-                <a href="./plantuml-diagrams/atlas-evaluation-flow.puml" download class="download-link">Source PUML</a>
-            </div>
-        </div>
-        
-        <h2>3. Dataset Management Flow</h2>
-        <div class="diagram-container">
-            <img src="./custom-diagrams/diagrams/atlas-dataset-flow.png" alt="Dataset Management Flow">
-            <div class="download-links">
-                <a href="./custom-diagrams/diagrams/atlas-dataset-flow.png" download class="download-link">Download PNG</a>
-                <a href="./custom-diagrams/diagrams/atlas-dataset-flow.svg" download class="download-link">Download SVG</a>
-                <a href="./plantuml-diagrams/atlas-dataset-flow.puml" download class="download-link">Source PUML</a>
-            </div>
-        </div>
-        
-        <h2>4. Results Viewing and Comparison Flow</h2>
-        <div class="diagram-container">
-            <img src="./custom-diagrams/diagrams/atlas-results-flow.png" alt="Results Viewing Flow">
-            <div class="download-links">
-                <a href="./custom-diagrams/diagrams/atlas-results-flow.png" download class="download-link">Download PNG</a>
-                <a href="./custom-diagrams/diagrams/atlas-results-flow.svg" download class="download-link">Download SVG</a>
-                <a href="./plantuml-diagrams/atlas-results-flow.puml" download class="download-link">Source PUML</a>
-            </div>
-        </div>
-        
-        <h2>5. Complete System Architecture</h2>
-        <div class="diagram-container">
-            <img src="./custom-diagrams/diagrams/atlas-architecture-resized.png" alt="Atlas Architecture">
-            <div class="download-links">
-                <a href="./custom-diagrams/diagrams/atlas-architecture.png" download class="download-link">Download PNG</a>
-                <a href="./custom-diagrams/diagrams/atlas-architecture.svg" download class="download-link">Download SVG</a>
-                <a href="./plantuml-diagrams/atlas-architecture.puml" download class="download-link">Source PUML</a>
-            </div>
-        </div>
-    </div>
-    
-    <div id="avs" class="tab-content">
+    <div id="evaluation-avs" class="tab-content active">
         <h2>1. Task Creation and Assignment Flow</h2>
         <div class="diagram-container">
-            <img src="./custom-diagrams/diagrams/avs-task-flow.png" alt="Task Creation Flow">
+            <img src="custom-diagrams/diagrams/avs-task-flow.png" alt="Task Creation and Assignment Flow" onclick="openImageOverlay(this.src)">
             <div class="download-links">
-                <a href="./custom-diagrams/diagrams/avs-task-flow.png" download class="download-link">Download PNG</a>
-                <a href="./custom-diagrams/diagrams/avs-task-flow.svg" download class="download-link">Download SVG</a>
-                <a href="./plantuml-diagrams/avs-task-flow.puml" download class="download-link">Source PUML</a>
+                <a href="custom-diagrams/diagrams/avs-task-flow.png" download class="download-link">Download PNG</a>
+                <a href="custom-diagrams/diagrams/avs-task-flow.svg" download class="download-link">Download SVG</a>
             </div>
         </div>
         
         <h2>2. Operator Registration Flow</h2>
         <div class="diagram-container">
-            <img src="./custom-diagrams/diagrams/avs-registration-flow.png" alt="Operator Registration Flow">
+            <img src="custom-diagrams/diagrams/avs-registration-flow.png" alt="Operator Registration Flow" onclick="openImageOverlay(this.src)">
             <div class="download-links">
-                <a href="./custom-diagrams/diagrams/avs-registration-flow.png" download class="download-link">Download PNG</a>
-                <a href="./custom-diagrams/diagrams/avs-registration-flow.svg" download class="download-link">Download SVG</a>
-                <a href="./plantuml-diagrams/avs-registration-flow.puml" download class="download-link">Source PUML</a>
+                <a href="custom-diagrams/diagrams/avs-registration-flow.png" download class="download-link">Download PNG</a>
+                <a href="custom-diagrams/diagrams/avs-registration-flow.svg" download class="download-link">Download SVG</a>
             </div>
         </div>
         
         <h2>3. Task Reassignment Flow</h2>
         <div class="diagram-container">
-            <img src="./custom-diagrams/diagrams/avs-reassignment-flow.png" alt="Task Reassignment Flow">
+            <img src="custom-diagrams/diagrams/avs-reassignment-flow.png" alt="Task Reassignment Flow" onclick="openImageOverlay(this.src)">
             <div class="download-links">
-                <a href="./custom-diagrams/diagrams/avs-reassignment-flow.png" download class="download-link">Download PNG</a>
-                <a href="./custom-diagrams/diagrams/avs-reassignment-flow.svg" download class="download-link">Download SVG</a>
-                <a href="./plantuml-diagrams/avs-reassignment-flow.puml" download class="download-link">Source PUML</a>
+                <a href="custom-diagrams/diagrams/avs-reassignment-flow.png" download class="download-link">Download PNG</a>
+                <a href="custom-diagrams/diagrams/avs-reassignment-flow.svg" download class="download-link">Download SVG</a>
             </div>
         </div>
         
         <h2>4. Complete System Architecture</h2>
         <div class="diagram-container">
-            <img src="./custom-diagrams/diagrams/avs-architecture-resized.png" alt="AVS Architecture">
+            <img src="custom-diagrams/diagrams/avs-architecture-resized.png" alt="Evaluation AVS Architecture" onclick="openImageOverlay(this.src)">
             <div class="download-links">
-                <a href="./custom-diagrams/diagrams/avs-architecture.png" download class="download-link">Download PNG</a>
-                <a href="./custom-diagrams/diagrams/avs-architecture.svg" download class="download-link">Download SVG</a>
-                <a href="./plantuml-diagrams/avs-architecture.puml" download class="download-link">Source PUML</a>
+                <a href="custom-diagrams/diagrams/avs-architecture.png" download class="download-link">Download PNG</a>
+                <a href="custom-diagrams/diagrams/avs-architecture.svg" download class="download-link">Download SVG</a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="atlas-app" class="tab-content">
+        <h2>1. User Authentication Flow</h2>
+        <div class="diagram-container">
+            <img src="custom-diagrams/diagrams/atlas-auth-flow.png" alt="User Authentication Flow" onclick="openImageOverlay(this.src)">
+            <div class="download-links">
+                <a href="custom-diagrams/diagrams/atlas-auth-flow.png" download class="download-link">Download PNG</a>
+                <a href="custom-diagrams/diagrams/atlas-auth-flow.svg" download class="download-link">Download SVG</a>
+            </div>
+        </div>
+        
+        <h2>2. Evaluation Creation and Processing Flow</h2>
+        <div class="diagram-container">
+            <img src="custom-diagrams/diagrams/atlas-evaluation-flow.png" alt="Evaluation Creation and Processing Flow" onclick="openImageOverlay(this.src)">
+            <div class="download-links">
+                <a href="custom-diagrams/diagrams/atlas-evaluation-flow.png" download class="download-link">Download PNG</a>
+                <a href="custom-diagrams/diagrams/atlas-evaluation-flow.svg" download class="download-link">Download SVG</a>
+            </div>
+        </div>
+        
+        <h2>3. Dataset Management Flow</h2>
+        <div class="diagram-container">
+            <img src="custom-diagrams/diagrams/atlas-dataset-flow.png" alt="Dataset Management Flow" onclick="openImageOverlay(this.src)">
+            <div class="download-links">
+                <a href="custom-diagrams/diagrams/atlas-dataset-flow.png" download class="download-link">Download PNG</a>
+                <a href="custom-diagrams/diagrams/atlas-dataset-flow.svg" download class="download-link">Download SVG</a>
+            </div>
+        </div>
+        
+        <h2>4. Results Viewing and Comparison Flow</h2>
+        <div class="diagram-container">
+            <img src="custom-diagrams/diagrams/atlas-results-flow.png" alt="Results Viewing and Comparison Flow" onclick="openImageOverlay(this.src)">
+            <div class="download-links">
+                <a href="custom-diagrams/diagrams/atlas-results-flow.png" download class="download-link">Download PNG</a>
+                <a href="custom-diagrams/diagrams/atlas-results-flow.svg" download class="download-link">Download SVG</a>
+            </div>
+        </div>
+        
+        <h2>5. Complete System Architecture</h2>
+        <div class="diagram-container">
+            <img src="custom-diagrams/diagrams/atlas-architecture-resized.png" alt="Atlas App Architecture" onclick="openImageOverlay(this.src)">
+            <div class="download-links">
+                <a href="custom-diagrams/diagrams/atlas-architecture.png" download class="download-link">Download PNG</a>
+                <a href="custom-diagrams/diagrams/atlas-architecture.svg" download class="download-link">Download SVG</a>
             </div>
         </div>
     </div>
     
     <div id="imageOverlay" class="overlay">
-        <img id="overlayImage" src="">
-        <div class="zoom-controls">
-            <button class="zoom-btn" id="zoomOut" title="Zoom Out"><span class="control-icon">−</span></button>
-            <div class="zoom-level" id="zoomLevel">100%</div>
-            <button class="zoom-btn" id="zoomIn" title="Zoom In"><span class="control-icon">+</span></button>
-            <button class="zoom-btn" id="zoomReset" title="Reset View"><span class="control-icon" style="position:relative;top:-1.5px;">↺</span></button>
-            <button class="zoom-btn" id="zoomClose" title="Close (Esc)"><span class="control-icon">×</span></button>
+        <div class="overlay-content">
+            <img id="overlayImage" src="">
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoomOut" title="Zoom Out"><span class="control-icon">−</span></button>
+                <div class="zoom-level" id="zoomLevel">100%</div>
+                <button class="zoom-btn" id="zoomIn" title="Zoom In"><span class="control-icon">+</span></button>
+                <button class="zoom-btn" id="zoomReset" title="Reset View"><span class="control-icon" style="position:relative;top:-1.5px;">↺</span></button>
+                <button class="zoom-btn" id="zoomClose" title="Close (Esc)"><span class="control-icon">×</span></button>
+            </div>
         </div>
     </div>
-
+    
     <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
             
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
-            }
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
             
-            tablinks = document.getElementsByClassName("tab");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].classList.remove("active");
-            }
-            
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
         }
         
-        // Image zoom functionality
+        let scale = 1;
+        let panning = false;
+        let pointX = 0;
+        let pointY = 0;
+        let start = { x: 0, y: 0 };
+        
+        function openImageOverlay(src) {
+            const overlay = document.getElementById('imageOverlay');
+            const image = document.getElementById('overlayImage');
+            
+            image.src = src;
+            overlay.style.display = 'flex';
+            
+            // Trigger fade-in animation
+            setTimeout(() => {
+                overlay.classList.add('visible');
+            }, 10);
+            
+            resetView();
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeImageOverlay() {
+            const overlay = document.getElementById('imageOverlay');
+            
+            // Trigger fade-out animation
+            overlay.classList.remove('visible');
+            
+            // Wait for animation to complete before hiding
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+        
+        function resetView() {
+            scale = 1;
+            pointX = 0;
+            pointY = 0;
+            const image = document.getElementById('overlayImage');
+            image.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+            document.getElementById('zoomLevel').textContent = '100%';
+        }
+        
+        function updateZoomLevel() {
+            document.getElementById('zoomLevel').textContent = `${Math.round(scale * 100)}%`;
+        }
+        
+        function downloadAllDiagrams() {
+            // Define all diagram SVGs to ensure we get the correct ones
+            const diagramFiles = [
+                "custom-diagrams/diagrams/avs-task-flow.svg",
+                "custom-diagrams/diagrams/avs-registration-flow.svg",
+                "custom-diagrams/diagrams/avs-reassignment-flow.svg",
+                "custom-diagrams/diagrams/avs-architecture.svg",
+                "custom-diagrams/diagrams/atlas-auth-flow.svg",
+                "custom-diagrams/diagrams/atlas-evaluation-flow.svg",
+                "custom-diagrams/diagrams/atlas-dataset-flow.svg",
+                "custom-diagrams/diagrams/atlas-results-flow.svg",
+                "custom-diagrams/diagrams/atlas-architecture.svg"
+            ];
+            
+            const delay = 500; // delay between downloads in ms
+            
+            diagramFiles.forEach((file, index) => {
+                setTimeout(() => {
+                    const a = document.createElement('a');
+                    a.href = file;
+                    a.download = file.split('/').pop();
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }, index * delay);
+            });
+            
+            alert("Downloading all UML diagrams as SVG files. Check your downloads folder.");
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.getElementById('imageOverlay');
-            const overlayImage = document.getElementById('overlayImage');
+            const image = document.getElementById('overlayImage');
             
-            // Add help message for first-time users
-            if (!localStorage.getItem('zoomHelpShown')) {
-                const helpMessage = document.createElement('div');
-                helpMessage.style.position = 'fixed';
-                helpMessage.style.top = '20px';
-                helpMessage.style.left = '50%';
-                helpMessage.style.transform = 'translateX(-50%)';
-                helpMessage.style.backgroundColor = 'rgba(0,0,0,0.7)';
-                helpMessage.style.color = 'white';
-                helpMessage.style.padding = '10px 20px';
-                helpMessage.style.borderRadius = '20px';
-                helpMessage.style.zIndex = '1002';
-                helpMessage.style.textAlign = 'center';
-                helpMessage.style.boxShadow = '0 2px 10px rgba(0,0,0,0.3)';
-                helpMessage.style.maxWidth = '80%';
-                helpMessage.innerHTML = '<strong>Tip:</strong> Click + to zoom in, then use hand tool to move around. <span style="text-decoration:underline;cursor:pointer;" id="closeHelp">Dismiss</span>';
-                overlay.appendChild(helpMessage);
-                
-                document.getElementById('closeHelp').addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    helpMessage.remove();
-                    localStorage.setItem('zoomHelpShown', 'true');
-                });
-                
-                // Auto-dismiss after 6 seconds
-                setTimeout(() => {
-                    if (overlay.contains(helpMessage)) {
-                        helpMessage.remove();
-                        localStorage.setItem('zoomHelpShown', 'true');
-                    }
-                }, 6000);
-            }
-            
-            // Add click event to all diagram images
-            const images = document.querySelectorAll('.diagram-container img');
-            images.forEach(img => {
-                img.addEventListener('click', function() {
-                    overlayImage.src = this.src;
-                    overlay.style.display = 'flex';
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
-                    
-                    // Reset zoom and position when opening a new image
-                    scale = 1;
-                    translateX = 0;
-                    translateY = 0;
-                    updateZoom();
-                });
+            document.getElementById('zoomIn').addEventListener('click', function() {
+                scale += 0.1;
+                if (scale > 3) scale = 3;
+                image.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+                updateZoomLevel();
             });
             
-            // Close overlay when clicking on it, but only when not zoomed in
+            document.getElementById('zoomOut').addEventListener('click', function() {
+                scale -= 0.1;
+                if (scale < 0.5) scale = 0.5;
+                image.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+                updateZoomLevel();
+            });
+            
+            document.getElementById('zoomReset').addEventListener('click', resetView);
+            document.getElementById('zoomClose').addEventListener('click', closeImageOverlay);
+            
             overlay.addEventListener('click', function(e) {
-                if ((e.target === overlay || e.target === overlayImage) && scale <= 1) {
-                    overlay.style.display = 'none';
-                    document.body.style.overflow = ''; // Restore scrolling
+                if (e.target === overlay) {
+                    closeImageOverlay();
                 }
             });
             
-            // Close on escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && overlay.style.display === 'flex') {
-                    overlay.style.display = 'none';
-                    document.body.style.overflow = '';
-                }
-            });
-            
-            // Dragging and zooming functionality
-            let isDragging = false;
-            let startX, startY, translateX = 0, translateY = 0;
-            let scale = 1;
-            let zoomLevel = document.getElementById('zoomLevel');
-            let zoomIn = document.getElementById('zoomIn');
-            let zoomOut = document.getElementById('zoomOut');
-            let zoomReset = document.getElementById('zoomReset');
-            
-            // Zoom controls
-            zoomIn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                scale += 0.25;
-                updateZoom();
-            });
-            
-            zoomOut.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (scale > 0.5) scale -= 0.25;
-                updateZoom();
-            });
-            
-            zoomReset.addEventListener('click', function(e) {
-                e.stopPropagation();
-                scale = 1;
-                translateX = 0;
-                translateY = 0;
-                updateZoom();
-            });
-            
-            document.getElementById('zoomClose').addEventListener('click', function(e) {
-                e.stopPropagation();
-                overlay.style.display = 'none';
-                document.body.style.overflow = '';
-            });
-            
-            function updateZoom() {
-                overlayImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-                zoomLevel.textContent = `${Math.round(scale * 100)}%`;
-                
-                // Update cursor based on zoom level
+            image.addEventListener('mousedown', function(e) {
+                e.preventDefault();
                 if (scale > 1) {
-                    overlayImage.style.cursor = isDragging ? 'grabbing' : 'grab';
-                } else {
-                    overlayImage.style.cursor = 'zoom-out';
-                }
-            }
-            
-            // Disable mouse wheel zoom to prevent accidental zooming when scrolling
-            overlay.addEventListener('wheel', function(e) {
-                e.preventDefault(); // Prevent scrolling behind the overlay
-                // Zoom functionality is now only available via buttons
-            });
-            
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (overlay.style.display === 'flex') {
-                    if (e.key === '+' || e.key === '=') {
-                        // Zoom in
-                        scale += 0.25;
-                        updateZoom();
-                    } else if (e.key === '-' || e.key === '_') {
-                        // Zoom out
-                        if (scale > 0.5) scale -= 0.25;
-                        updateZoom();
-                    } else if (e.key === '0') {
-                        // Reset zoom
-                        scale = 1;
-                        translateX = 0;
-                        translateY = 0;
-                        updateZoom();
-                    }
-                    // Arrow keys for panning
-                    else if (e.key === 'ArrowLeft') {
-                        translateX += 50;
-                        updateZoom();
-                    } else if (e.key === 'ArrowRight') {
-                        translateX -= 50;
-                        updateZoom();
-                    } else if (e.key === 'ArrowUp') {
-                        translateY += 50;
-                        updateZoom();
-                    } else if (e.key === 'ArrowDown') {
-                        translateY -= 50;
-                        updateZoom();
-                    }
+                    panning = true;
+                    start = { x: e.clientX - pointX, y: e.clientY - pointY };
+                    image.style.cursor = 'grabbing';
                 }
             });
             
-            // Mouse dragging - fixed to not move the whole image but only view different parts
-            overlay.addEventListener('mousedown', function(e) {
-                if (e.target === overlayImage && scale > 1) { // Only enable dragging when zoomed in
-                    isDragging = true;
-                    // Store the initial mouse position
-                    startX = e.clientX;
-                    startY = e.clientY;
-                    // Save the current translation values
-                    initialTranslateX = translateX;
-                    initialTranslateY = translateY;
-                    // Change cursor to grabbing
-                    overlayImage.style.cursor = 'grabbing';
-                    
-                    // Capture mouse to ensure drag continues properly
-                    document.body.style.userSelect = 'none';
-                    e.preventDefault(); // Prevent default dragging behavior
-                }
-            });
-            
-            overlay.addEventListener('mousemove', function(e) {
-                if (isDragging && scale > 1) {
-                    // Calculate the distance moved from the start position
-                    const deltaX = e.clientX - startX;
-                    const deltaY = e.clientY - startY;
-                    
-                    // Update translation based on the initial position plus the delta
-                    translateX = initialTranslateX + deltaX;
-                    translateY = initialTranslateY + deltaY;
-                    
-                    // Limit panning to keep image in view
-                    const maxTranslateX = (scale - 1) * overlayImage.width / 2;
-                    const maxTranslateY = (scale - 1) * overlayImage.height / 2;
-                    
-                    if (Math.abs(translateX) > maxTranslateX) {
-                        translateX = translateX > 0 ? maxTranslateX : -maxTranslateX;
-                    }
-                    
-                    if (Math.abs(translateY) > maxTranslateY) {
-                        translateY = translateY > 0 ? maxTranslateY : -maxTranslateY;
-                    }
-                    
-                    // Apply the transform
-                    updateZoom();
-                }
-            });
-            
-            function endDrag() {
-                if (isDragging) {
-                    isDragging = false;
-                    // Reset cursor
-                    overlayImage.style.cursor = scale > 1 ? 'grab' : 'zoom-out';
-                    document.body.style.userSelect = '';
-                }
-            }
-            
-            // Handle mouse up anywhere in the document
-            document.addEventListener('mouseup', endDrag);
-            
-            // Handle mouse leave
-            overlay.addEventListener('mouseleave', endDrag);
-            
-            // Initialize variables for drag position tracking
-            let initialTranslateX = 0;
-            let initialTranslateY = 0;
-            
-            // Touch support for mobile devices with improved drag handling
-            let lastTouchDistance = 0;
-            
-            overlay.addEventListener('touchstart', function(e) {
-                if (e.touches.length === 1 && scale > 1) {  // Only allow dragging when zoomed in
-                    // Single touch - for panning
-                    isDragging = true;
-                    // Store initial touch position
-                    startX = e.touches[0].clientX;
-                    startY = e.touches[0].clientY;
-                    // Save current translation values
-                    initialTranslateX = translateX;
-                    initialTranslateY = translateY;
-                } else if (e.touches.length === 2) {
-                    // Disable pinch zooming, only use buttons for zooming
-                    isDragging = false;
-                }
-                e.preventDefault(); // Prevent default touch behavior
-            }, { passive: false });
-            
-            overlay.addEventListener('touchmove', function(e) {
-                e.preventDefault(); // Prevent scrolling
+            document.addEventListener('mousemove', function(e) {
+                if (!panning || scale <= 1) return;
                 
-                if (e.touches.length === 1 && isDragging && scale > 1) {
-                    // Pan with one finger using delta from start position
-                    const deltaX = e.touches[0].clientX - startX;
-                    const deltaY = e.touches[0].clientY - startY;
-                    
-                    translateX = initialTranslateX + deltaX;
-                    translateY = initialTranslateY + deltaY;
-                    
-                    // Limit panning to keep image in view
-                    const maxTranslateX = (scale - 1) * overlayImage.width / 2;
-                    const maxTranslateY = (scale - 1) * overlayImage.height / 2;
-                    
-                    if (Math.abs(translateX) > maxTranslateX) {
-                        translateX = translateX > 0 ? maxTranslateX : -maxTranslateX;
-                    }
-                    
-                    if (Math.abs(translateY) > maxTranslateY) {
-                        translateY = translateY > 0 ? maxTranslateY : -maxTranslateY;
-                    }
-                    
-                    updateZoom();
-                }
-                // Pinch zoom disabled to match mouse wheel behavior
-            }, { passive: false });
-            
-            overlay.addEventListener('touchend', function() {
-                isDragging = false;
-                overlayImage.style.cursor = scale > 1 ? 'grab' : 'zoom-out';
+                pointX = e.clientX - start.x;
+                pointY = e.clientY - start.y;
+                
+                const maxX = (image.offsetWidth * scale - image.offsetWidth) / 2;
+                const maxY = (image.offsetHeight * scale - image.offsetHeight) / 2;
+                
+                pointX = Math.min(Math.max(pointX, -maxX), maxX);
+                pointY = Math.min(Math.max(pointY, -maxY), maxY);
+                
+                image.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
             });
             
-            // Prevent zoom controls from triggering overlay close
-            document.querySelector('.zoom-controls').addEventListener('click', function(e) {
-                e.stopPropagation();
+            document.addEventListener('mouseup', function() {
+                panning = false;
+                if (scale > 1) {
+                    image.style.cursor = 'grab';
+                } else {
+                    image.style.cursor = 'default';
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeImageOverlay();
+                }
+            });
+            
+            // Prevent default wheel behavior to avoid accidental zooming
+            image.addEventListener('wheel', function(e) {
+                e.preventDefault();
             });
         });
-        
-        // PDF generation functionality
-        function generatePDF() {
-            // Create a new window for the PDF
-            const printWindow = window.open('', '_blank');
-            
-            // Get the current active tab
-            const activeTab = document.querySelector('.tab-content.active');
-            const tabTitle = document.querySelector('.tab.active').textContent;
-            
-            // Create PDF content
-            let content = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>LayerLens - ${tabTitle} Diagrams</title>
-                <style>
-                    @media print {
-                        @page { margin: 1cm; }
-                    }
-                    body {
-                        font-family: Arial, sans-serif;
-                        line-height: 1.6;
-                        color: #333;
-                        max-width: 210mm; /* A4 width */
-                        margin: 0 auto;
-                        padding: 20px;
-                    }
-                    h1 {
-                        text-align: center;
-                        margin-bottom: 20px;
-                        color: #333;
-                        border-bottom: 1px solid #ddd;
-                        padding-bottom: 10px;
-                    }
-                    h2 {
-                        margin-top: 30px;
-                        color: #444;
-                        break-after: avoid;
-                    }
-                    .diagram-container {
-                        margin: 20px 0 40px 0;
-                        page-break-inside: avoid;
-                    }
-                    img {
-                        max-width: 100%;
-                        height: auto;
-                        margin: 10px auto;
-                        display: block;
-                        border: 1px solid #eee;
-                    }
-                    p.footer {
-                        text-align: center;
-                        font-size: 0.9em;
-                        color: #666;
-                        margin-top: 40px;
-                        border-top: 1px solid #ddd;
-                        padding-top: 10px;
-                    }
-                </style>
-            </head>
-            <body>
-                <h1>LayerLens - ${tabTitle} Diagrams</h1>`;
-            
-            // Clone the diagrams
-            const diagrams = activeTab.querySelectorAll('.diagram-container');
-            const headings = activeTab.querySelectorAll('h2');
-            
-            for (let i = 0; i < diagrams.length; i++) {
-                content += `
-                <h2>${headings[i].textContent}</h2>
-                <div class="diagram-container">
-                    <img src="${diagrams[i].querySelector('img').src}" alt="${headings[i].textContent}">
-                </div>`;
-            }
-            
-            content += `
-                <p class="footer">
-                    Generated from LayerLens Sequence Diagrams - 
-                    <a href="https://github.com/k-g-j/ll-sequence-diagrams">github.com/k-g-j/ll-sequence-diagrams</a>
-                </p>
-            </body>
-            </html>`;
-            
-            // Write the content to the new window
-            printWindow.document.open();
-            printWindow.document.write(content);
-            printWindow.document.close();
-            
-            // Wait for images to load before printing
-            printWindow.addEventListener('load', function() {
-                printWindow.print();
-            }, true);
-        }
     </script>
 </body>
 </html>
