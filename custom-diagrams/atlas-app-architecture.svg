@@ -88,7 +88,7 @@
   
   <!-- Backend to Blockchain -->
   <line x1="520" y1="435" x2="300" y2="565" stroke="#000000" stroke-width="1.5"/>
-  <polygon points="300,565 295,555 305,555" fill="#000000"/>
+  <polygon points="300,565 292,558 297,550" fill="#000000"/>
   
   <!-- Backend to Storage -->
   <line x1="520" y1="435" x2="500" y2="563" stroke="#000000" stroke-width="1.5"/>
