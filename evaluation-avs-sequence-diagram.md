@@ -140,13 +140,25 @@ sequenceDiagram
 
 ## 4. Complete System Architecture
 
-<div style="background-color:white; padding:20px;">
+<style>
+  .mermaid-wrapper svg {
+    background-color: white !important;
+  }
+</style>
+
+<div class="mermaid-wrapper" style="background-color:white !important; padding:20px; margin:0; border-radius:8px;">
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'tertiaryColor': '#c4ffad', 'background': '#ffffff', 'mainBkg': '#ffffff', 'taskTextColor': '#000000', 'taskTextOutsideColor': '#000000', 'canvasBkg': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#ffadce',
+      'background': '#ffffff'
+    }
+  }
+}%%
 flowchart TB
-    %% Force white background
-    graph[bgcolor="#ffffff"]
     %% Setting white backgrounds for all sections
     subgraph Blockchain["BLOCKCHAIN"]
         TaskManager["TASK MANAGER CONTRACT"]

@@ -223,13 +223,25 @@ sequenceDiagram
 
 ## 5. Complete System Architecture
 
-<div style="background-color:white; padding:20px;">
+<style>
+  .mermaid-wrapper svg {
+    background-color: white !important;
+  }
+</style>
+
+<div class="mermaid-wrapper" style="background-color:white !important; padding:20px; margin:0; border-radius:8px;">
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'tertiaryColor': '#ffbbad', 'background': '#ffffff', 'mainBkg': '#ffffff', 'taskTextColor': '#000000', 'taskTextOutsideColor': '#000000', 'canvasBkg': '#ffffff'}, 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900}}%%
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#adc8ff',
+      'background': '#ffffff'
+    }
+  }
+}%%
 flowchart TB
-    %% Force white background
-    graph[bgcolor="#ffffff"]
     %% Setting white backgrounds for all sections
     subgraph FrontendGroup["FRONTEND"]
         NextApp["NEXT.JS APP"]
