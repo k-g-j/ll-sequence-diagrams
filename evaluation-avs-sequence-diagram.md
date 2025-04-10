@@ -14,4 +14,4 @@
 
 ## 4. Complete System Architecture
 
-![Evaluation AVS Architecture](./custom-diagrams/v3/avs-architecture.png)
+![Evaluation AVS Architecture](./custom-diagrams/v3/avs-architecture-resized.png)

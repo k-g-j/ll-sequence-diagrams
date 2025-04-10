@@ -1,22 +1,23 @@
 @startuml avs-architecture
-' Fix handwritten mode
-!pragma layout smetana
+' Fix handwritten mode and border issues
 !theme plain
-!pragma svek_trace on
+!pragma layout smetana
 
-' Use more readable layout with larger size and horizontally wide diagram
+' Use more compact layout for GitHub UI
 skinparam componentStyle rectangle
 skinparam backgroundColor white
 skinparam defaultTextAlignment center
-skinparam wrapWidth 400
-skinparam nodesep 180
-skinparam ranksep 180
+skinparam wrapWidth 100
+skinparam nodesep 30
+skinparam ranksep 40
 skinparam pageBorderColor transparent
+skinparam shadowing false
+skinparam roundCorner 0
+skinparam Padding 5
+skinparam BoxPadding 5
 
-' Make diagram much larger and wider 
-scale max 1000 width
-scale max 1000 height
-scale 1.8
+' Make diagram narrower with specific width constraint
+scale 600 width
 
 ' Fix arrow styling
 skinparam ArrowColor black

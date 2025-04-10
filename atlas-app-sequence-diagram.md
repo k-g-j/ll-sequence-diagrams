@@ -18,4 +18,4 @@
 
 ## 5. Complete System Architecture
 
-![Atlas App Architecture](./custom-diagrams/v3/atlas-architecture.png)
+![Atlas App Architecture](./custom-diagrams/v3/atlas-architecture-resized.png)
