@@ -2,6 +2,9 @@
 skinparam sequenceMessageAlign center
 skinparam backgroundColor white
 skinparam handwritten false
+skinparam ArrowColor black
+skinparam SequenceArrowThickness 1.5
+skinparam SequenceMessageAlignment left
 
 title Evaluation Creation and Processing Flow
 
@@ -45,10 +48,10 @@ Worker -> MongoDB: Update with task ID
 MongoDB --> Worker: Confirm update
 deactivate Worker
 
-Contract --> Operator: Assign evaluation task
+Contract ->> Operator: Assign evaluation task
 activate Operator
 note right of Operator: Operator processes evaluation
-Operator -> Contract: Submit evaluation results
+Operator ->> Contract: Submit evaluation results
 deactivate Operator
 
 Worker -> Contract: Listen for EvalCompleted events

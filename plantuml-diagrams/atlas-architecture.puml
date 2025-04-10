@@ -2,6 +2,8 @@
 skinparam componentStyle rectangle
 skinparam backgroundColor white
 skinparam handwritten false
+skinparam ArrowColor black
+skinparam ArrowThickness 1.5
 
 title LayerLens Atlas App Architecture
 
@@ -60,43 +62,43 @@ cloud "External Services" {
 }
 
 ' User interactions
-WebUI --> NextApp
-NextApp --> Auth
-NextApp --> Viz
-NextApp --> ApiGw
+WebUI -right-> NextApp
+NextApp -down-> Auth
+NextApp -down-> Viz
+NextApp -right-> ApiGw
 
 ' API interactions
-Auth --> Cognito
-ApiGw --> GoBackend
-ApiGw --> WebSocket
-ApiGw --> RateLim
+Auth -right-> Cognito
+ApiGw -down-> GoBackend
+ApiGw -down-> WebSocket
+ApiGw -down-> RateLim
 
 ' Core service connections
-GoBackend --> EvalManager
-GoBackend --> ModelRegistry
-GoBackend --> DatasetManager
-GoBackend --> UserManager
-GoBackend --> ResultsProcessor
+GoBackend -down-> EvalManager
+GoBackend -down-> ModelRegistry
+GoBackend -down-> DatasetManager
+GoBackend -down-> UserManager
+GoBackend -down-> ResultsProcessor
 
 ' Data connections
-EvalManager --> MongoEvals
-ModelRegistry --> MongoEvals
-DatasetManager --> MongoDsets
-UserManager --> MongoUsers
-ResultsProcessor --> MetricsDB
-ResultsProcessor --> HistoryDB
+EvalManager -down-> MongoEvals
+ModelRegistry -down-> MongoEvals
+DatasetManager -down-> MongoDsets
+UserManager -down-> MongoUsers
+ResultsProcessor -down-> MetricsDB
+ResultsProcessor -down-> HistoryDB
 
 ' Integration connections
-EvalManager --> Queue
-Queue --> Worker
-Worker --> ContractClient
-Worker --> ResultsProcessor
-ContractClient --> AVS
-MetricsCollector --> LLMs
-MetricsCollector --> MetricsDB
+EvalManager -right-> Queue
+Queue -right-> Worker
+Worker -right-> ContractClient
+Worker -down-> ResultsProcessor
+ContractClient -right-> AVS
+MetricsCollector -right-> LLMs
+MetricsCollector -down-> MetricsDB
 
 ' Storage connections
-DatasetManager --> DatasetsS3
-ResultsProcessor --> ResultsS3
+DatasetManager -right-> DatasetsS3
+ResultsProcessor -right-> ResultsS3
 
 @enduml
