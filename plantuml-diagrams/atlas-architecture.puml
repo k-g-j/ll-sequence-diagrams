@@ -1,39 +1,27 @@
 @startuml atlas-architecture
-!theme plain
-!pragma layout smetana
-skinparam handwritten false
-skinparam linetype ortho
 
-' Use more compact layout for GitHub UI
+' Basic styling
+!theme plain
 skinparam componentStyle rectangle
 skinparam backgroundColor white
 skinparam defaultTextAlignment center
-skinparam wrapWidth 100
-skinparam nodesep 30
-skinparam ranksep 40
-skinparam pageBorderColor transparent
+
+' Explicitly disable handwritten mode
+skinparam handwritten false
 skinparam shadowing false
 skinparam roundCorner 0
-skinparam Padding 5
-skinparam BoxPadding 5
 
-' Make diagram narrower with specific width constraint
-scale 1000 width
-scale 1000 height
+' Set linetype to ortho for straight lines
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 50
 
-' Fix arrow styling
+' Make sure lines and fonts are crisp
 skinparam ArrowColor black
-skinparam ArrowThickness 2.0
-skinparam ArrowFontColor black
-skinparam ArrowFontSize 16
+skinparam ArrowThickness 1.5
 
-' Improve fonts and text
-skinparam ComponentFontSize 18
-skinparam ComponentFontStyle bold
-skinparam PackageFontSize 20
-skinparam PackageFontStyle bold
-skinparam TitleFontSize 24
-skinparam TitleFontStyle bold
+' Add spacing to prevent cutoff
+scale 800 width
 
 title LayerLens Atlas App Architecture
 
@@ -92,43 +80,43 @@ cloud "External Services" {
 }
 
 ' User interactions
-WebUI -> NextApp
-NextApp -> Auth
-NextApp -> Viz
-NextApp -> ApiGw
+WebUI -- NextApp
+NextApp -- Auth
+NextApp -- Viz
+NextApp -- ApiGw
 
 ' API interactions
-Auth -> Cognito
-ApiGw -> GoBackend
-ApiGw -> WebSocket
-ApiGw -> RateLim
+Auth -- Cognito
+ApiGw -- GoBackend
+ApiGw -- WebSocket
+ApiGw -- RateLim
 
 ' Core service connections
-GoBackend -> EvalManager
-GoBackend -> ModelRegistry
-GoBackend -> DatasetManager
-GoBackend -> UserManager
-GoBackend -> ResultsProcessor
+GoBackend -- EvalManager
+GoBackend -- ModelRegistry
+GoBackend -- DatasetManager
+GoBackend -- UserManager
+GoBackend -- ResultsProcessor
 
 ' Data connections
-EvalManager -> MongoEvals
-ModelRegistry -> MongoEvals
-DatasetManager -> MongoDsets
-UserManager -> MongoUsers
-ResultsProcessor -> MetricsDB
-ResultsProcessor -> HistoryDB
+EvalManager -- MongoEvals
+ModelRegistry -- MongoEvals
+DatasetManager -- MongoDsets
+UserManager -- MongoUsers
+ResultsProcessor -- MetricsDB
+ResultsProcessor -- HistoryDB
 
 ' Integration connections
-EvalManager -> Queue
-Queue -> Worker
-Worker -> ContractClient
-Worker -> ResultsProcessor
-ContractClient -> AVS
-MetricsCollector -> LLMs
-MetricsCollector -> MetricsDB
+EvalManager -- Queue
+Queue -- Worker
+Worker -- ContractClient
+Worker -- ResultsProcessor
+ContractClient -- AVS
+MetricsCollector -- LLMs
+MetricsCollector -- MetricsDB
 
 ' Storage connections
-DatasetManager -> DatasetsS3
-ResultsProcessor -> ResultsS3
+DatasetManager -- DatasetsS3
+ResultsProcessor -- ResultsS3
 
 @enduml

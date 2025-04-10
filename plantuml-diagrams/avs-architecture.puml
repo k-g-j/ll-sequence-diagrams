@@ -1,39 +1,27 @@
 @startuml avs-architecture
-!theme plain
-!pragma layout smetana
-skinparam handwritten false
-skinparam linetype ortho
 
-' Use more compact layout for GitHub UI
+' Basic styling
+!theme plain
 skinparam componentStyle rectangle
 skinparam backgroundColor white
 skinparam defaultTextAlignment center
-skinparam wrapWidth 100
-skinparam nodesep 30
-skinparam ranksep 40
-skinparam pageBorderColor transparent
+
+' Explicitly disable handwritten mode
+skinparam handwritten false
 skinparam shadowing false
 skinparam roundCorner 0
-skinparam Padding 5
-skinparam BoxPadding 5
 
-' Make diagram narrower with specific width constraint
-scale 1000 width
-scale 1000 height
+' Set linetype to ortho for straight lines
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 50
 
-' Fix arrow styling
+' Make sure lines and fonts are crisp
 skinparam ArrowColor black
-skinparam ArrowThickness 2.0
-skinparam ArrowFontColor black
-skinparam ArrowFontSize 16
+skinparam ArrowThickness 1.5
 
-' Improve fonts and text
-skinparam ComponentFontSize 18
-skinparam ComponentFontStyle bold
-skinparam PackageFontSize 20
-skinparam PackageFontStyle bold
-skinparam TitleFontSize 24
-skinparam TitleFontStyle bold
+' Add spacing to prevent cutoff
+scale 800 width
 
 title Evaluation AVS Architecture
 
@@ -74,35 +62,35 @@ cloud "External Services" {
 }
 
 ' Contract interactions
-ServiceManager -> BLSRegistry
-TaskManager -> ServiceManager
-StakeRegistry -> ServiceManager
-BLSRegistry -> EigenLayer
-StakeRegistry -> EigenLayer
+ServiceManager -- BLSRegistry
+TaskManager -- ServiceManager
+StakeRegistry -- ServiceManager
+BLSRegistry -- EigenLayer
+StakeRegistry -- EigenLayer
 
 ' Operator components
-OpService -> TaskQueue
-OpService -> BlsSigner
-OpService -> ConfigMgr
-OpService -> GoEval
-OpCLI -> OpService
-OpCLI -> ConfigMgr
-ModelFactory -> LLM
-GoEval -> Processor
-GoEval -> Scorer
-GoEval -> Metrics
-Processor -> LayerLensAPI
+OpService -- TaskQueue
+OpService -- BlsSigner
+OpService -- ConfigMgr
+OpService -- GoEval
+OpCLI -- OpService
+OpCLI -- ConfigMgr
+ModelFactory -- LLM
+GoEval -- Processor
+GoEval -- Scorer
+GoEval -- Metrics
+Processor -- LayerLensAPI
 
 ' Infrastructure
-Docker -> OpService
-Monitor -> OpService
-Monitor -> Health
-Monitor -> Slashing
-Slashing -> EigenLayer
+Docker -- OpService
+Monitor -- OpService
+Monitor -- Health
+Monitor -- Slashing
+Slashing -- EigenLayer
 
 ' External connections
-OpService -> TaskManager
-OpService -> S3
-TaskManager -> LayerLensAPI
+OpService -- TaskManager
+OpService -- S3
+TaskManager -- LayerLensAPI
 
 @enduml
