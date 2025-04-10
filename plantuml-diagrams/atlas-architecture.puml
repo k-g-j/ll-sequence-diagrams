@@ -1,0 +1,102 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam backgroundColor white
+skinparam handwritten false
+
+title LayerLens Atlas App Architecture
+
+package "User Interface Layer" {
+  [Atlas Web UI] as WebUI
+  [Next.js App] as NextApp
+  [Authentication Module] as Auth
+  [Results Visualization] as Viz
+}
+
+package "API Layer" {
+  [API Gateway] as ApiGw
+  [Go Backend API] as GoBackend
+  [WebSocket Service] as WebSocket
+  [Rate Limiter] as RateLim
+}
+
+package "Core Services" {
+  [Evaluation Manager] as EvalManager
+  [Model Registry] as ModelRegistry
+  [Dataset Manager] as DatasetManager
+  [User Manager] as UserManager
+  [Results Processor] as ResultsProcessor
+}
+
+package "Integration Layer" {
+  [Evaluation Worker] as Worker
+  [Smart Contract Client] as ContractClient
+  [Metrics Collector] as MetricsCollector
+}
+
+package "Data Layer" {
+  database "MongoDB" as MongoDB {
+    [Evaluations] as MongoEvals
+    [Users] as MongoUsers
+    [Datasets] as MongoDsets
+  }
+  
+  database "MariaDB" as MariaDB {
+    [Aggregated Metrics] as MetricsDB
+    [Historical Data] as HistoryDB
+  }
+  
+  database "AWS S3" as S3 {
+    [Results Storage] as ResultsS3
+    [Dataset Files] as DatasetsS3
+  }
+  
+  queue "Message Queue" as Queue
+}
+
+cloud "External Services" {
+  [AWS Cognito] as Cognito
+  [LayerLens AVS] as AVS
+  [LLM Providers] as LLMs
+}
+
+' User interactions
+WebUI --> NextApp
+NextApp --> Auth
+NextApp --> Viz
+NextApp --> ApiGw
+
+' API interactions
+Auth --> Cognito
+ApiGw --> GoBackend
+ApiGw --> WebSocket
+ApiGw --> RateLim
+
+' Core service connections
+GoBackend --> EvalManager
+GoBackend --> ModelRegistry
+GoBackend --> DatasetManager
+GoBackend --> UserManager
+GoBackend --> ResultsProcessor
+
+' Data connections
+EvalManager --> MongoEvals
+ModelRegistry --> MongoEvals
+DatasetManager --> MongoDsets
+UserManager --> MongoUsers
+ResultsProcessor --> MetricsDB
+ResultsProcessor --> HistoryDB
+
+' Integration connections
+EvalManager --> Queue
+Queue --> Worker
+Worker --> ContractClient
+Worker --> ResultsProcessor
+ContractClient --> AVS
+MetricsCollector --> LLMs
+MetricsCollector --> MetricsDB
+
+' Storage connections
+DatasetManager --> DatasetsS3
+ResultsProcessor --> ResultsS3
+
+@enduml

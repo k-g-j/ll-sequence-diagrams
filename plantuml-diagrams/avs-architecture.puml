@@ -1,0 +1,76 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam backgroundColor white
+skinparam handwritten false
+
+title Evaluation AVS Architecture
+
+package "Smart Contracts Layer" {
+  [EvalAvsServiceManager] as ServiceManager
+  [EvalAvsTaskManager] as TaskManager
+  [BlsRegistryCoordinator] as BLSRegistry
+  [StakeRegistry] as StakeRegistry
+}
+
+package "Operator Layer" {
+  [Operator Service] as OpService
+  [Operator CLI] as OpCLI
+  [Task Queue] as TaskQueue
+  [BLS Signing Module] as BlsSigner
+  [Config Manager] as ConfigMgr
+  
+  component "Go Evaluator" as GoEval {
+    [Model Client Factory] as ModelFactory
+    [Response Scorer] as Scorer
+    [Result Processor] as Processor
+    [Metrics Collector] as Metrics
+  }
+}
+
+package "Infrastructure Layer" {
+  [Docker Container] as Docker
+  [Monitoring Agent] as Monitor
+  [Health Checker] as Health
+  [Slashing Detector] as Slashing
+}
+
+cloud "External Services" {
+  [EigenLayer Core] as EigenLayer
+  [Dataset Registry (S3)] as S3
+  [LLM API Providers] as LLM
+  [LayerLens API] as LayerLensAPI
+}
+
+' Contract interactions
+ServiceManager --> BLSRegistry
+TaskManager --> ServiceManager
+StakeRegistry --> ServiceManager
+BLSRegistry --> EigenLayer
+StakeRegistry --> EigenLayer
+
+' Operator components
+OpService --> TaskQueue
+OpService --> BlsSigner
+OpService --> ConfigMgr
+OpService --> GoEval
+OpCLI --> OpService
+OpCLI --> ConfigMgr
+ModelFactory --> LLM
+GoEval --> Processor
+GoEval --> Scorer
+GoEval --> Metrics
+Processor --> LayerLensAPI
+
+' Infrastructure
+Docker --> OpService
+Monitor --> OpService
+Monitor --> Health
+Monitor --> Slashing
+Slashing --> EigenLayer
+
+' External connections
+OpService --> TaskManager
+OpService --> S3
+TaskManager --> LayerLensAPI
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+skinparam sequenceMessageAlign center
+skinparam backgroundColor white
+skinparam handwritten false
+
+title Operator Registration Flow
+
+actor Operator
+participant "Operator CLI" as CLI
+participant "Config Files" as Config
+participant "EvalAvsServiceManager" as ServiceManager
+participant "EvalAvsTaskManager" as TaskManager
+participant "EigenLayer Contracts" as EigenLayer
+
+note over Operator, EigenLayer: Operator Setup and Registration
+
+Operator -> CLI: run init command
+activate CLI
+CLI -> CLI: Generate/load ECDSA and BLS keys
+CLI -> Config: Create config files
+CLI --> Operator: Configuration complete
+deactivate CLI
+
+Operator -> CLI: run docker setup
+activate CLI
+CLI -> CLI: Generate docker-compose files
+CLI --> Operator: Docker setup complete
+deactivate CLI
+
+Operator -> Operator: Start operator node
+activate Operator
+Operator -> EigenLayer: Register with EigenLayer (ECDSA+BLS keys)
+EigenLayer --> Operator: Registration confirmed
+
+Operator -> ServiceManager: Register with EvalAvsServiceManager
+ServiceManager -> EigenLayer: Verify registration
+EigenLayer --> ServiceManager: Confirm registration
+ServiceManager --> Operator: AVS registration confirmed
+
+Operator -> TaskManager: joinAssignmentQueue()
+TaskManager -> TaskManager: Add operator to queue
+TaskManager --> Operator: Successfully joined queue
+deactivate Operator
+
+note over Operator, EigenLayer: Operator is now ready to execute tasks
+@enduml
