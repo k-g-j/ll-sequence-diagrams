@@ -6,11 +6,11 @@
 
 ## 2. Operator Registration Flow
 
-![Operator Registration Flow](./plantuml-diagrams/avs-registration-flow.png)
+![Operator Registration Flow](./custom-diagrams/v3/avs-registration-flow.png)
 
 ## 3. Task Reassignment Flow
 
-![Task Reassignment Flow](./plantuml-diagrams/avs-reassignment-flow.png)
+![Task Reassignment Flow](./custom-diagrams/v3/avs-reassignment-flow.png)
 
 ## 4. Complete System Architecture
 

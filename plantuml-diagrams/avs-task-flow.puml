@@ -1,5 +1,6 @@
-@startuml
-!option handwritten true
+@startuml avs-task-flow
+' Fix handwritten mode
+!theme plain
 
 ' Use improved fonts and spacing
 skinparam backgroundColor white

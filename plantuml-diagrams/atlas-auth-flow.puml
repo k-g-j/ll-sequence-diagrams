@@ -1,5 +1,6 @@
-@startuml
-!option handwritten true
+@startuml atlas-auth-flow
+' Fix handwritten mode
+!theme plain
 
 ' Use improved fonts and spacing
 skinparam sequenceMessageAlign center

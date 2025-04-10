@@ -1,29 +1,35 @@
-@startuml
-!option handwritten true
+@startuml avs-architecture
+' Fix handwritten mode
+!pragma layout smetana
+!theme plain
+!pragma svek_trace on
 
-' Use more readable layout with larger size
+' Use more readable layout with larger size and horizontally wide diagram
 skinparam componentStyle rectangle
 skinparam backgroundColor white
 skinparam defaultTextAlignment center
-skinparam wrapWidth 200
-skinparam nodesep 150
-skinparam ranksep 150
+skinparam wrapWidth 400
+skinparam nodesep 180
+skinparam ranksep 180
+skinparam pageBorderColor transparent
 
-' Make diagram much larger
-scale 2.0
+' Make diagram much larger and wider 
+scale max 1000 width
+scale max 1000 height
+scale 1.8
 
 ' Fix arrow styling
 skinparam ArrowColor black
 skinparam ArrowThickness 2.0
 skinparam ArrowFontColor black
-skinparam ArrowFontSize 18
+skinparam ArrowFontSize 16
 
 ' Improve fonts and text
-skinparam ComponentFontSize 20
+skinparam ComponentFontSize 18
 skinparam ComponentFontStyle bold
-skinparam PackageFontSize 22
+skinparam PackageFontSize 20
 skinparam PackageFontStyle bold
-skinparam TitleFontSize 28
+skinparam TitleFontSize 24
 skinparam TitleFontStyle bold
 
 title Evaluation AVS Architecture
