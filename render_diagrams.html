@@ -222,7 +222,7 @@ sequenceDiagram
         
         <h2>4. Complete System Architecture</h2>
         <div class="mermaid">
-%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 700, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#c4ffad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000' } } }%%
+%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#c4ffad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000', 'nodeBorder': '#000000', 'mainBkg': '#ffffff', 'nodeTextColor': '#000000', 'labelTextColor': '#000000', 'clusterBkg': '#ffffff', 'clusterBorder': '#000000', 'edgeLabelBackground': '#ffffff' } } }%%
 flowchart TB
     subgraph Blockchain["BLOCKCHAIN"]
         TaskManager["TASK MANAGER CONTRACT"]
@@ -274,10 +274,10 @@ flowchart TB
     GoEval --> Results
     
     %% Classification styling with darker colors and thicker borders
-    classDef blockchain fill:#ffadce,stroke:#000000,stroke-width:3px,color:#000000
-    classDef operator fill:#adc8ff,stroke:#000000,stroke-width:3px,color:#000000
-    classDef evaluator fill:#c4ffad,stroke:#000000,stroke-width:3px,color:#000000
-    classDef external fill:#ffbbad,stroke:#000000,stroke-width:3px,color:#000000
+    classDef blockchain fill:#ffadce,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef operator fill:#adc8ff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef evaluator fill:#c4ffad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef external fill:#ffbbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     
     class TaskManager,ServiceManager,EigenLayer blockchain
     class OpMain,AvsReader,AvsWriter,AvsSubscriber,Registration operator
@@ -508,7 +508,7 @@ sequenceDiagram
         
         <h2>5. Complete System Architecture</h2>
         <div class="mermaid">
-%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 700, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#ffbbad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000' } } }%%
+%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#ffbbad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000', 'nodeBorder': '#000000', 'mainBkg': '#ffffff', 'nodeTextColor': '#000000', 'labelTextColor': '#000000', 'clusterBkg': '#ffffff', 'clusterBorder': '#000000', 'edgeLabelBackground': '#ffffff' } } }%%
 flowchart TB
     subgraph FrontendGroup["FRONTEND"]
         NextApp["NEXT.JS APP"]
@@ -576,11 +576,11 @@ flowchart TB
     Contract <---> AVS
     
     %% Classification styling with darker colors and thicker borders
-    classDef frontend fill:#adc8ff,stroke:#000000,stroke-width:3px,color:#000000
-    classDef backend fill:#c4ffad,stroke:#000000,stroke-width:3px,color:#000000
-    classDef storage fill:#ffbbad,stroke:#000000,stroke-width:3px,color:#000000
-    classDef infra fill:#e9adff,stroke:#000000,stroke-width:3px,color:#000000
-    classDef blockchain fill:#ffdbad,stroke:#000000,stroke-width:3px,color:#000000
+    classDef frontend fill:#adc8ff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef backend fill:#c4ffad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef storage fill:#ffbbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef infra fill:#e9adff,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
+    classDef blockchain fill:#ffdbad,stroke:#000000,stroke-width:4px,color:#000000,font-weight:900,text-transform:uppercase
     
     class NextApp,ReactQuery,Components,Hooks,Auth frontend
     class API,Worker,ResultsWorker,Scheduler backend
@@ -601,7 +601,7 @@ flowchart TB
             securityLevel: 'loose',
             fontSize: 16,
             fontFamily: 'Arial',
-            fontWeight: 'bold',
+            fontWeight: 900,
             themeVariables: {
                 background: '#ffffff',
                 primaryColor: '#adc8ff',
@@ -610,7 +610,28 @@ flowchart TB
                 lineColor: '#000000',
                 secondaryColor: '#c4ffad',
                 secondaryTextColor: '#000000',
-                secondaryBorderColor: '#000000'
+                secondaryBorderColor: '#000000',
+                tertiaryColor: '#ffadce',
+                tertiaryTextColor: '#000000',
+                tertiaryBorderColor: '#000000',
+                nodeBorder: '#000000',
+                mainBkg: '#ffffff',
+                nodeTextColor: '#000000',
+                textColor: '#000000',
+                labelTextColor: '#000000',
+                clusterBkg: '#ffffff',
+                clusterBorder: '#000000',
+                titleColor: '#000000',
+                edgeLabelBackground: '#ffffff',
+                noteTextColor: '#000000',
+                actorTextColor: '#000000',
+                actorBkg: '#ffffff',
+                actorBorder: '#000000',
+                actorLineColor: '#000000',
+                labelBoxBkgColor: '#ffffff',
+                labelBoxBorderColor: '#000000',
+                labelColor: '#000000',
+                loopTextColor: '#000000'
             }
         });
         
