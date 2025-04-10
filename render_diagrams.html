@@ -26,6 +26,7 @@
             background-color: #f9f9f9;
             padding: 20px;
             border-radius: 5px;
+            font-weight: bold;
         }
         .tabs {
             display: flex;
@@ -215,33 +216,33 @@ sequenceDiagram
         
         <h2>4. Complete System Architecture</h2>
         <div class="mermaid">
-%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#f9d', 'primaryTextColor': '#000', 'primaryBorderColor': '#333', 'lineColor': '#333', 'secondaryColor': '#bbf', 'secondaryTextColor': '#000', 'secondaryBorderColor': '#333', 'tertiaryColor': '#bfb', 'tertiaryTextColor': '#000', 'tertiaryBorderColor': '#333', 'noteTextColor': '#000' }}}%%
+%%{init: { 'fontFamily': 'Arial', 'fontSize': 14, 'fontWeight': 600, 'theme': 'base', 'themeVariables': { 'primaryColor': '#f9d', 'primaryTextColor': '#000', 'primaryBorderColor': '#333', 'lineColor': '#333', 'secondaryColor': '#bbf', 'secondaryTextColor': '#000', 'secondaryBorderColor': '#333', 'tertiaryColor': '#bfb', 'tertiaryTextColor': '#000', 'tertiaryBorderColor': '#333', 'noteTextColor': '#000' } } }%%
 flowchart TB
-    subgraph Blockchain
-        TaskManager[EvalAvsTaskManager Contract]
-        ServiceManager[EvalAvsServiceManager Contract]
-        EigenLayer[EigenLayer Contracts]
+    subgraph Blockchain[<b>Blockchain</b>]
+        TaskManager["<b>EvalAvsTaskManager Contract</b>"]
+        ServiceManager["<b>EvalAvsServiceManager Contract</b>"]
+        EigenLayer["<b>EigenLayer Contracts</b>"]
     end
     
-    subgraph "Operator Node"
-        OpMain[Operator Main]
-        AvsReader[AVS Reader]
-        AvsWriter[AVS Writer]
-        AvsSubscriber[AVS Subscriber]
-        Registration[Registration]
+    subgraph OperatorNode[<b>Operator Node</b>]
+        OpMain["<b>Operator Main</b>"]
+        AvsReader["<b>AVS Reader</b>"]
+        AvsWriter["<b>AVS Writer</b>"]
+        AvsSubscriber["<b>AVS Subscriber</b>"]
+        Registration["<b>Registration</b>"]
     end
     
-    subgraph "Evaluation Engine"
-        GoEval[Go-Evaluator]
-        Extractor[Response Extractor]
-        Scoring[Scoring Module]
-        PythonExec[Python Executor]
+    subgraph EvalEngine[<b>Evaluation Engine</b>]
+        GoEval["<b>Go-Evaluator</b>"]
+        Extractor["<b>Response Extractor</b>"]
+        Scoring["<b>Scoring Module</b>"]
+        PythonExec["<b>Python Executor</b>"]
     end
     
-    subgraph "External Services"
-        S3[(Dataset Registry S3)]
-        LLMAPI[LLM Provider API]
-        Results[LayerLens Results API]
+    subgraph ExternalServices[<b>External Services</b>]
+        S3["<b>Dataset Registry (S3)</b>"]
+        LLMAPI["<b>LLM Provider API</b>"]
+        Results["<b>LayerLens Results API</b>"]
     end
     
     %% Connections
@@ -267,15 +268,17 @@ flowchart TB
     GoEval --> Results
     
     %% Classification styling
-    classDef blockchain fill:#f9d,stroke:#333,stroke-width:2px
-    classDef operator fill:#bbf,stroke:#333,stroke-width:1px
-    classDef evaluator fill:#bfb,stroke:#333,stroke-width:1px
-    classDef external fill:#fbb,stroke:#333,stroke-width:1px
+    classDef blockchain fill:#f9d,stroke:#333,stroke-width:2px,color:#000
+    classDef operator fill:#bbf,stroke:#333,stroke-width:1px,color:#000
+    classDef evaluator fill:#bfb,stroke:#333,stroke-width:1px,color:#000
+    classDef external fill:#fbb,stroke:#333,stroke-width:1px,color:#000
     
     class TaskManager,ServiceManager,EigenLayer blockchain
     class OpMain,AvsReader,AvsWriter,AvsSubscriber,Registration operator
     class GoEval,Extractor,Scoring,PythonExec evaluator
     class S3,LLMAPI,Results external
+    
+    class Blockchain,OperatorNode,EvalEngine,ExternalServices darkText
         </div>
     </div>
     
@@ -499,38 +502,38 @@ sequenceDiagram
         
         <h2>5. Complete System Architecture</h2>
         <div class="mermaid">
-%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#bbf', 'primaryTextColor': '#000', 'primaryBorderColor': '#333', 'lineColor': '#333', 'secondaryColor': '#bfb', 'secondaryTextColor': '#000', 'secondaryBorderColor': '#333', 'tertiaryColor': '#fbb', 'tertiaryTextColor': '#000', 'tertiaryBorderColor': '#333', 'noteTextColor': '#000' }}}%%
+%%{init: { 'fontFamily': 'Arial', 'fontSize': 14, 'fontWeight': 600, 'theme': 'base', 'themeVariables': { 'primaryColor': '#bbf', 'primaryTextColor': '#000', 'primaryBorderColor': '#333', 'lineColor': '#333', 'secondaryColor': '#bfb', 'secondaryTextColor': '#000', 'secondaryBorderColor': '#333', 'tertiaryColor': '#fbb', 'tertiaryTextColor': '#000', 'tertiaryBorderColor': '#333', 'noteTextColor': '#000' } } }%%
 flowchart TB
-    subgraph "Frontend" 
-        NextApp[Next.js App]
-        ReactQuery[React Query]
-        Components[UI Components]
-        Hooks[Custom Hooks]
-        Auth[Next Auth]
+    subgraph FrontendGroup[<b>Frontend</b>]
+        NextApp["<b>Next.js App</b>"]
+        ReactQuery["<b>React Query</b>"]
+        Components["<b>UI Components</b>"]
+        Hooks["<b>Custom Hooks</b>"]
+        Auth["<b>Next Auth</b>"]
     end
     
-    subgraph "Backend Services"
-        API[Atlas API]
-        Worker[Evaluation Worker]
-        ResultsWorker[Results Worker]
-        Scheduler[Task Scheduler]
+    subgraph BackendGroup[<b>Backend Services</b>]
+        API["<b>Atlas API</b>"]
+        Worker["<b>Evaluation Worker</b>"]
+        ResultsWorker["<b>Results Worker</b>"]
+        Scheduler["<b>Task Scheduler</b>"]
     end
     
-    subgraph "Data Storage"
-        MongoDB[(MongoDB)]
-        MariaDB[(MariaDB)]
-        S3[(AWS S3)]
+    subgraph StorageGroup[<b>Data Storage</b>]
+        MongoDB["<b>MongoDB</b>"]
+        MariaDB["<b>MariaDB</b>"]
+        S3["<b>AWS S3</b>"]
     end
     
-    subgraph "Infrastructure"
-        Kafka[Kafka Message Queue]
-        Cognito[AWS Cognito]
-        CDK[AWS CDK Infrastructure]
+    subgraph InfraGroup[<b>Infrastructure</b>]
+        Kafka["<b>Kafka Message Queue</b>"]
+        Cognito["<b>AWS Cognito</b>"]
+        CDK["<b>AWS CDK Infrastructure</b>"]
     end
     
-    subgraph "Blockchain Integration"
-        Contract[Smart Contract]
-        AVS[Evaluation AVS]
+    subgraph BlockchainGroup[<b>Blockchain Integration</b>]
+        Contract["<b>Smart Contract</b>"]
+        AVS["<b>Evaluation AVS</b>"]
     end
     
     %% Frontend connections
@@ -578,6 +581,8 @@ flowchart TB
     class MongoDB,MariaDB,S3 storage
     class Kafka,Cognito,CDK infra
     class Contract,AVS blockchain
+    
+    class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup darkText
         </div>
     </div>
     
@@ -587,7 +592,9 @@ flowchart TB
             theme: 'default',
             logLevel: 'fatal',
             securityLevel: 'loose',
-            fontSize: 14
+            fontSize: 16,
+            fontFamily: 'Arial',
+            fontWeight: 'bold'
         });
         
         function switchTab(tabId) {
