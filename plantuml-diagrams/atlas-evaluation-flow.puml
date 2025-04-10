@@ -1,6 +1,9 @@
 @startuml atlas-evaluation-flow
-' Fix handwritten mode
 !theme plain
+skinparam handwritten false
+skinparam shadowing false
+skinparam roundCorner 0
+skinparam linetype polyline
 
 ' Use improved fonts and spacing
 skinparam backgroundColor white

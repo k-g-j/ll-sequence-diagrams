@@ -1,7 +1,8 @@
 @startuml atlas-architecture
-' Fix handwritten mode and border issues
 !theme plain
 !pragma layout smetana
+skinparam handwritten false
+skinparam linetype ortho
 
 ' Use more compact layout for GitHub UI
 skinparam componentStyle rectangle
@@ -17,7 +18,8 @@ skinparam Padding 5
 skinparam BoxPadding 5
 
 ' Make diagram narrower with specific width constraint
-scale 600 width
+scale 1000 width
+scale 1000 height
 
 ' Fix arrow styling
 skinparam ArrowColor black
