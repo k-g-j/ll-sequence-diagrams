@@ -24,10 +24,28 @@
         }
         .mermaid {
             margin: 20px 0;
-            background-color: white; /* Force white background */
+            background-color: white !important; /* Force white background */
             padding: 20px;
             border-radius: 5px;
             font-weight: bold;
+        }
+        /* Force white backgrounds on all mermaid elements */
+        .mermaid svg {
+            background-color: white !important;
+        }
+        .mermaid .flowchart-horizontal rect,
+        .mermaid .flowchart-v2 rect,
+        .mermaid .statediagram rect,
+        .mermaid .classdiagram rect,
+        .mermaid .nodes rect,
+        .mermaid g rect,
+        .mermaid .cluster rect {
+            fill: white !important;
+            background-color: white !important;
+        }
+        .mermaid .section {
+            fill: white !important;
+            background-color: white !important;
         }
         .tabs {
             display: flex;
@@ -222,13 +240,29 @@ sequenceDiagram
         
         <h2>4. Complete System Architecture</h2>
         <div class="mermaid">
-%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#c4ffad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000', 'nodeBorder': '#000000', 'mainBkg': '#ffffff', 'nodeTextColor': '#000000', 'labelTextColor': '#000000', 'clusterBkg': '#ffffff', 'clusterBorder': '#000000', 'edgeLabelBackground': '#ffffff' } } }%%
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#ffadce',
+      'primaryTextColor': '#000000',
+      'primaryBorderColor': '#000000',
+      'lineColor': '#000000',
+      'secondaryColor': '#adc8ff',
+      'tertiaryColor': '#c4ffad',
+      'background': '#ffffff'
+    },
+    'fontFamily': 'Arial',
+    'fontSize': 16,
+    'fontWeight': 900
+  }
+}%%
 flowchart TB
     subgraph Blockchain["BLOCKCHAIN"]
         TaskManager["TASK MANAGER CONTRACT"]
         ServiceManager["SERVICE MANAGER CONTRACT"]
         EigenLayer["EIGENLAYER CONTRACTS"]
-    end
+    end:::whiteStyle
     
     subgraph OperatorNode["OPERATOR NODE"]
         OpMain["OPERATOR MAIN"]
@@ -236,20 +270,20 @@ flowchart TB
         AvsWriter["AVS WRITER"]
         AvsSubscriber["AVS SUBSCRIBER"]
         Registration["REGISTRATION"]
-    end
+    end:::whiteStyle
     
     subgraph EvalEngine["EVALUATION ENGINE"]
         GoEval["GO-EVALUATOR"]
         Extractor["RESPONSE EXTRACTOR"]
         Scoring["SCORING MODULE"]
         PythonExec["PYTHON EXECUTOR"]
-    end
+    end:::whiteStyle
     
     subgraph ExternalServices["EXTERNAL SERVICES"]
         S3["DATASET REGISTRY (S3)"]
         LLMAPI["LLM PROVIDER API"]
         Results["LAYERLENS RESULTS API"]
-    end
+    end:::whiteStyle
     
     %% Connections with thicker lines
     TaskManager <--> ServiceManager
@@ -285,6 +319,9 @@ flowchart TB
     class S3,LLMAPI,Results external
     
     class Blockchain,OperatorNode,EvalEngine,ExternalServices darkText
+    
+    %% White style for subgraphs
+    classDef whiteStyle fill:#ffffff,stroke:#000000,color:#000000
         </div>
     </div>
     
@@ -508,7 +545,23 @@ sequenceDiagram
         
         <h2>5. Complete System Architecture</h2>
         <div class="mermaid">
-%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#ffbbad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000', 'nodeBorder': '#000000', 'mainBkg': '#ffffff', 'nodeTextColor': '#000000', 'labelTextColor': '#000000', 'clusterBkg': '#ffffff', 'clusterBorder': '#000000', 'edgeLabelBackground': '#ffffff' } } }%%
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#adc8ff',
+      'primaryTextColor': '#000000',
+      'primaryBorderColor': '#000000',
+      'lineColor': '#000000',
+      'secondaryColor': '#c4ffad',
+      'tertiaryColor': '#ffbbad',
+      'background': '#ffffff'
+    },
+    'fontFamily': 'Arial',
+    'fontSize': 16,
+    'fontWeight': 900
+  }
+}%%
 flowchart TB
     subgraph FrontendGroup["FRONTEND"]
         NextApp["NEXT.JS APP"]
@@ -516,31 +569,31 @@ flowchart TB
         Components["UI COMPONENTS"]
         Hooks["CUSTOM HOOKS"]
         Auth["NEXT AUTH"]
-    end
+    end:::whiteStyle
     
     subgraph BackendGroup["BACKEND SERVICES"]
         API["ATLAS API"]
         Worker["EVALUATION WORKER"]
         ResultsWorker["RESULTS WORKER"]
         Scheduler["TASK SCHEDULER"]
-    end
+    end:::whiteStyle
     
     subgraph StorageGroup["DATA STORAGE"]
         MongoDB["MONGODB"]
         MariaDB["MARIADB"]
         S3["AWS S3"]
-    end
+    end:::whiteStyle
     
     subgraph InfraGroup["INFRASTRUCTURE"]
         Kafka["KAFKA MESSAGE QUEUE"]
         Cognito["AWS COGNITO"]
         CDK["AWS CDK INFRASTRUCTURE"]
-    end
+    end:::whiteStyle
     
     subgraph BlockchainGroup["BLOCKCHAIN INTEGRATION"]
         Contract["SMART CONTRACT"]
         AVS["EVALUATION AVS"]
-    end
+    end:::whiteStyle
     
     %% Frontend connections with thicker lines
     NextApp ---> ReactQuery
@@ -589,6 +642,9 @@ flowchart TB
     class Contract,AVS blockchain
     
     class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup darkText
+    
+    %% White style for subgraphs
+    classDef whiteStyle fill:#ffffff,stroke:#000000,color:#000000
         </div>
     </div>
     
@@ -596,7 +652,7 @@ flowchart TB
         // Force light theme in mermaid
         mermaid.initialize({
             startOnLoad: true,
-            theme: 'neutral',
+            theme: 'base',
             logLevel: 'fatal',
             securityLevel: 'loose',
             fontSize: 16,
@@ -609,29 +665,23 @@ flowchart TB
                 primaryBorderColor: '#000000',
                 lineColor: '#000000',
                 secondaryColor: '#c4ffad',
-                secondaryTextColor: '#000000',
-                secondaryBorderColor: '#000000',
                 tertiaryColor: '#ffadce',
-                tertiaryTextColor: '#000000',
-                tertiaryBorderColor: '#000000',
-                nodeBorder: '#000000',
                 mainBkg: '#ffffff',
-                nodeTextColor: '#000000',
-                textColor: '#000000',
-                labelTextColor: '#000000',
-                clusterBkg: '#ffffff',
-                clusterBorder: '#000000',
-                titleColor: '#000000',
-                edgeLabelBackground: '#ffffff',
-                noteTextColor: '#000000',
-                actorTextColor: '#000000',
-                actorBkg: '#ffffff',
-                actorBorder: '#000000',
-                actorLineColor: '#000000',
-                labelBoxBkgColor: '#ffffff',
-                labelBoxBorderColor: '#000000',
-                labelColor: '#000000',
-                loopTextColor: '#000000'
+                canvasBkg: '#ffffff',
+                primaryBkg: '#ffffff',
+                secondaryBkg: '#ffffff',
+                tertiaryBkg: '#ffffff',
+                pie1: '#adc8ff',
+                pie2: '#c4ffad',
+                pie3: '#ffadce',
+                pie4: '#ffbbad',
+                pie5: '#e9adff',
+                pie6: '#ffdbad',
+                pie7: '#ffebad',
+                pieTitleTextSize: '25px',
+                pieTitleTextColor: '#000000',
+                pieSectionTextSize: '20px',
+                pieSectionTextColor: '#000000'
             }
         });
         

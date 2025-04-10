@@ -141,13 +141,29 @@ sequenceDiagram
 ## 4. Complete System Architecture
 
 ```mermaid
-%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#ffadce', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#adc8ff', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#c4ffad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000', 'nodeBorder': '#000000', 'mainBkg': '#ffffff', 'nodeTextColor': '#000000', 'labelTextColor': '#000000', 'clusterBkg': '#ffffff', 'clusterBorder': '#000000', 'edgeLabelBackground': '#ffffff' } } }%%
+%%{
+  init: {
+    'theme': 'base', 
+    'themeVariables': {
+      'primaryColor': '#ffadce',
+      'primaryTextColor': '#000000',
+      'primaryBorderColor': '#000000',
+      'lineColor': '#000000',
+      'secondaryColor': '#adc8ff',
+      'tertiaryColor': '#c4ffad',
+      'background': '#ffffff'
+    },
+    'fontFamily': 'Arial',
+    'fontSize': 16,
+    'fontWeight': 900
+  }
+}%%
 flowchart TB
     subgraph Blockchain["BLOCKCHAIN"]
         TaskManager["TASK MANAGER CONTRACT"]
         ServiceManager["SERVICE MANAGER CONTRACT"]
         EigenLayer["EIGENLAYER CONTRACTS"]
-    end
+    end:::whiteStyle
     
     subgraph OperatorNode["OPERATOR NODE"]
         OpMain["OPERATOR MAIN"]
@@ -155,20 +171,20 @@ flowchart TB
         AvsWriter["AVS WRITER"]
         AvsSubscriber["AVS SUBSCRIBER"]
         Registration["REGISTRATION"]
-    end
+    end:::whiteStyle
     
     subgraph EvalEngine["EVALUATION ENGINE"]
         GoEval["GO-EVALUATOR"]
         Extractor["RESPONSE EXTRACTOR"]
         Scoring["SCORING MODULE"]
         PythonExec["PYTHON EXECUTOR"]
-    end
+    end:::whiteStyle
     
     subgraph ExternalServices["EXTERNAL SERVICES"]
         S3[("DATASET REGISTRY (S3)")]
         LLMAPI["LLM PROVIDER API"]
         Results["LAYERLENS RESULTS API"]
-    end
+    end:::whiteStyle
     
     %% Connections with thicker lines
     TaskManager <--> ServiceManager
@@ -204,4 +220,7 @@ flowchart TB
     class S3,LLMAPI,Results external
     
     class Blockchain,OperatorNode,EvalEngine,ExternalServices darkText
+    
+    %% White style for subgraphs
+    classDef whiteStyle fill:#ffffff,stroke:#000000,color:#000000
 ```

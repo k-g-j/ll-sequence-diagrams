@@ -224,7 +224,23 @@ sequenceDiagram
 ## 5. Complete System Architecture
 
 ```mermaid
-%%{init: { 'theme': 'neutral', 'fontFamily': 'Arial', 'fontSize': 16, 'fontWeight': 900, 'themeVariables': { 'background': '#ffffff', 'primaryColor': '#adc8ff', 'primaryTextColor': '#000000', 'primaryBorderColor': '#000000', 'lineColor': '#000000', 'secondaryColor': '#c4ffad', 'secondaryTextColor': '#000000', 'secondaryBorderColor': '#000000', 'tertiaryColor': '#ffbbad', 'tertiaryTextColor': '#000000', 'tertiaryBorderColor': '#000000', 'noteTextColor': '#000000', 'nodeBorder': '#000000', 'mainBkg': '#ffffff', 'nodeTextColor': '#000000', 'labelTextColor': '#000000', 'clusterBkg': '#ffffff', 'clusterBorder': '#000000', 'edgeLabelBackground': '#ffffff' } } }%%
+%%{
+  init: {
+    'theme': 'base', 
+    'themeVariables': {
+      'primaryColor': '#adc8ff',
+      'primaryTextColor': '#000000',
+      'primaryBorderColor': '#000000',
+      'lineColor': '#000000',
+      'secondaryColor': '#c4ffad',
+      'tertiaryColor': '#ffbbad',
+      'background': '#ffffff'
+    },
+    'fontFamily': 'Arial',
+    'fontSize': 16,
+    'fontWeight': 900
+  }
+}%%
 flowchart TB
     subgraph FrontendGroup["FRONTEND"]
         NextApp["NEXT.JS APP"]
@@ -232,31 +248,31 @@ flowchart TB
         Components["UI COMPONENTS"]
         Hooks["CUSTOM HOOKS"]
         Auth["NEXT AUTH"]
-    end
+    end:::whiteStyle
     
     subgraph BackendGroup["BACKEND SERVICES"]
         API["ATLAS API"]
         Worker["EVALUATION WORKER"]
         ResultsWorker["RESULTS WORKER"]
         Scheduler["TASK SCHEDULER"]
-    end
+    end:::whiteStyle
     
     subgraph StorageGroup["DATA STORAGE"]
         MongoDB[("MONGODB")]
         MariaDB[("MARIADB")]
         S3[("AWS S3")]
-    end
+    end:::whiteStyle
     
     subgraph InfraGroup["INFRASTRUCTURE"]
         Kafka["KAFKA MESSAGE QUEUE"]
         Cognito["AWS COGNITO"]
         CDK["AWS CDK INFRASTRUCTURE"]
-    end
+    end:::whiteStyle
     
     subgraph BlockchainGroup["BLOCKCHAIN INTEGRATION"]
         Contract["SMART CONTRACT"]
         AVS["EVALUATION AVS"]
-    end
+    end:::whiteStyle
     
     %% Frontend connections with thicker lines
     NextApp ---> ReactQuery
@@ -305,4 +321,7 @@ flowchart TB
     class Contract,AVS blockchain
     
     class FrontendGroup,BackendGroup,StorageGroup,InfraGroup,BlockchainGroup darkText
+    
+    %% White style for subgraphs
+    classDef whiteStyle fill:#ffffff,stroke:#000000,color:#000000
 ```
