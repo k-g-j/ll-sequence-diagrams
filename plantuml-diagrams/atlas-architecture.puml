@@ -1,71 +1,84 @@
 @startuml
-' Use modern PlantUML styling with rectangle component style
+' Use handwritten style with more readable layout
 skinparam componentStyle rectangle
 skinparam backgroundColor white
-skinparam linetype ortho
-skinparam nodesep 80
-skinparam ranksep 100
+skinparam handwritten true
+skinparam defaultTextAlignment center
+skinparam wrapWidth 200
+skinparam nodesep 120
+skinparam ranksep 130
+
+' Increase overall diagram size
+scale 1.2
 
 ' Fix arrow styling
 skinparam ArrowColor black
 skinparam ArrowThickness 1.5
 skinparam ArrowFontColor black
-skinparam ArrowFontSize 12
+skinparam ArrowFontSize 14
+
+' Improve fonts and text
+skinparam ComponentFontSize 16
+skinparam ComponentFontStyle bold
+skinparam PackageFontSize 18
+skinparam PackageFontStyle bold
+skinparam TitleFontSize 24
+skinparam TitleFontStyle bold
 
 title LayerLens Atlas App Architecture
 
 package "User Interface Layer" {
-  [Atlas Web UI] as WebUI
-  [Next.js App] as NextApp
-  [Authentication Module] as Auth
-  [Results Visualization] as Viz
+  [Atlas Web UI] as WebUI #lightblue
+  [Next.js App] as NextApp #lightblue
+  [Authentication Module] as Auth #lightblue
+  [Results Visualization] as Viz #lightblue
 }
 
 package "API Layer" {
-  [API Gateway] as ApiGw
-  [Go Backend API] as GoBackend
-  [WebSocket Service] as WebSocket
-  [Rate Limiter] as RateLim
+  [API Gateway] as ApiGw #lightgreen
+  [Go Backend API] as GoBackend #lightgreen
+  [WebSocket Service] as WebSocket #lightgreen
+  [Rate Limiter] as RateLim #lightgreen
 }
 
 package "Core Services" {
-  [Evaluation Manager] as EvalManager
-  [Model Registry] as ModelRegistry
-  [Dataset Manager] as DatasetManager
-  [User Manager] as UserManager
-  [Results Processor] as ResultsProcessor
+  [Evaluation Manager] as EvalManager #lightyellow
+  [Model Registry] as ModelRegistry #lightyellow
+  [Dataset Manager] as DatasetManager #lightyellow
+  [User Manager] as UserManager #lightyellow
+  [Results Processor] as ResultsProcessor #lightyellow
 }
 
 package "Integration Layer" {
-  [Evaluation Worker] as Worker
-  [Smart Contract Client] as ContractClient
-  [Metrics Collector] as MetricsCollector
+  [Evaluation Worker] as Worker #pink
+  [Smart Contract Client] as ContractClient #pink
+  [Metrics Collector] as MetricsCollector #pink
 }
 
 package "Data Layer" {
-  database "MongoDB" as MongoDB {
+  database "MongoDB" as MongoDB #lightgray {
     [Evaluations] as MongoEvals
     [Users] as MongoUsers
     [Datasets] as MongoDsets
   }
   
-  database "MariaDB" as MariaDB {
+  database "MariaDB" as MariaDB #lightgray {
     [Aggregated Metrics] as MetricsDB
     [Historical Data] as HistoryDB
   }
   
-  database "AWS S3" as S3 {
+  database "AWS S3" as S3 #lightgray {
     [Results Storage] as ResultsS3
     [Dataset Files] as DatasetsS3
   }
   
-  queue "Message Queue" as Queue
+  queue "Message Queue" as Queue #lightgray
 }
 
 cloud "External Services" {
-  [AWS Cognito] as Cognito
-  [LayerLens AVS] as AVS
-  [LLM Providers] as LLMs
+  [AWS Cognito] as Cognito #lavender
+  [LayerLens AVS] as AVS #lavender
+  [LLM Providers] as LLMs #lavender
 }
 
 ' User interactions

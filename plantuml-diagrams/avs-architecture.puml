@@ -1,34 +1,47 @@
 @startuml
-' Use modern PlantUML styling with rectangle component style
+' Use handwritten style with more readable layout
 skinparam componentStyle rectangle
 skinparam backgroundColor white
-skinparam linetype ortho
-skinparam nodesep 80
-skinparam ranksep 100
+skinparam handwritten true
+skinparam defaultTextAlignment center
+skinparam wrapWidth 200
+skinparam nodesep 120
+skinparam ranksep 130
+
+' Increase overall diagram size
+scale 1.2
 
 ' Fix arrow styling
 skinparam ArrowColor black
 skinparam ArrowThickness 1.5
 skinparam ArrowFontColor black
-skinparam ArrowFontSize 12
+skinparam ArrowFontSize 14
+
+' Improve fonts and text
+skinparam ComponentFontSize 16
+skinparam ComponentFontStyle bold
+skinparam PackageFontSize 18
+skinparam PackageFontStyle bold
+skinparam TitleFontSize 24
+skinparam TitleFontStyle bold
 
 title Evaluation AVS Architecture
 
 package "Smart Contracts Layer" {
-  [EvalAvsServiceManager] as ServiceManager
-  [EvalAvsTaskManager] as TaskManager
-  [BlsRegistryCoordinator] as BLSRegistry
-  [StakeRegistry] as StakeRegistry
+  [EvalAvsServiceManager] as ServiceManager #lightblue
+  [EvalAvsTaskManager] as TaskManager #lightblue
+  [BlsRegistryCoordinator] as BLSRegistry #lightblue
+  [StakeRegistry] as StakeRegistry #lightblue
 }
 
 package "Operator Layer" {
-  [Operator Service] as OpService
-  [Operator CLI] as OpCLI
-  [Task Queue] as TaskQueue
-  [BLS Signing Module] as BlsSigner
-  [Config Manager] as ConfigMgr
+  [Operator Service] as OpService #lightgreen
+  [Operator CLI] as OpCLI #lightgreen
+  [Task Queue] as TaskQueue #lightgreen
+  [BLS Signing Module] as BlsSigner #lightgreen
+  [Config Manager] as ConfigMgr #lightgreen
   
-  component "Go Evaluator" as GoEval {
+  component "Go Evaluator" as GoEval #lightyellow {
     [Model Client Factory] as ModelFactory
     [Response Scorer] as Scorer
     [Result Processor] as Processor
@@ -37,17 +50,17 @@ package "Operator Layer" {
 }
 
 package "Infrastructure Layer" {
-  [Docker Container] as Docker
-  [Monitoring Agent] as Monitor
-  [Health Checker] as Health
-  [Slashing Detector] as Slashing
+  [Docker Container] as Docker #pink
+  [Monitoring Agent] as Monitor #pink
+  [Health Checker] as Health #pink
+  [Slashing Detector] as Slashing #pink
 }
 
 cloud "External Services" {
-  [EigenLayer Core] as EigenLayer
-  [Dataset Registry (S3)] as S3
-  [LLM API Providers] as LLM
-  [LayerLens API] as LayerLensAPI
+  [EigenLayer Core] as EigenLayer #lavender
+  [Dataset Registry (S3)] as S3 #lavender
+  [LLM API Providers] as LLM #lavender
+  [LayerLens API] as LayerLensAPI #lavender
 }
 
 ' Contract interactions

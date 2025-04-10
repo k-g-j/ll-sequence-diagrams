@@ -1,23 +1,28 @@
 @startuml
-' Use improved sequence diagram styling
+' Use handwritten style with improved fonts and spacing
 skinparam backgroundColor white
-skinparam handwritten false
-skinparam linetype ortho
+skinparam handwritten true
+skinparam defaultTextAlignment center
 
 ' Fix arrow styling
 skinparam ArrowColor black
 skinparam ArrowThickness 1.5
 skinparam SequenceArrowThickness 1.5
 
-' Fix message alignment
-skinparam sequenceMessageAlign direction
-skinparam SequenceMessageAlignment center
+' Improve fonts for better readability
+skinparam ParticipantFontSize 16
+skinparam ParticipantFontStyle bold
+skinparam ActorFontSize 16
+skinparam ActorFontStyle bold
+skinparam NoteFontSize 14
+skinparam TitleFontSize 20
+skinparam TitleFontStyle bold
 
-' Improve participant styling
-skinparam ParticipantBorderThickness 1.5
-skinparam DatabaseBorderThickness 1.5
-skinparam ActorBorderThickness 1.5
-skinparam NoteBorderThickness 1.5
+' Color participants for better visualization
+skinparam ActorBackgroundColor lightblue
+skinparam ParticipantBackgroundColor lightyellow
+skinparam NoteBackgroundColor lightgray
+skinparam DatabaseBackgroundColor lightgreen
 
 title Evaluation Creation and Processing Flow
 

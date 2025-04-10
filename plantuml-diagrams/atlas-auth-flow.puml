@@ -1,7 +1,25 @@
 @startuml
+' Use handwritten style with improved fonts and spacing
 skinparam sequenceMessageAlign center
 skinparam backgroundColor white
-skinparam handwritten false
+skinparam handwritten true
+skinparam defaultTextAlignment center
+
+' Fix fonts and arrow styling
+skinparam ArrowColor black
+skinparam ArrowThickness 1.5
+skinparam ParticipantFontSize 16
+skinparam ParticipantFontStyle bold
+skinparam ActorFontSize 16
+skinparam ActorFontStyle bold
+skinparam NoteFontSize 14
+skinparam TitleFontSize 20
+skinparam TitleFontStyle bold
+
+' Color participants for better visualization
+skinparam ActorBackgroundColor lightblue
+skinparam ParticipantBackgroundColor lightyellow
+skinparam NoteBackgroundColor lightgray
 
 title User Authentication Flow
 
