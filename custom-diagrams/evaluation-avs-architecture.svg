@@ -8,14 +8,14 @@
   <text x="450" y="105" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">BLOCKCHAIN</text>
   
   <!-- Blockchain Components -->
-  <rect x="220" y="130" width="140" height="40" fill="#ffadce" stroke="#000000" stroke-width="2"/>
-  <text x="290" y="155" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle">TASK MANAGER CONTRACT</text>
+  <rect x="220" y="130" width="150" height="40" fill="#ffadce" stroke="#000000" stroke-width="2"/>
+  <text x="295" y="155" font-family="Arial" font-size="9" font-weight="bold" text-anchor="middle">TASK MANAGER CONTRACT</text>
   
-  <rect x="385" y="130" width="140" height="40" fill="#ffadce" stroke="#000000" stroke-width="2"/>
-  <text x="455" y="155" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle">SERVICE MANAGER CONTRACT</text>
+  <rect x="385" y="130" width="150" height="40" fill="#ffadce" stroke="#000000" stroke-width="2"/>
+  <text x="460" y="155" font-family="Arial" font-size="9" font-weight="bold" text-anchor="middle">SERVICE MANAGER CONTRACT</text>
   
   <rect x="550" y="130" width="130" height="40" fill="#ffadce" stroke="#000000" stroke-width="2"/>
-  <text x="615" y="155" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle">EIGENLAYER CONTRACTS</text>
+  <text x="615" y="155" font-family="Arial" font-size="9" font-weight="bold" text-anchor="middle">EIGENLAYER CONTRACTS</text>
   
   <!-- Operator Node Box -->
   <rect x="120" y="250" width="280" height="180" fill="#ffffff" stroke="#000000" stroke-width="2"/>
@@ -45,21 +45,21 @@
   <rect x="520" y="295" width="100" height="35" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
   <text x="570" y="317" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">GO-EVALUATOR</text>
   
-  <rect x="650" y="295" width="110" height="35" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
-  <text x="705" y="317" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle">RESPONSE EXTRACTOR</text>
+  <rect x="650" y="295" width="120" height="35" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
+  <text x="710" y="317" font-family="Arial" font-size="9" font-weight="bold" text-anchor="middle">RESPONSE EXTRACTOR</text>
   
   <rect x="520" y="345" width="100" height="35" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
   <text x="570" y="367" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">SCORING MODULE</text>
   
-  <rect x="650" y="345" width="100" height="35" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
-  <text x="700" y="367" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">PYTHON EXECUTOR</text>
+  <rect x="650" y="345" width="120" height="35" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
+  <text x="710" y="367" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle">PYTHON EXECUTOR</text>
   
   <!-- External Services Box -->
   <rect x="300" y="500" width="300" height="120" fill="#ffffff" stroke="#000000" stroke-width="2"/>
   <text x="450" y="525" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">EXTERNAL SERVICES</text>
   
   <!-- External Services Components -->
-  <ellipse cx="375" cy="570" rx="45" ry="25" fill="#ffbbad" stroke="#000000" stroke-width="2"/>
+  <ellipse cx="375" cy="570" rx="58" ry="25" fill="#ffbbad" stroke="#000000" stroke-width="2"/>
   <text x="375" y="575" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle">DATASET REGISTRY</text>
   
   <rect x="440" y="550" width="110" height="40" fill="#ffbbad" stroke="#000000" stroke-width="2"/>
@@ -75,21 +75,21 @@
   
   <!-- Operator to Blockchain -->
   <line x1="255" y1="395" x2="285" y2="170" stroke="#000000" stroke-width="2"/>
-  <polygon points="285,170 280,180 290,180" fill="#000000"/>
+  <polygon points="285,170 277,178 290,178" fill="#000000"/>
   
   <line x1="320" y1="345" x2="400" y2="170" stroke="#000000" stroke-width="2"/>
-  <polygon points="400,170 395,180 405,180" fill="#000000"/>
+  <polygon points="400,170 392,177 403,177" fill="#000000"/>
   
   <!-- Operator to Engine -->
   <line x1="240" y1="325" x2="520" y2="313" stroke="#000000" stroke-width="2"/>
-  <polygon points="520,313 510,308 510,318" fill="#000000"/>
+  <polygon points="520,313 512,311 512,318" fill="#000000"/>
   
   <!-- Engine to External -->
   <line x1="570" y1="380" x2="375" y2="545" stroke="#000000" stroke-width="2"/>
-  <polygon points="375,545 370,535 380,535" fill="#000000"/>
+  <polygon points="375,545 380,537 370,537" fill="#000000"/>
   
   <line x1="570" y1="380" x2="495" y2="550" stroke="#000000" stroke-width="2"/>
-  <polygon points="495,550 490,540 500,540" fill="#000000"/>
+  <polygon points="495,550 500,542 490,542" fill="#000000"/>
   
   <line x1="620" y1="380" x2="620" y2="550" stroke="#000000" stroke-width="2"/>
   <polygon points="620,550 615,540 625,540" fill="#000000"/>
