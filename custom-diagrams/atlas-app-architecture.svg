@@ -8,17 +8,17 @@
   <text x="450" y="105" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">FRONTEND</text>
   
   <!-- Frontend Components -->
-  <rect x="240" y="120" width="90" height="40" fill="#adc8ff" stroke="#000000" stroke-width="2"/>
-  <text x="285" y="145" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">NEXT.JS APP</text>
+  <rect x="240" y="120" width="100" height="40" fill="#adc8ff" stroke="#000000" stroke-width="2"/>
+  <text x="290" y="145" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">NEXT.JS APP</text>
   
-  <rect x="350" y="120" width="90" height="40" fill="#adc8ff" stroke="#000000" stroke-width="2"/>
-  <text x="395" y="145" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">REACT QUERY</text>
+  <rect x="350" y="120" width="100" height="40" fill="#adc8ff" stroke="#000000" stroke-width="2"/>
+  <text x="400" y="145" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">REACT QUERY</text>
   
-  <rect x="460" y="120" width="90" height="40" fill="#adc8ff" stroke="#000000" stroke-width="2"/>
-  <text x="505" y="145" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">UI COMPONENTS</text>
+  <rect x="460" y="120" width="100" height="40" fill="#adc8ff" stroke="#000000" stroke-width="2"/>
+  <text x="510" y="145" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">UI COMPONENTS</text>
   
-  <rect x="570" y="120" width="90" height="40" fill="#adc8ff" stroke="#000000" stroke-width="2"/>
-  <text x="615" y="145" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">CUSTOM HOOKS</text>
+  <rect x="570" y="120" width="100" height="40" fill="#adc8ff" stroke="#000000" stroke-width="2"/>
+  <text x="620" y="145" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">CUSTOM HOOKS</text>
   
   <!-- Backend Box -->
   <rect x="450" y="280" width="300" height="180" fill="#ffffff" stroke="#000000" stroke-width="2"/>
@@ -26,16 +26,16 @@
   
   <!-- Backend Components -->
   <rect x="470" y="325" width="100" height="40" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
-  <text x="520" y="350" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">ATLAS API</text>
+  <text x="520" y="350" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">ATLAS API</text>
   
   <rect x="620" y="325" width="100" height="40" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
-  <text x="670" y="350" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">TASK SCHEDULER</text>
+  <text x="670" y="350" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">TASK SCHEDULER</text>
   
-  <rect x="470" y="395" width="100" height="40" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
-  <text x="520" y="420" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">EVALUATION WORKER</text>
+  <rect x="470" y="395" width="110" height="40" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
+  <text x="525" y="420" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle">EVALUATION WORKER</text>
   
   <rect x="620" y="395" width="100" height="40" fill="#c4ffad" stroke="#000000" stroke-width="2"/>
-  <text x="670" y="420" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle">RESULTS WORKER</text>
+  <text x="670" y="420" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle">RESULTS WORKER</text>
   
   <!-- Infrastructure Box -->
   <rect x="100" y="280" width="300" height="100" fill="#ffffff" stroke="#000000" stroke-width="2"/>
