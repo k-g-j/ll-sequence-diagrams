@@ -1,80 +1,168 @@
 @startuml avs-architecture
 !pragma layout smetana
 
-!define FONTSIZE 11
-!define FONTFAMILY Helvetica
+' Define custom colors to match sequence diagrams
+skinparam component<<Frontend>> {
+  BackgroundColor #E9F7EF
+  BorderColor #27AE60
+  BorderThickness 2
+}
 
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+skinparam component<<API>> {
+  BackgroundColor #EBF5FB
+  BorderColor #3498DB
+  BorderThickness 2
+}
+
+skinparam component<<Auth>> {
+  BackgroundColor #F9EBEA
+  BorderColor #E74C3C
+  BorderThickness 2
+}
+
+skinparam component<<Database>> {
+  BackgroundColor #F4ECF7
+  BorderColor #8E44AD
+  BorderThickness 2
+}
+
+skinparam component<<External>> {
+  BackgroundColor #FEF9E7
+  BorderColor #F1C40F
+  BorderThickness 2
+}
+
+skinparam component<<Contract>> {
+  BackgroundColor #FADBD8
+  BorderColor #943126
+  BorderThickness 2
+}
+
+skinparam component<<Queue>> {
+  BackgroundColor #FCF3CF
+  BorderColor #B7950B
+  BorderThickness 2
+}
+
+skinparam component<<Operator>> {
+  BackgroundColor #D6EAF8
+  BorderColor #2E86C1
+  BorderThickness 2
+}
+
+skinparam component<<Evaluator>> {
+  BackgroundColor #D4EFDF
+  BorderColor #196F3D
+  BorderThickness 2
+}
+
+skinparam component<<Storage>> {
+  BackgroundColor #F5EEF8
+  BorderColor #76448A
+  BorderThickness 2
+}
+
+' Custom styling
+skinparam ArrowColor #000000
+skinparam ArrowThickness 1.3
+skinparam defaultTextAlignment center
+skinparam RoundCorner 8
+skinparam titleFontSize 18
+skinparam titleFontStyle bold
+skinparam ComponentStyle rectangle
+skinparam componentBorderThickness 1.5
+skinparam componentFontSize 12
+skinparam componentFontName Arial
+skinparam PackageStyle rectangle
+skinparam packageBackgroundColor transparent
+skinparam packageBorderColor #999999
+skinparam databaseBackgroundColor DATABASE_BG
+skinparam databaseBorderColor DATABASE_BORDER
+skinparam queueBackgroundColor QUEUE_BG
+skinparam queueBorderColor QUEUE_BORDER
 
 title Evaluation AVS Architecture
 
-Container_Boundary(smart_contracts, "Smart Contracts Layer") {
-    Component(service_manager, "EvalAvsServiceManager", "Solidity", "Manages AVS")
-    Component(task_manager, "EvalAvsTaskManager", "Solidity", "Manages tasks")
-    Component(bls_registry, "BlsRegistryCoordinator", "Solidity", "BLS key registry")
-    Component(stake_registry, "StakeRegistry", "Solidity", "Stake management")
+package "Smart Contracts Layer" {
+    [EvalAvsServiceManager\n(Solidity)] as service_manager <<Contract>>
+    [EvalAvsTaskManager\n(Solidity)] as task_manager <<Contract>>
+    [BlsRegistryCoordinator\n(Solidity)] as bls_registry <<Contract>>
+    [StakeRegistry\n(Solidity)] as stake_registry <<Contract>>
 }
 
-Container_Boundary(operator_layer, "Operator Layer") {
-    Component(op_service, "Operator Service", "Go", "Main service")
-    Component(op_cli, "Operator CLI", "Go", "Command interface")
-    Component(task_queue, "Task Queue", "Go", "Task management")
-    Component(bls_signer, "BLS Signing Module", "Go", "Cryptographic signing")
-    Component(config_mgr, "Config Manager", "Go", "Configuration")
+package "Operator Layer" {
+    [Operator Service\n(Go)] as op_service <<Operator>>
+    [Operator CLI\n(Go)] as op_cli <<API>>
+    [Task Queue\n(Go)] as task_queue <<Queue>>
+    [BLS Signing Module\n(Go)] as bls_signer <<Operator>>
+    [Config Manager\n(Go)] as config_mgr <<Operator>>
     
-    Container_Boundary(go_eval, "Go Evaluator") {
-        Component(model_factory, "Model Client Factory", "Go", "API Clients")
-        Component(scorer, "Response Scorer", "Go", "Scores responses")
-        Component(processor, "Result Processor", "Go", "Processes results")
-        Component(metrics, "Metrics Collector", "Go", "Collects metrics")
+    package "Go Evaluator" {
+        [Model Client Factory\n(Go)] as model_factory <<Evaluator>>
+        [Response Scorer\n(Go)] as scorer <<Evaluator>>
+        [Result Processor\n(Go)] as processor <<Evaluator>>
+        [Metrics Collector\n(Go)] as metrics <<Evaluator>>
     }
 }
 
-Container_Boundary(infra, "Infrastructure Layer") {
-    Component(docker, "Docker Container", "Docker", "Containerization")
-    Component(monitor, "Monitoring Agent", "Go", "System monitoring")
-    Component(health, "Health Checker", "Go", "Service health")
-    Component(slashing, "Slashing Detector", "Go", "Fault detection")
+package "Infrastructure Layer" {
+    [Docker Container\n(Docker)] as docker <<External>>
+    [Monitoring Agent\n(Go)] as monitor <<API>>
+    [Health Checker\n(Go)] as health <<API>>
+    [Slashing Detector\n(Go)] as slashing <<API>>
 }
 
-Container_Boundary(external, "External Services") {
-    System_Ext(eigenlayer, "EigenLayer Core", "Ethereum-based restaking")
-    System_Ext(s3, "Dataset Registry (S3)", "S3 storage")
-    System_Ext(llm, "LLM API Providers", "Model APIs")
-    System_Ext(api, "LayerLens API", "Main API")
+package "External Services" {
+    [EigenLayer Core\n(Ethereum)] as eigenlayer <<External>>
+    database "Dataset Registry\n(S3)" as s3 <<Storage>>
+    [LLM API Providers\n(API)] as llm <<External>>
+    [LayerLens API\n(API)] as api <<API>>
 }
 
 ' Contract interactions
-Rel(service_manager, bls_registry, "Manages")
-Rel(task_manager, service_manager, "Uses")
-Rel(stake_registry, service_manager, "Provides stakes")
-Rel(bls_registry, eigenlayer, "Registers with")
-Rel(stake_registry, eigenlayer, "Verifies stakes")
+service_manager --> bls_registry : Manages
+task_manager --> service_manager : Uses
+stake_registry --> service_manager : Provides stakes
+bls_registry --> eigenlayer : Registers with
+stake_registry --> eigenlayer : Verifies stakes
 
 ' Operator components
-Rel(op_service, task_queue, "Uses")
-Rel(op_service, bls_signer, "Signs with")
-Rel(op_service, config_mgr, "Gets config from")
-Rel(op_service, go_eval, "Executes with")
-Rel(op_cli, op_service, "Manages")
-Rel(op_cli, config_mgr, "Configures")
-Rel(model_factory, llm, "Connects to")
-Rel(go_eval, processor, "Processes with")
-Rel(go_eval, scorer, "Scores with")
-Rel(go_eval, metrics, "Collects with")
-Rel(processor, api, "Reports to")
+op_service --> task_queue : Uses
+op_service --> bls_signer : Signs with
+op_service --> config_mgr : Gets config from
+op_service --> model_factory : Executes with
+op_cli --> op_service : Manages
+op_cli --> config_mgr : Configures
+model_factory --> llm : Connects to
+processor --> scorer : Processes with
+metrics --> processor : Collects metrics
+processor --> api : Reports to
 
 ' Infrastructure
-Rel(docker, op_service, "Hosts")
-Rel(monitor, op_service, "Monitors")
-Rel(monitor, health, "Checks")
-Rel(monitor, slashing, "Detects")
-Rel(slashing, eigenlayer, "Reports to")
+docker --> op_service : Hosts
+monitor --> op_service : Monitors
+monitor --> health : Checks
+monitor --> slashing : Detects
+slashing --> eigenlayer : Reports to
 
 ' External connections
-Rel(op_service, task_manager, "Interacts with")
-Rel(op_service, s3, "Retrieves data from")
-Rel(task_manager, api, "Reports to")
+op_service --> task_manager : Interacts with
+op_service --> s3 : Retrieves data from
+task_manager --> api : Reports to
+
+' Add color-coding legend
+legend right
+  |= Component Type |= Description |
+  |<back:FRONTEND_BG>                </back>| Frontend - Web/UI Components |
+  |<back:API_BG>                </back>| API - Backend Services |
+  |<back:AUTH_BG>                </back>| Auth - Authentication Services |
+  |<back:DATABASE_BG>                </back>| Database - Data Storage |
+  |<back:EXTERNAL_BG>                </back>| External - 3rd Party Services |
+  |<back:CONTRACT_BG>                </back>| Contract - Smart Contracts |
+  |<back:QUEUE_BG>                </back>| Queue - Message Queues |
+  |<back:OPERATOR_BG>                </back>| Operator - Validator Nodes |
+  |<back:EVALUATOR_BG>                </back>| Evaluator - Evaluation Services |
+  |<back:STORAGE_BG>                </back>| Storage - Storage Services |
+endlegend
 
 @enduml
