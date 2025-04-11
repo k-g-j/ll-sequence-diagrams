@@ -1,0 +1,49 @@
+@startuml avs-registration-flow
+
+!include common-style.puml
+
+' Maintain some specific customizations for this diagram
+skinparam linetype ortho
+skinparam ParticipantPadding 20
+skinparam SequenceBoxPadding 10
+skinparam ArrowThickness 1.5
+
+title Operator Registration Flow
+
+actor Operator
+participant "Operator CLI" as CLI <<API>>
+participant "Config Files" as Config <<Storage>>
+participant "EvalAvsServiceManager" as ServiceManager <<Contract>>
+participant "EvalAvsTaskManager" as TaskManager <<Contract>>
+participant "EigenLayer Contracts" as EigenLayer <<Contract>>
+
+
+Operator -> CLI: run init command
+activate CLI
+CLI -> CLI: Generate/load ECDSA and BLS keys
+CLI -> Config: Create config files
+CLI --> Operator: Configuration complete
+deactivate CLI
+
+Operator -> CLI: run docker setup
+activate CLI
+CLI -> CLI: Generate docker-compose files
+CLI --> Operator: Docker setup complete
+deactivate CLI
+
+Operator -> Operator: Start operator node
+activate Operator
+Operator -> EigenLayer: Register with EigenLayer (ECDSA+BLS keys)
+EigenLayer --> Operator: Registration confirmed
+
+Operator -> ServiceManager: Register with EvalAvsServiceManager
+ServiceManager -> EigenLayer: Verify registration
+EigenLayer --> ServiceManager: Confirm registration
+ServiceManager --> Operator: AVS registration confirmed
+
+Operator -> TaskManager: joinAssignmentQueue()
+TaskManager -> TaskManager: Add operator to queue
+TaskManager --> Operator: Successfully joined queue
+deactivate Operator
+
+@enduml

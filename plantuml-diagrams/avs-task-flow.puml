@@ -1,0 +1,67 @@
+@startuml avs-task-flow
+
+!include common-style.puml
+
+' Maintain some specific customizations for this diagram
+skinparam linetype ortho
+skinparam ParticipantPadding 20
+skinparam SequenceBoxPadding 10
+skinparam ArrowThickness 1.5
+
+title Task Creation and Assignment Flow
+
+actor Admin
+participant "EvalAvsTaskManager" as TaskManager <<Contract>>
+participant "Assignment Queue" as Queue <<Queue>>
+participant "Operator" as Operator <<Operator>>
+participant "GoEvaluator" as GoEvaluator <<Evaluator>>
+participant "Dataset Registry (S3)" as S3 <<Storage>>
+participant "LLM Provider" as LLM <<External>>
+participant "LayerLens API" as API <<API>>
+
+
+Admin -> TaskManager: requestEval(modelName, datasetName, subsets)
+activate TaskManager
+TaskManager -> Queue: popNextAssignedOperator()
+Queue --> TaskManager: assignedOperator
+TaskManager -> TaskManager: Create EvalAvsTask
+TaskManager -> TaskManager: Emit EvalRequested Event
+deactivate TaskManager
+
+Operator -> Operator: Listen for EvalRequested events
+TaskManager -> Operator: EvalRequested(taskId, task, externalId)
+
+
+Operator -> Operator: Check if assigned to task
+activate Operator
+Operator -> S3: Fetch dataset files (formatted.jsonl + config)
+S3 --> Operator: Return dataset files
+Operator -> API: Request API Key for model provider
+API --> Operator: Return API Key
+Operator -> GoEvaluator: Execute evaluation
+
+activate GoEvaluator
+loop For each prompt in dataset
+    GoEvaluator -> LLM: Send prompt
+    LLM --> GoEvaluator: Return response
+    GoEvaluator -> GoEvaluator: Score response
+    GoEvaluator -> GoEvaluator: Hash response (MD5)
+end
+GoEvaluator -> GoEvaluator: Generate combined hash
+GoEvaluator --> Operator: Return results and hash
+deactivate GoEvaluator
+
+Operator -> API: Save detailed results
+API --> Operator: Confirm save
+
+
+Operator -> Operator: Generate BLS signature
+Operator -> TaskManager: respondToEvalRequest(taskId, hash, signature)
+activate TaskManager
+TaskManager -> TaskManager: Verify signature
+TaskManager -> TaskManager: Update task state to SUBMITTED
+TaskManager -> Queue: Add operator back to queue
+TaskManager -> TaskManager: Emit EvalCompleted Event
+deactivate TaskManager
+deactivate Operator
+@enduml

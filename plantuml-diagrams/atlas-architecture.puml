@@ -1,0 +1,185 @@
+@startuml atlas-architecture
+!pragma layout smetana
+
+' Define custom colors to match sequence diagrams
+skinparam component<<Frontend>> {
+  BackgroundColor #E9F7EF
+  BorderColor #27AE60
+  BorderThickness 2
+}
+
+skinparam component<<API>> {
+  BackgroundColor #EBF5FB
+  BorderColor #3498DB
+  BorderThickness 2
+}
+
+skinparam component<<Auth>> {
+  BackgroundColor #F9EBEA
+  BorderColor #E74C3C
+  BorderThickness 2
+}
+
+skinparam component<<Database>> {
+  BackgroundColor #F4ECF7
+  BorderColor #8E44AD
+  BorderThickness 2
+}
+
+skinparam component<<External>> {
+  BackgroundColor #FEF9E7
+  BorderColor #F1C40F
+  BorderThickness 2
+}
+
+skinparam component<<Contract>> {
+  BackgroundColor #FADBD8
+  BorderColor #943126
+  BorderThickness 2
+}
+
+skinparam component<<Queue>> {
+  BackgroundColor #FCF3CF
+  BorderColor #B7950B
+  BorderThickness 2
+}
+
+skinparam component<<Operator>> {
+  BackgroundColor #D6EAF8
+  BorderColor #2E86C1
+  BorderThickness 2
+}
+
+skinparam component<<Evaluator>> {
+  BackgroundColor #D4EFDF
+  BorderColor #196F3D
+  BorderThickness 2
+}
+
+skinparam component<<Storage>> {
+  BackgroundColor #F5EEF8
+  BorderColor #76448A
+  BorderThickness 2
+}
+
+' Custom styling
+skinparam ArrowColor #000000
+skinparam ArrowThickness 1.3
+skinparam defaultTextAlignment center
+skinparam RoundCorner 8
+skinparam titleFontSize 18
+skinparam titleFontStyle bold
+skinparam ComponentStyle rectangle
+skinparam componentBorderThickness 1.5
+skinparam componentFontSize 12
+skinparam componentFontName Arial
+skinparam PackageStyle rectangle
+skinparam packageBackgroundColor transparent
+skinparam packageBorderColor #999999
+skinparam legendBackgroundColor #FFFFFF
+skinparam legendBorderColor #CCCCCC
+skinparam database<<Database>> {
+  BackgroundColor #F4ECF7
+  BorderColor #8E44AD
+  BorderThickness 2
+}
+
+skinparam queue<<Queue>> {
+  BackgroundColor #FCF3CF
+  BorderColor #B7950B
+  BorderThickness 2
+}
+
+actor "User" as user
+
+package "Frontend" {
+  [Atlas Web UI\n(React)] as web_ui <<Frontend>>
+  [Next.js App\n(Node.js)] as nextjs <<Frontend>>
+  [Authentication Module\n(NextAuth)] as auth <<Auth>>
+  [Results Visualization\n(React)] as viz <<Frontend>>
+}
+
+package "API" {
+  [API Gateway\n(Go)] as api_gw <<API>>
+  [Go Backend API\n(Go)] as go_backend <<API>>
+  [WebSocket Service\n(Go)] as websocket <<API>>
+  [Rate Limiter\n(Go)] as rate_limiter <<API>>
+}
+
+package "Core" {
+  [Evaluation Manager\n(Go)] as eval_manager <<API>>
+  [Model Registry\n(Go)] as model_registry <<API>>
+  [Dataset Manager\n(Go)] as dataset_manager <<API>>
+  [User Manager\n(Go)] as user_manager <<API>>
+  [Results Processor\n(Go)] as results_processor <<API>>
+}
+
+package "Integration" {
+  [Evaluation Worker\n(Go)] as worker <<Evaluator>>
+  [Smart Contract Client\n(Go)] as contract_client <<Contract>>
+  [Metrics Collector\n(Go)] as metrics <<Evaluator>>
+}
+
+package "Data" {
+  [MongoDB\n(NoSQL)] as mongodb <<Database>>
+  [MariaDB\n(SQL)] as mariadb <<Database>>
+  [AWS S3\n(Object Storage)] as s3 <<Storage>>
+  [Message Queue\n(Kafka)] as queue <<Queue>>
+}
+
+package "External" {
+  [AWS Cognito\n(Auth)] as cognito <<Auth>>
+  [LayerLens AVS\n(Service)] as avs <<Operator>>
+  [LLM Providers\n(API)] as llms <<External>>
+}
+
+user --> web_ui : Uses
+web_ui --> nextjs : Renders through
+nextjs --> auth : Authenticates with
+nextjs --> viz : Displays with
+nextjs --> api_gw : Makes requests to
+
+auth --> cognito : Verifies with
+api_gw --> go_backend : Routes to
+api_gw --> websocket : Connects to
+api_gw --> rate_limiter : Limits through
+
+go_backend --> eval_manager : Uses
+go_backend --> model_registry : Uses
+go_backend --> dataset_manager : Uses
+go_backend --> user_manager : Uses
+go_backend --> results_processor : Uses
+
+eval_manager --> mongodb : Stores data in
+model_registry --> mongodb : Stores data in
+dataset_manager --> mongodb : Stores data in
+user_manager --> mongodb : Stores data in
+results_processor --> mariadb : Stores metrics in
+
+eval_manager --> queue : Publishes to
+queue --> worker : Consumes from
+worker --> contract_client : Calls
+worker --> results_processor : Processes with
+contract_client --> avs : Interacts with
+metrics --> llms : Calls
+metrics --> mariadb : Stores in
+
+dataset_manager --> s3 : Stores files in
+results_processor --> s3 : Stores results in
+
+' Add color-coding legend
+legend right
+  |= Component Type |= Description |
+  |<back:#E9F7EF><color:black>Frontend</color></back>| Web/UI Components |
+  |<back:#EBF5FB><color:black>API</color></back>| Backend Services |
+  |<back:#F9EBEA><color:black>Auth</color></back>| Authentication Services |
+  |<back:#F4ECF7><color:black>Database</color></back>| Data Storage |
+  |<back:#FEF9E7><color:black>External</color></back>| 3rd Party Services |
+  |<back:#FADBD8><color:black>Contract</color></back>| Smart Contracts |
+  |<back:#FCF3CF><color:black>Queue</color></back>| Message Queues |
+  |<back:#D6EAF8><color:black>Operator</color></back>| Validator Nodes |
+  |<back:#D4EFDF><color:black>Evaluator</color></back>| Evaluation Services |
+  |<back:#F5EEF8><color:black>Storage</color></back>| Storage Services |
+endlegend
+
+@enduml

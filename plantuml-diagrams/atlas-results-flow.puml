@@ -1,0 +1,59 @@
+@startuml atlas-results-flow
+
+!include common-style.puml
+
+' Maintain some specific customizations for this diagram
+skinparam linetype ortho
+skinparam ParticipantPadding 20
+skinparam SequenceBoxPadding 10
+skinparam ArrowThickness 1.5
+
+title Results Viewing and Comparison Flow
+
+actor User
+participant "Atlas Frontend" as Frontend <<Frontend>>
+participant "Atlas API" as API <<API>>
+participant "MongoDB" as MongoDB <<Database>>
+participant "MariaDB" as MariaDB <<Database>>
+participant "AWS S3" as S3 <<Storage>>
+
+
+User -> Frontend: Navigate to evaluations
+activate Frontend
+Frontend -> API: GET /api/v1/evaluations
+activate API
+API -> MongoDB: Fetch user's evaluations
+MongoDB --> API: Return evaluations
+API --> Frontend: Return evaluation list
+deactivate API
+Frontend --> User: Display evaluations
+deactivate Frontend
+
+User -> Frontend: Select evaluation for details
+activate Frontend
+Frontend -> API: GET /api/v1/evaluations/{id}
+activate API
+API -> MongoDB: Fetch evaluation metadata
+MongoDB --> API: Return metadata
+API -> S3: Fetch detailed results
+S3 --> API: Return result data
+API --> Frontend: Return combined data
+deactivate API
+Frontend -> Frontend: Process and visualize results
+Frontend --> User: Display detailed metrics and charts
+deactivate Frontend
+
+User -> Frontend: Request model comparison
+activate Frontend
+Frontend -> API: GET /api/v1/models/compare?ids=model1,model2&dataset=X
+activate API
+API -> MariaDB: Fetch aggregate metrics
+MariaDB --> API: Return metrics
+API -> MongoDB: Fetch evaluations for models
+MongoDB --> API: Return evaluations
+API --> Frontend: Return comparison data
+deactivate API
+Frontend -> Frontend: Generate comparison visualizations
+Frontend --> User: Display model comparison
+deactivate Frontend
+@enduml

@@ -1,0 +1,57 @@
+@startuml atlas-dataset-flow
+
+!include common-style.puml
+
+title Dataset Management Flow
+
+actor Admin
+actor User
+participant "Atlas Frontend" as Frontend <<Frontend>>
+participant "Atlas API" as API <<API>>
+participant "AWS S3" as S3 <<Storage>>
+participant "MongoDB" as MongoDB <<Database>>
+participant "Dataset Registry" as Registry <<Storage>>
+
+
+Admin -> Frontend: Navigate to dataset management
+Admin -> Frontend: Upload dataset files
+activate Frontend
+Frontend -> Frontend: Validate dataset format
+Frontend -> API: POST /api/v1/datasets
+activate API
+API -> API: Validate dataset metadata
+API -> S3: Upload dataset files
+S3 --> API: Confirm upload
+API -> MongoDB: Store dataset metadata
+MongoDB --> API: Confirm storage
+API -> Registry: Register dataset in registry
+Registry --> API: Confirm registration
+API --> Frontend: Return success
+deactivate API
+Frontend --> Admin: Show success message
+deactivate Frontend
+
+User -> Frontend: Browse available datasets
+activate Frontend
+Frontend -> API: GET /api/v1/datasets
+activate API
+API -> MongoDB: Fetch dataset metadata
+MongoDB --> API: Return datasets
+API --> Frontend: Return dataset list
+deactivate API
+Frontend --> User: Display dataset gallery
+deactivate Frontend
+
+User -> Frontend: View dataset details
+activate Frontend
+Frontend -> API: GET /api/v1/datasets/{id}
+activate API
+API -> MongoDB: Fetch dataset metadata
+MongoDB --> API: Return dataset
+API -> S3: Get dataset sample
+S3 --> API: Return sample data
+API --> Frontend: Return combined data
+deactivate API
+Frontend --> User: Display dataset details
+deactivate Frontend
+@enduml

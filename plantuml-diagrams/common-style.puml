@@ -1,0 +1,184 @@
+@startuml common-style
+
+' Common styling for all sequence diagrams in LayerLens
+' Defines entity types with distinct shapes, colors and styles
+
+' Basic styling
+skinparam monochrome false
+skinparam handwritten false
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultTextAlignment center
+skinparam sequenceMessageAlign center
+skinparam linetype polyline
+skinparam maxMessageSize 250
+skinparam sequenceArrowThickness 1.5
+skinparam roundcorner 8
+skinparam padding 8
+skinparam noteBorderThickness 1
+
+' Enhanced appearance
+skinparam backgroundColor white
+skinparam titleFontSize 16
+skinparam titleFontColor #303030
+skinparam titleFontStyle bold
+skinparam footerFontSize 10
+skinparam headerFontSize 10
+skinparam arrowColor #000000
+skinparam noteBackgroundColor #FFFFCC
+skinparam noteBorderColor #999999
+
+' Global participant style
+skinparam ParticipantPadding 15
+skinparam SequenceBoxPadding 10
+skinparam BoxPadding 10
+skinparam participantFontSize 13
+skinparam participantFontStyle bold
+skinparam sequenceStereotypeFontSize 11
+
+' Actor customization
+skinparam actor {
+  BorderColor #454545
+  BackgroundColor white
+  FontStyle bold
+}
+
+' Define stereotype-based styling with shapes
+
+' Web/Frontend Components
+skinparam participant<<Frontend>> {
+  BackgroundColor #E9F7EF
+  BorderColor #27AE60
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' Backend API Services
+skinparam participant<<API>> {
+  BackgroundColor #EBF5FB
+  BorderColor #3498DB
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' Authentication Services
+skinparam participant<<Auth>> {
+  BackgroundColor #F9EBEA
+  BorderColor #E74C3C
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' Database/Storage Services
+skinparam participant<<Database>> {
+  BackgroundColor #F4ECF7
+  BorderColor #8E44AD
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' External 3rd Party Services
+skinparam participant<<External>> {
+  BackgroundColor #FEF9E7
+  BorderColor #F1C40F
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' Smart Contracts
+skinparam participant<<Contract>> {
+  BackgroundColor #FADBD8
+  BorderColor #943126
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' Message Queues
+skinparam participant<<Queue>> {
+  BackgroundColor #FCF3CF
+  BorderColor #B7950B
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' Validator/Operator Nodes
+skinparam participant<<Operator>> {
+  BackgroundColor #D6EAF8
+  BorderColor #2E86C1
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' Evaluation Services
+skinparam participant<<Evaluator>> {
+  BackgroundColor #D4EFDF
+  BorderColor #196F3D
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' Storage Services (S3, etc)
+skinparam participant<<Storage>> {
+  BackgroundColor #F5EEF8
+  BorderColor #76448A
+  BorderThickness 2
+  FontStyle bold
+  StereotypeFontSize 10
+}
+
+' Note styling
+skinparam note {
+  BorderThickness 1
+  BackgroundColor #FFFFDD
+  BorderColor #999999
+}
+
+' Sequence specific styling
+skinparam sequence {
+  LifeLineBorderColor #000000
+  LifeLineBackgroundColor #F8F8F8
+  MessageAlignment center
+  ArrowFontSize 12
+  ArrowColor #000000
+  DividerBackgroundColor #EEEEEE
+  DividerBorderColor #CCCCCC
+  DividerBorderThickness 1
+  DividerFontStyle bold
+  GroupBackgroundColor #EEEEEE
+  GroupBorderColor #CCCCCC
+  GroupBorderThickness 1
+  GroupFontStyle bold
+  FootBoxBackgroundColor white
+  FootBoxBorderColor #CCCCCC
+  FootBoxBorderThickness 1
+}
+
+' Show complete lifelines with footbox
+show footbox
+hide unlinked
+
+' Standard legend to include in diagrams
+legend right
+  |= Entity Type |= Description |
+  |<#E9F7EF>| Frontend - Web/UI Components |
+  |<#EBF5FB>| API - Backend Services |
+  |<#F9EBEA>| Auth - Authentication Services |
+  |<#F4ECF7>| Database - Data Storage |
+  |<#FEF9E7>| External - 3rd Party Services |
+  |<#FADBD8>| Contract - Smart Contracts |
+  |<#FCF3CF>| Queue - Message Queues |
+  |<#D6EAF8>| Operator - Validator Nodes |
+  |<#D4EFDF>| Evaluator - Evaluation Services |
+  |<#F5EEF8>| Storage - Storage Services |
+endlegend
+
+@enduml

@@ -1,0 +1,73 @@
+@startuml atlas-evaluation-flow
+
+!include common-style.puml
+
+title Evaluation Creation and Processing Flow
+
+actor User
+participant "Atlas Frontend" as Frontend <<Frontend>>
+participant "Atlas API Backend" as API <<API>>
+participant "MongoDB" as MongoDB <<Database>>
+participant "Message Queue" as Kafka <<Queue>>
+participant "Evaluation Worker" as Worker <<API>>
+participant "Smart Contract" as Contract <<Contract>>
+participant "AVS Operator" as Operator <<Operator>>
+participant "AWS S3" as S3 <<Storage>>
+
+
+User -> Frontend: Select model and dataset
+activate Frontend
+User -> Frontend: Submit evaluation request
+Frontend -> API: POST /api/v1/evaluations
+activate API
+API -> API: Validate request
+API -> MongoDB: Store evaluation with PENDING status
+MongoDB --> API: Confirm storage
+API -> Kafka: Publish to evaluations topic
+Kafka --> API: Confirm message
+API --> Frontend: Return evaluation ID and status
+deactivate API
+Frontend --> User: Show evaluation pending
+deactivate Frontend
+
+Kafka --> Worker: Consume evaluation message
+activate Worker
+Worker -> MongoDB: Fetch evaluation details
+MongoDB --> Worker: Return evaluation data
+Worker -> Contract: Call requestEval()
+activate Contract
+Contract -> Contract: Assign operator and create task
+Contract --> Worker: Return task ID
+deactivate Contract
+Worker -> MongoDB: Update with task ID
+MongoDB --> Worker: Confirm update
+deactivate Worker
+
+Contract -> Operator: Assign evaluation task
+activate Operator
+note right of Operator: Operator processes evaluation
+Operator -> Contract: Submit evaluation results
+deactivate Operator
+
+Worker -> Contract: Listen for EvalCompleted events
+Contract --> Worker: EvalCompleted event
+activate Worker
+Worker -> Worker: Process results
+Worker -> S3: Store detailed results
+S3 --> Worker: Confirm storage
+Worker -> MongoDB: Update evaluation status to COMPLETED
+MongoDB --> Worker: Confirm update
+Worker -> API: Notify of completion via WebSocket
+deactivate Worker
+
+API --> Frontend: WebSocket event: evaluation complete
+activate Frontend
+Frontend -> API: GET /api/v1/evaluations/{id}
+API -> MongoDB: Fetch evaluation
+MongoDB --> API: Return evaluation data
+API -> S3: Fetch detailed results
+S3 --> API: Return results data
+API --> Frontend: Return combined data
+Frontend --> User: Display evaluation results
+deactivate Frontend
+@enduml

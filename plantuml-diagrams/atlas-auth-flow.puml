@@ -1,0 +1,39 @@
+@startuml atlas-auth-flow
+
+!include common-style.puml
+
+title User Authentication Flow
+
+actor User
+participant "Atlas Frontend" as Frontend <<Frontend>>
+participant "Next Auth" as NextAuth <<Auth>>
+participant "Atlas API" as API <<API>>
+participant "AWS Cognito" as Cognito <<External>>
+participant "Database" as DB <<Database>>
+
+
+User -> Frontend: Login with email/password
+activate Frontend
+Frontend -> NextAuth: Submit credentials
+NextAuth -> Cognito: Authenticate user
+activate Cognito
+Cognito --> NextAuth: Return JWT token
+deactivate Cognito
+NextAuth --> Frontend: Store auth token in session
+Frontend --> User: Redirect to dashboard
+deactivate Frontend
+
+User -> Frontend: Access protected route
+activate Frontend
+Frontend -> API: Request data with auth token
+activate API
+API -> API: JWT middleware validates token
+API -> Cognito: Verify token (if needed)
+Cognito --> API: Token verification
+API -> DB: Fetch authorized data
+DB --> API: Return data
+API --> Frontend: Return authorized data
+deactivate API
+Frontend --> User: Display content
+deactivate Frontend
+@enduml

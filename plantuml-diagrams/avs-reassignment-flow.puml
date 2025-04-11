@@ -1,0 +1,37 @@
+@startuml avs-reassignment-flow
+
+!include common-style.puml
+
+' Maintain some specific customizations for this diagram
+skinparam linetype ortho
+skinparam ParticipantPadding 20
+skinparam SequenceBoxPadding 10
+skinparam ArrowThickness 1.5
+
+title Task Reassignment Flow
+
+actor Admin
+participant "EvalAvsTaskManager" as TaskManager <<Contract>>
+participant "Original Operator" as OriginalOperator <<Operator>>
+participant "New Operator" as NewOperator <<Operator>>
+participant "GoEvaluator" as GoEvaluator <<Evaluator>>
+
+
+Admin -> TaskManager: reassignTask(taskId)
+activate TaskManager
+TaskManager -> TaskManager: Check if task is expired
+TaskManager -> TaskManager: Get next operator from queue
+TaskManager -> TaskManager: Update task with new operator
+TaskManager -> TaskManager: Emit EvalReassigned Event
+deactivate TaskManager
+
+TaskManager --> OriginalOperator: EvalReassigned Event
+OriginalOperator -> OriginalOperator: Cancel task processing
+
+TaskManager --> NewOperator: EvalReassigned Event
+activate NewOperator
+NewOperator -> NewOperator: Check if new assigned operator
+NewOperator -> GoEvaluator: Start evaluation process
+note right of NewOperator: Process follows normal evaluation flow
+deactivate NewOperator
+@enduml
