@@ -12,8 +12,8 @@ title Task Reassignment Flow
 
 actor Admin
 participant "EvalAvsTaskManager" as TaskManager <<Contract>>
-participant "OriginalOperator" as OriginalOperator <<Operator>>
-participant "NewOperator" as NewOperator <<Operator>>
+participant "Original Operator" as OriginalOperator <<Operator>>
+participant "New Operator" as NewOperator <<Operator>>
 participant "GoEvaluator" as GoEvaluator <<Evaluator>>
 
 note over Admin, GoEvaluator: Task Reassignment Process

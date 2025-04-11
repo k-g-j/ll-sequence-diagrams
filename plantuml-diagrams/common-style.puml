@@ -1,7 +1,7 @@
 @startuml common-style
 
 ' Common styling for all sequence diagrams in LayerLens
-' Defines entity types with distinct colors and styles
+' Defines entity types with distinct shapes, colors and styles
 
 ' Basic styling
 skinparam monochrome false
@@ -11,66 +11,101 @@ skinparam defaultFontName Arial
 skinparam sequenceMessageAlign center
 skinparam linetype polyline
 
-' Define entity styles
-skinparam participant {
-  BackgroundColor white
-  BorderColor black
+' Define stereotype-based styling
+
+' Web/Frontend Components
+skinparam participant<<Frontend>> {
+  BackgroundColor #E9F7EF
+  BorderColor #27AE60
+  BorderThickness 2
+  FontStyle bold
 }
 
-' Define stereotypes and colors for different entity types
-' Web/Frontend Components
-skinparam participantBackgroundColor<<Frontend>> #E9F7EF
-skinparam participantBorderColor<<Frontend>> #27AE60
-
 ' Backend API Services
-skinparam participantBackgroundColor<<API>> #EBF5FB
-skinparam participantBorderColor<<API>> #3498DB
+skinparam participant<<API>> {
+  BackgroundColor #EBF5FB
+  BorderColor #3498DB
+  BorderThickness 2
+  FontStyle bold
+}
 
 ' Authentication Services
-skinparam participantBackgroundColor<<Auth>> #F9EBEA
-skinparam participantBorderColor<<Auth>> #E74C3C
+skinparam participant<<Auth>> {
+  BackgroundColor #F9EBEA
+  BorderColor #E74C3C
+  BorderThickness 2
+  FontStyle bold
+}
 
 ' Database/Storage Services
-skinparam participantBackgroundColor<<Database>> #F4ECF7
-skinparam participantBorderColor<<Database>> #8E44AD
+skinparam participant<<Database>> {
+  BackgroundColor #F4ECF7
+  BorderColor #8E44AD
+  BorderThickness 2
+  FontStyle bold
+}
 
 ' External 3rd Party Services
-skinparam participantBackgroundColor<<External>> #FEF9E7
-skinparam participantBorderColor<<External>> #F1C40F
+skinparam participant<<External>> {
+  BackgroundColor #FEF9E7
+  BorderColor #F1C40F
+  BorderThickness 2
+  FontStyle bold
+}
 
 ' Smart Contracts
-skinparam participantBackgroundColor<<Contract>> #FADBD8
-skinparam participantBorderColor<<Contract>> #943126
+skinparam participant<<Contract>> {
+  BackgroundColor #FADBD8
+  BorderColor #943126
+  BorderThickness 2
+  FontStyle bold
+}
 
 ' Message Queues
-skinparam participantBackgroundColor<<Queue>> #FCF3CF
-skinparam participantBorderColor<<Queue>> #B7950B
+skinparam participant<<Queue>> {
+  BackgroundColor #FCF3CF
+  BorderColor #B7950B
+  BorderThickness 2
+  FontStyle bold
+}
 
 ' Validator/Operator Nodes
-skinparam participantBackgroundColor<<Operator>> #D6EAF8
-skinparam participantBorderColor<<Operator>> #2E86C1
+skinparam participant<<Operator>> {
+  BackgroundColor #D6EAF8
+  BorderColor #2E86C1
+  BorderThickness 2
+  FontStyle bold
+}
 
 ' Evaluation Services
-skinparam participantBackgroundColor<<Evaluator>> #D4EFDF
-skinparam participantBorderColor<<Evaluator>> #196F3D
+skinparam participant<<Evaluator>> {
+  BackgroundColor #D4EFDF
+  BorderColor #196F3D
+  BorderThickness 2
+  FontStyle bold
+}
 
 ' Storage Services (S3, etc)
-skinparam participantBackgroundColor<<Storage>> #F5EEF8
-skinparam participantBorderColor<<Storage>> #76448A
+skinparam participant<<Storage>> {
+  BackgroundColor #F5EEF8
+  BorderColor #76448A
+  BorderThickness 2
+  FontStyle bold
+}
 
 ' Standard legend to include in diagrams
 legend
   |= Entity Type |= Description |
-  |<#E9F7EF>| Frontend | Web/UI Components |
-  |<#EBF5FB>| API | Backend Services |
-  |<#F9EBEA>| Auth | Authentication Services |
-  |<#F4ECF7>| Database | Data Storage |
-  |<#FEF9E7>| External | 3rd Party Services |
-  |<#FADBD8>| Contract | Smart Contracts |
-  |<#FCF3CF>| Queue | Message Queues |
-  |<#D6EAF8>| Operator | Validator Nodes |
-  |<#D4EFDF>| Evaluator | Evaluation Services |
-  |<#F5EEF8>| Storage | Storage Services |
+  |<#E9F7EF>| Frontend - Web/UI Components |
+  |<#EBF5FB>| API - Backend Services |
+  |<#F9EBEA>| Auth - Authentication Services |
+  |<#F4ECF7>| Database - Data Storage |
+  |<#FEF9E7>| External - 3rd Party Services |
+  |<#FADBD8>| Contract - Smart Contracts |
+  |<#FCF3CF>| Queue - Message Queues |
+  |<#D6EAF8>| Operator - Validator Nodes |
+  |<#D4EFDF>| Evaluator - Evaluation Services |
+  |<#F5EEF8>| Storage - Storage Services |
 endlegend
 
 @enduml
