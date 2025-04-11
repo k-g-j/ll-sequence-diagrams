@@ -144,7 +144,7 @@ skinparam note {
 
 ' Sequence specific styling
 skinparam sequence {
-  LifeLineBorderColor #CCCCCC
+  LifeLineBorderColor #000000
   LifeLineBackgroundColor white
   MessageAlignment center
   ArrowFontSize 12
