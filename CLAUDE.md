@@ -32,6 +32,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - NEVER include Claude attribution in commit messages or PRs
 - Do not include phrases like "Generated with Claude Code" or "Co-Authored-By: Claude"
 - Keep commit messages concise and focused on the changes made
+- Before committing, check for and remove unnecessary files and folders from the repository
+- Use `git status` to verify only intended files are being committed
 
 ## IMPORTANT: Never commit CLAUDE.md to GitHub
 - This file is for local use only

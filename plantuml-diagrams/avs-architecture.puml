@@ -160,16 +160,16 @@ task_manager --> api : Reports to
 ' Add color-coding legend
 legend right
   |= Component Type |= Description |
-  |<back:#E9F7EF>  Frontend  </back>| Web/UI Components |
-  |<back:#EBF5FB>  API  </back>| Backend Services |
-  |<back:#F9EBEA>  Auth  </back>| Authentication Services |
-  |<back:#F4ECF7>  Database  </back>| Data Storage |
-  |<back:#FEF9E7>  External  </back>| 3rd Party Services |
-  |<back:#FADBD8>  Contract  </back>| Smart Contracts |
-  |<back:#FCF3CF>  Queue  </back>| Message Queues |
-  |<back:#D6EAF8>  Operator  </back>| Validator Nodes |
-  |<back:#D4EFDF>  Evaluator  </back>| Evaluation Services |
-  |<back:#F5EEF8>  Storage  </back>| Storage Services |
+  |<back:#E9F7EF><color:black>Frontend</color></back>| Web/UI Components |
+  |<back:#EBF5FB><color:black>API</color></back>| Backend Services |
+  |<back:#F9EBEA><color:black>Auth</color></back>| Authentication Services |
+  |<back:#F4ECF7><color:black>Database</color></back>| Data Storage |
+  |<back:#FEF9E7><color:black>External</color></back>| 3rd Party Services |
+  |<back:#FADBD8><color:black>Contract</color></back>| Smart Contracts |
+  |<back:#FCF3CF><color:black>Queue</color></back>| Message Queues |
+  |<back:#D6EAF8><color:black>Operator</color></back>| Validator Nodes |
+  |<back:#D4EFDF><color:black>Evaluator</color></back>| Evaluation Services |
+  |<back:#F5EEF8><color:black>Storage</color></back>| Storage Services |
 endlegend
 
 @enduml
