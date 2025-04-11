@@ -16,7 +16,6 @@ participant "Original Operator" as OriginalOperator <<Operator>>
 participant "New Operator" as NewOperator <<Operator>>
 participant "GoEvaluator" as GoEvaluator <<Evaluator>>
 
-note over Admin, GoEvaluator: Task Reassignment Process
 
 Admin -> TaskManager: reassignTask(taskId)
 activate TaskManager

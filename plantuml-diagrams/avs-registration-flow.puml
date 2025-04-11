@@ -17,7 +17,6 @@ participant "EvalAvsServiceManager" as ServiceManager <<Contract>>
 participant "EvalAvsTaskManager" as TaskManager <<Contract>>
 participant "EigenLayer Contracts" as EigenLayer <<Contract>>
 
-note over Operator, EigenLayer: Operator Setup and Registration
 
 Operator -> CLI: run init command
 activate CLI
@@ -47,5 +46,4 @@ TaskManager -> TaskManager: Add operator to queue
 TaskManager --> Operator: Successfully joined queue
 deactivate Operator
 
-note over Operator, EigenLayer: Operator is now ready to execute tasks
 @enduml

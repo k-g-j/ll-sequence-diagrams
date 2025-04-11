@@ -17,7 +17,6 @@ participant "MongoDB" as MongoDB <<Database>>
 participant "MariaDB" as MariaDB <<Database>>
 participant "AWS S3" as S3 <<Storage>>
 
-note over User, S3: Viewing and Comparing Results
 
 User -> Frontend: Navigate to evaluations
 activate Frontend

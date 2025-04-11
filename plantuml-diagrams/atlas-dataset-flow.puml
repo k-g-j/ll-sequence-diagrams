@@ -12,7 +12,6 @@ participant "AWS S3" as S3 <<Storage>>
 participant "MongoDB" as MongoDB <<Database>>
 participant "Dataset Registry" as Registry <<Storage>>
 
-note over Admin, Registry: Dataset Upload and Management
 
 Admin -> Frontend: Navigate to dataset management
 Admin -> Frontend: Upload dataset files

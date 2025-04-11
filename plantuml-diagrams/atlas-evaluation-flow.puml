@@ -14,7 +14,6 @@ participant "Smart Contract" as Contract <<Contract>>
 participant "AVS Operator" as Operator <<Operator>>
 participant "AWS S3" as S3 <<Storage>>
 
-note over User, S3: Evaluation Creation and Processing
 
 User -> Frontend: Select model and dataset
 activate Frontend
