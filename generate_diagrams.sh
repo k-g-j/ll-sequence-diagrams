@@ -48,10 +48,30 @@ fi
 echo "Updating markdown files to reference new diagrams..."
 
 # Update atlas-app-sequence-diagram.md if needed
-sed -i '' 's|custom-diagrams/v[34]/|custom-diagrams/diagrams/|g' atlas-app-sequence-diagram.md
+if grep -q "custom-diagrams/v[34]/" atlas-app-sequence-diagram.md 2>/dev/null; then
+  # For macOS
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' 's|custom-diagrams/v[34]/|custom-diagrams/diagrams/|g' atlas-app-sequence-diagram.md
+  # For Linux and other systems
+  else
+    sed -i 's|custom-diagrams/v[34]/|custom-diagrams/diagrams/|g' atlas-app-sequence-diagram.md
+  fi
+else
+  echo "atlas-app-sequence-diagram.md already has the correct paths"
+fi
 
 # Update evaluation-avs-sequence-diagram.md if needed
-sed -i '' 's|custom-diagrams/v[34]/|custom-diagrams/diagrams/|g' evaluation-avs-sequence-diagram.md
+if grep -q "custom-diagrams/v[34]/" evaluation-avs-sequence-diagram.md 2>/dev/null; then
+  # For macOS
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    sed -i '' 's|custom-diagrams/v[34]/|custom-diagrams/diagrams/|g' evaluation-avs-sequence-diagram.md
+  # For Linux and other systems
+  else
+    sed -i 's|custom-diagrams/v[34]/|custom-diagrams/diagrams/|g' evaluation-avs-sequence-diagram.md
+  fi
+else
+  echo "evaluation-avs-sequence-diagram.md already has the correct paths"
+fi
 
 echo "All diagrams generated successfully!"
 echo "View them in the custom-diagrams/diagrams/ directory"
