@@ -12,7 +12,7 @@ skinparam defaultTextAlignment center
 skinparam sequenceMessageAlign center
 skinparam linetype polyline
 skinparam maxMessageSize 250
-skinparam sequenceArrowThickness 1.2
+skinparam sequenceArrowThickness 1.5
 skinparam roundcorner 8
 skinparam padding 8
 skinparam noteBorderThickness 1
@@ -24,7 +24,7 @@ skinparam titleFontColor #303030
 skinparam titleFontStyle bold
 skinparam footerFontSize 10
 skinparam headerFontSize 10
-skinparam arrowColor #454545
+skinparam arrowColor #000000
 skinparam noteBackgroundColor #FFFFCC
 skinparam noteBorderColor #999999
 
@@ -148,7 +148,7 @@ skinparam sequence {
   LifeLineBackgroundColor white
   MessageAlignment center
   ArrowFontSize 12
-  ArrowColor #454545
+  ArrowColor #000000
   DividerBackgroundColor #EEEEEE
   DividerBorderColor #CCCCCC
   DividerBorderThickness 1
