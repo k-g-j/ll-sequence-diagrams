@@ -1,32 +1,21 @@
 @startuml avs-registration-flow
 
-' Basic styling
-!theme plain
-skinparam backgroundColor white
-skinparam defaultTextAlignment center
+!include common-style.puml
 
-' Explicitly disable handwritten mode
-skinparam handwritten false
-skinparam shadowing false
-skinparam roundCorner 0
-
-' Force straight lines
+' Maintain some specific customizations for this diagram
 skinparam linetype ortho
 skinparam ParticipantPadding 20
 skinparam SequenceBoxPadding 10
-
-' Make sure lines and fonts are crisp
-skinparam ArrowColor black
 skinparam ArrowThickness 1.5
 
 title Operator Registration Flow
 
 actor Operator
-participant "Operator CLI" as CLI
-participant "Config Files" as Config
-participant "EvalAvsServiceManager" as ServiceManager
-participant "EvalAvsTaskManager" as TaskManager
-participant "EigenLayer Contracts" as EigenLayer
+participant "Operator CLI" as CLI <<API>>
+participant "Config Files" as Config <<Storage>>
+participant "EvalAvsServiceManager" as ServiceManager <<Contract>>
+participant "EvalAvsTaskManager" as TaskManager <<Contract>>
+participant "EigenLayer Contracts" as EigenLayer <<Contract>>
 
 note over Operator, EigenLayer: Operator Setup and Registration
 

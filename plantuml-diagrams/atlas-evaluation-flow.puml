@@ -1,23 +1,18 @@
 @startuml atlas-evaluation-flow
 
-skinparam monochrome true
-skinparam handwritten false
-skinparam shadowing false
-skinparam defaultFontName Arial
-skinparam sequenceMessageAlign center
-skinparam linetype polyline
+!include common-style.puml
 
 title Evaluation Creation and Processing Flow
 
 actor User
-participant "Atlas Frontend" as Frontend
-participant "Atlas API Backend" as API
-participant "MongoDB" as MongoDB
-participant "Message Queue" as Kafka
-participant "Evaluation Worker" as Worker
-participant "Smart Contract" as Contract
-participant "AVS Operator" as Operator
-participant "AWS S3" as S3
+participant "Atlas Frontend" as Frontend <<Frontend>>
+participant "Atlas API Backend" as API <<API>>
+participant "MongoDB" as MongoDB <<Database>>
+participant "Message Queue" as Kafka <<Queue>>
+participant "Evaluation Worker" as Worker <<API>>
+participant "Smart Contract" as Contract <<Contract>>
+participant "AVS Operator" as Operator <<Operator>>
+participant "AWS S3" as S3 <<Storage>>
 
 note over User, S3: Evaluation Creation and Processing
 

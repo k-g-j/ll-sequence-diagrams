@@ -19,16 +19,56 @@ skinparam SequenceBoxPadding 10
 skinparam ArrowColor black
 skinparam ArrowThickness 1.5
 
+' Define entity styles for different components
+skinparam participant {
+  BackgroundColor white
+  BorderColor black
+}
+
+' Define stereotypes and colors for different entity types
+skinparam participantBackgroundColor<<Contract>> #FADBD8
+skinparam participantBorderColor<<Contract>> #943126
+
+skinparam participantBackgroundColor<<Queue>> #FCF3CF
+skinparam participantBorderColor<<Queue>> #B7950B
+
+skinparam participantBackgroundColor<<Operator>> #D6EAF8
+skinparam participantBorderColor<<Operator>> #2E86C1
+
+skinparam participantBackgroundColor<<Evaluator>> #D4EFDF
+skinparam participantBorderColor<<Evaluator>> #196F3D
+
+skinparam participantBackgroundColor<<Storage>> #F5EEF8
+skinparam participantBorderColor<<Storage>> #76448A
+
+skinparam participantBackgroundColor<<External>> #EDEDED
+skinparam participantBorderColor<<External>> #616A6B
+
+skinparam participantBackgroundColor<<API>> #EBF5FB
+skinparam participantBorderColor<<API>> #3498DB
+
 title Task Creation and Assignment Flow
 
 actor Admin
-participant "EvalAvsTaskManager" as TaskManager
-participant "Assignment Queue" as Queue
-participant "Operator" as Operator
-participant "GoEvaluator" as GoEvaluator
-participant "Dataset Registry (S3)" as S3
-participant "LLM Provider" as LLM
-participant "LayerLens API" as API
+participant "EvalAvsTaskManager" as TaskManager <<Contract>>
+participant "Assignment Queue" as Queue <<Queue>>
+participant "Operator" as Operator <<Operator>>
+participant "GoEvaluator" as GoEvaluator <<Evaluator>>
+participant "Dataset Registry (S3)" as S3 <<Storage>>
+participant "LLM Provider" as LLM <<External>>
+participant "LayerLens API" as API <<API>>
+
+' Add legend
+legend right
+  |= Entity Type |= Description |
+  |<#FADBD8>| Contract | Smart Contracts |
+  |<#FCF3CF>| Queue | Message Queues |
+  |<#D6EAF8>| Operator | Validator Nodes |
+  |<#D4EFDF>| Evaluator | Evaluation Services |
+  |<#F5EEF8>| Storage | Data Storage Services |
+  |<#EDEDED>| External | 3rd Party Services |
+  |<#EBF5FB>| API | Backend APIs |
+endlegend
 
 note over Admin, API: Task Creation and Assignment
 

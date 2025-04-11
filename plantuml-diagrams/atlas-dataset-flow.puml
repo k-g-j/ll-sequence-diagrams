@@ -1,21 +1,16 @@
 @startuml atlas-dataset-flow
 
-skinparam monochrome true
-skinparam handwritten false
-skinparam shadowing false
-skinparam defaultFontName Arial
-skinparam sequenceMessageAlign center
-skinparam linetype polyline
+!include common-style.puml
 
 title Dataset Management Flow
 
 actor Admin
 actor User
-participant "Atlas Frontend" as Frontend
-participant "Atlas API" as API
-participant "AWS S3" as S3
-participant "MongoDB" as MongoDB
-participant "Dataset Registry" as Registry
+participant "Atlas Frontend" as Frontend <<Frontend>>
+participant "Atlas API" as API <<API>>
+participant "AWS S3" as S3 <<Storage>>
+participant "MongoDB" as MongoDB <<Database>>
+participant "Dataset Registry" as Registry <<Storage>>
 
 note over Admin, Registry: Dataset Upload and Management
 

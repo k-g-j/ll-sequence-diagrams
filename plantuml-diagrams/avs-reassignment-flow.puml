@@ -1,31 +1,20 @@
 @startuml avs-reassignment-flow
 
-' Basic styling
-!theme plain
-skinparam backgroundColor white
-skinparam defaultTextAlignment center
+!include common-style.puml
 
-' Explicitly disable handwritten mode
-skinparam handwritten false
-skinparam shadowing false
-skinparam roundCorner 0
-
-' Force straight lines
+' Maintain some specific customizations for this diagram
 skinparam linetype ortho
 skinparam ParticipantPadding 20
 skinparam SequenceBoxPadding 10
-
-' Make sure lines and fonts are crisp
-skinparam ArrowColor black
 skinparam ArrowThickness 1.5
 
 title Task Reassignment Flow
 
 actor Admin
-participant "EvalAvsTaskManager" as TaskManager
-participant "OriginalOperator" as OriginalOperator
-participant "NewOperator" as NewOperator
-participant "GoEvaluator" as GoEvaluator
+participant "EvalAvsTaskManager" as TaskManager <<Contract>>
+participant "OriginalOperator" as OriginalOperator <<Operator>>
+participant "NewOperator" as NewOperator <<Operator>>
+participant "GoEvaluator" as GoEvaluator <<Evaluator>>
 
 note over Admin, GoEvaluator: Task Reassignment Process
 

@@ -1,32 +1,21 @@
 @startuml atlas-results-flow
 
-' Basic styling
-!theme plain
-skinparam backgroundColor white
-skinparam defaultTextAlignment center
+!include common-style.puml
 
-' Explicitly disable handwritten mode
-skinparam handwritten false
-skinparam shadowing false
-skinparam roundCorner 0
-
-' Force straight lines
+' Maintain some specific customizations for this diagram
 skinparam linetype ortho
 skinparam ParticipantPadding 20
 skinparam SequenceBoxPadding 10
-
-' Make sure lines and fonts are crisp
-skinparam ArrowColor black
 skinparam ArrowThickness 1.5
 
 title Results Viewing and Comparison Flow
 
 actor User
-participant "Atlas Frontend" as Frontend
-participant "Atlas API" as API
-participant "MongoDB" as MongoDB
-participant "MariaDB" as MariaDB
-participant "AWS S3" as S3
+participant "Atlas Frontend" as Frontend <<Frontend>>
+participant "Atlas API" as API <<API>>
+participant "MongoDB" as MongoDB <<Database>>
+participant "MariaDB" as MariaDB <<Database>>
+participant "AWS S3" as S3 <<Storage>>
 
 note over User, S3: Viewing and Comparing Results
 
