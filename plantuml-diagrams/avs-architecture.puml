@@ -76,6 +76,8 @@ skinparam componentFontName Arial
 skinparam PackageStyle rectangle
 skinparam packageBackgroundColor transparent
 skinparam packageBorderColor #999999
+skinparam legendBackgroundColor #FFFFFF
+skinparam legendBorderColor #CCCCCC
 skinparam database<<Database>> {
   BackgroundColor #F4ECF7
   BorderColor #8E44AD
