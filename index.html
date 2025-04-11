@@ -5,135 +5,207 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LayerLens Diagrams Viewer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #0f172a;
+            --background-color: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-color: #1e293b;
+            --success-color: #10b981;
+            --info-color: #0ea5e9;
+            --accent-color: #6366f1;
+            --header-bg: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 1000px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: rgba(0, 56, 255, 0.05);
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
         }
+        
+        .site-header {
+            background-color: var(--header-bg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .content-wrapper {
+            padding: 0 2rem 3rem;
+        }
+        
         h1 {
-            color: #333;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin: 0;
         }
+        
         h2 {
-            margin-top: 20px;
-            margin-bottom: 15px;
-            color: #444;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
         }
+        
         .diagram-container {
-            margin: 15px 0;
-            padding: 15px;
-            border-radius: 5px;
+            margin: 1.5rem 0 2.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
             text-align: center;
-            background-color: transparent;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
         }
+        
         .diagram-container img {
             max-width: 100%;
             height: auto;
             border: none;
             cursor: pointer;
+            transition: transform 0.2s ease;
         }
+        
+        .diagram-container img:hover {
+            transform: scale(1.01);
+        }
+        
         .tabs {
             display: flex;
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
         }
+        
         .tab {
-            padding: 10px 20px;
+            padding: 0.75rem 1.5rem;
             cursor: pointer;
-            background-color: rgba(240, 240, 240, 0.5);
+            background-color: transparent;
             border: none;
-            margin-right: 5px;
-            border-radius: 5px 5px 0 0;
-            transition: background-color 0.2s;
+            margin-right: 0.5rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: #64748b;
         }
+        
         .tab.active {
-            background-color: rgba(0, 56, 255, 0.1);
-            position: relative;
-            font-weight: bold;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            font-weight: 600;
         }
+        
         .tab:hover:not(.active) {
-            background-color: rgba(0, 56, 255, 0.05);
+            color: var(--text-color);
+            border-bottom: 2px solid var(--border-color);
         }
+        
         .tab-content {
             display: none;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 0 5px 5px 5px;
+            padding: 0;
             background-color: transparent;
         }
+        
         .tab-content.active {
             display: block;
         }
+        
         .buttons {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
         }
+        
         .button {
-            padding: 10px 20px;
+            padding: 0.6rem 1.2rem;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 0.375rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 0.5rem;
             font-weight: 500;
-            transition: background-color 0.2s, transform 0.1s;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
+        
         .button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
+        
         .button:active {
             transform: translateY(0);
         }
+        
         .primary {
-            background-color: #4CAF50;
+            background-color: var(--success-color);
         }
+        
         .primary:hover {
-            background-color: #3d9140;
+            background-color: #0da271;
         }
+        
         .secondary {
-            background-color: #2196F3;
+            background-color: var(--info-color);
         }
+        
         .secondary:hover {
-            background-color: #0d8aee;
+            background-color: #0284c7;
         }
-        .warning {
-            background-color: #ff9800;
-        }
-        .warning:hover {
-            background-color: #e68900;
-        }
+        
         .github {
             background-color: #24292e;
         }
+        
         .github:hover {
             background-color: #0366d6;
         }
+        
         .download-links {
-            margin-top: 10px;
+            margin-top: 1rem;
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 0.75rem;
         }
+        
         .download-link {
-            padding: 5px 10px;
+            padding: 0.4rem 0.75rem;
             text-decoration: none;
-            color: #333;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            font-size: 0.9em;
+            color: #4b5563;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.25rem;
+            font-size: 0.8125rem;
+            transition: all 0.2s ease;
         }
+        
         .download-link:hover {
-            background-color: #e0e0e0;
+            background-color: #f3f4f6;
+            color: #111827;
+            border-color: #d1d5db;
         }
+        
         .overlay {
             position: fixed;
             top: 0;
@@ -148,9 +220,11 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+        
         .overlay.visible {
             opacity: 1;
         }
+        
         .overlay-content {
             display: flex;
             flex-direction: column;
@@ -162,6 +236,7 @@
             padding-bottom: 60px;
             position: relative;
         }
+        
         .overlay img {
             max-width: 100%;
             max-height: calc(98vh - 80px);
@@ -169,154 +244,212 @@
             transform-origin: center;
             margin-bottom: 15px;
         }
+        
         .zoom-controls {
             display: flex;
             gap: 8px;
-            padding: 8px;
-            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 12px;
+            background-color: rgba(30, 41, 59, 0.7);
             border-radius: 8px;
             backdrop-filter: blur(5px);
             position: absolute;
             bottom: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
         }
+        
         .zoom-btn {
             border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             font-size: 18px;
             color: white;
-            transition: background-color 0.2s;
+            transition: all 0.2s ease;
         }
+        
+        .zoom-btn:hover {
+            transform: translateY(-1px);
+        }
+        
         #zoomIn {
-            background-color: rgba(76, 175, 80, 0.9);
+            background-color: var(--success-color);
         }
+        
         #zoomOut {
-            background-color: rgba(244, 67, 54, 0.9);
+            background-color: #ef4444;
         }
+        
         #zoomReset {
-            background-color: rgba(33, 150, 243, 0.9);
+            background-color: var(--info-color);
         }
+        
         #zoomClose {
-            background-color: rgba(117, 117, 117, 0.9);
+            background-color: #64748b;
         }
+        
         .control-icon {
             pointer-events: none;
             user-select: none;
         }
+        
         .zoom-level {
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 14px;
-            padding: 0 8px;
-            background-color: rgba(0, 0, 0, 0.4);
-            border-radius: 12px;
-            min-width: 50px;
-            height: 36px;
+            padding: 0 12px;
+            background-color: rgba(17, 24, 39, 0.5);
+            border-radius: 4px;
+            min-width: 60px;
+            height: 40px;
+            font-weight: 500;
+        }
+        
+        .diagram-label {
+            margin-bottom: 0.75rem;
+            color: #475569;
+            font-size: 0.875rem;
+            text-align: left;
+        }
+        
+        @media (max-width: 768px) {
+            .site-header {
+                padding: 1rem 1.5rem;
+            }
+            
+            .content-wrapper {
+                padding: 0 1.5rem 2rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: stretch;
+            }
+            
+            .button {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>LayerLens Sequence Diagrams</h1>
+    <header class="site-header">
+        <h1>LayerLens Sequence Diagrams</h1>
+    </header>
     
-    <div class="buttons">
-        <button class="button primary" onclick="window.print()"><i class="fa fa-file-pdf-o"></i> Save as PDF</button>
-        <button class="button secondary" onclick="downloadAllDiagrams()"><i class="fa fa-download"></i> Download UML</button>
-        <button class="button github" onclick="window.location.href='https://github.com/k-g-j/ll-sequence-diagrams'"><i class="fa fa-github"></i> View on GitHub</button>
-    </div>
-
-    <div class="tabs" style="margin-bottom: 0;">
-        <div class="tab active" onclick="switchTab('evaluation-avs')">Evaluation AVS</div>
-        <div class="tab" onclick="switchTab('atlas-app')">Atlas App</div>
-    </div>
+    <div class="content-wrapper">
+        <div class="buttons">
+            <button class="button primary" onclick="window.print()"><i class="fa fa-file-pdf-o"></i> Save as PDF</button>
+            <button class="button secondary" onclick="downloadAllDiagrams()"><i class="fa fa-download"></i> Download UML</button>
+            <button class="button github" onclick="window.location.href='https://github.com/k-g-j/ll-sequence-diagrams'"><i class="fa fa-github"></i> View on GitHub</button>
+        </div>
     
-    <div id="evaluation-avs" class="tab-content active">
-        <h2>1. Task Creation and Assignment Flow</h2>
-        <div class="diagram-container">
-            <img src="custom-diagrams/diagrams/avs-task-flow.png" alt="Task Creation and Assignment Flow" onclick="openImageOverlay(this.src)">
-            <div class="download-links">
-                <a href="custom-diagrams/diagrams/avs-task-flow.png" download class="download-link">Download PNG</a>
-                <a href="custom-diagrams/diagrams/avs-task-flow.svg" download class="download-link">Download SVG</a>
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('evaluation-avs')">Evaluation AVS</div>
+            <div class="tab" onclick="switchTab('atlas-app')">Atlas App</div>
+        </div>
+        
+        <div id="evaluation-avs" class="tab-content active">
+            <h2>1. Task Creation and Assignment Flow</h2>
+            <div class="diagram-label">This diagram illustrates how tasks are created and assigned to operators in the EigenLayer AVS.</div>
+            <div class="diagram-container">
+                <img src="custom-diagrams/diagrams/avs-task-flow.png" alt="Task Creation and Assignment Flow" onclick="openImageOverlay(this.src)">
+                <div class="download-links">
+                    <a href="custom-diagrams/diagrams/avs-task-flow.png" download class="download-link">Download PNG</a>
+                    <a href="custom-diagrams/diagrams/avs-task-flow.svg" download class="download-link">Download SVG</a>
+                </div>
+            </div>
+            
+            <h2>2. Operator Registration Flow</h2>
+            <div class="diagram-label">This diagram shows how operators register with EigenLayer and join the evaluation queue.</div>
+            <div class="diagram-container">
+                <img src="custom-diagrams/diagrams/avs-registration-flow.png" alt="Operator Registration Flow" onclick="openImageOverlay(this.src)">
+                <div class="download-links">
+                    <a href="custom-diagrams/diagrams/avs-registration-flow.png" download class="download-link">Download PNG</a>
+                    <a href="custom-diagrams/diagrams/avs-registration-flow.svg" download class="download-link">Download SVG</a>
+                </div>
+            </div>
+            
+            <h2>3. Task Reassignment Flow</h2>
+            <div class="diagram-label">This diagram demonstrates the flow when tasks are reassigned from one operator to another.</div>
+            <div class="diagram-container">
+                <img src="custom-diagrams/diagrams/avs-reassignment-flow.png" alt="Task Reassignment Flow" onclick="openImageOverlay(this.src)">
+                <div class="download-links">
+                    <a href="custom-diagrams/diagrams/avs-reassignment-flow.png" download class="download-link">Download PNG</a>
+                    <a href="custom-diagrams/diagrams/avs-reassignment-flow.svg" download class="download-link">Download SVG</a>
+                </div>
+            </div>
+            
+            <h2>4. Complete System Architecture</h2>
+            <div class="diagram-label">This diagram presents the complete architecture of the Evaluation AVS system.</div>
+            <div class="diagram-container">
+                <img src="custom-diagrams/diagrams/avs-architecture-resized.png" alt="Evaluation AVS Architecture" onclick="openImageOverlay(this.src)">
+                <div class="download-links">
+                    <a href="custom-diagrams/diagrams/avs-architecture.png" download class="download-link">Download PNG</a>
+                    <a href="custom-diagrams/diagrams/avs-architecture.svg" download class="download-link">Download SVG</a>
+                </div>
             </div>
         </div>
         
-        <h2>2. Operator Registration Flow</h2>
-        <div class="diagram-container">
-            <img src="custom-diagrams/diagrams/avs-registration-flow.png" alt="Operator Registration Flow" onclick="openImageOverlay(this.src)">
-            <div class="download-links">
-                <a href="custom-diagrams/diagrams/avs-registration-flow.png" download class="download-link">Download PNG</a>
-                <a href="custom-diagrams/diagrams/avs-registration-flow.svg" download class="download-link">Download SVG</a>
+        <div id="atlas-app" class="tab-content">
+            <h2>1. User Authentication Flow</h2>
+            <div class="diagram-label">This diagram shows the authentication process for users in the Atlas application.</div>
+            <div class="diagram-container">
+                <img src="custom-diagrams/diagrams/atlas-auth-flow.png" alt="User Authentication Flow" onclick="openImageOverlay(this.src)">
+                <div class="download-links">
+                    <a href="custom-diagrams/diagrams/atlas-auth-flow.png" download class="download-link">Download PNG</a>
+                    <a href="custom-diagrams/diagrams/atlas-auth-flow.svg" download class="download-link">Download SVG</a>
+                </div>
             </div>
-        </div>
-        
-        <h2>3. Task Reassignment Flow</h2>
-        <div class="diagram-container">
-            <img src="custom-diagrams/diagrams/avs-reassignment-flow.png" alt="Task Reassignment Flow" onclick="openImageOverlay(this.src)">
-            <div class="download-links">
-                <a href="custom-diagrams/diagrams/avs-reassignment-flow.png" download class="download-link">Download PNG</a>
-                <a href="custom-diagrams/diagrams/avs-reassignment-flow.svg" download class="download-link">Download SVG</a>
+            
+            <h2>2. Evaluation Creation and Processing Flow</h2>
+            <div class="diagram-label">This diagram illustrates how evaluations are created and processed in the Atlas system.</div>
+            <div class="diagram-container">
+                <img src="custom-diagrams/diagrams/atlas-evaluation-flow.png" alt="Evaluation Creation and Processing Flow" onclick="openImageOverlay(this.src)">
+                <div class="download-links">
+                    <a href="custom-diagrams/diagrams/atlas-evaluation-flow.png" download class="download-link">Download PNG</a>
+                    <a href="custom-diagrams/diagrams/atlas-evaluation-flow.svg" download class="download-link">Download SVG</a>
+                </div>
             </div>
-        </div>
-        
-        <h2>4. Complete System Architecture</h2>
-        <div class="diagram-container">
-            <img src="custom-diagrams/diagrams/avs-architecture-resized.png" alt="Evaluation AVS Architecture" onclick="openImageOverlay(this.src)">
-            <div class="download-links">
-                <a href="custom-diagrams/diagrams/avs-architecture.png" download class="download-link">Download PNG</a>
-                <a href="custom-diagrams/diagrams/avs-architecture.svg" download class="download-link">Download SVG</a>
+            
+            <h2>3. Dataset Management Flow</h2>
+            <div class="diagram-label">This diagram shows the process of uploading, managing, and browsing datasets.</div>
+            <div class="diagram-container">
+                <img src="custom-diagrams/diagrams/atlas-dataset-flow.png" alt="Dataset Management Flow" onclick="openImageOverlay(this.src)">
+                <div class="download-links">
+                    <a href="custom-diagrams/diagrams/atlas-dataset-flow.png" download class="download-link">Download PNG</a>
+                    <a href="custom-diagrams/diagrams/atlas-dataset-flow.svg" download class="download-link">Download SVG</a>
+                </div>
             </div>
-        </div>
-    </div>
-    
-    <div id="atlas-app" class="tab-content">
-        <h2>1. User Authentication Flow</h2>
-        <div class="diagram-container">
-            <img src="custom-diagrams/diagrams/atlas-auth-flow.png" alt="User Authentication Flow" onclick="openImageOverlay(this.src)">
-            <div class="download-links">
-                <a href="custom-diagrams/diagrams/atlas-auth-flow.png" download class="download-link">Download PNG</a>
-                <a href="custom-diagrams/diagrams/atlas-auth-flow.svg" download class="download-link">Download SVG</a>
+            
+            <h2>4. Results Viewing and Comparison Flow</h2>
+            <div class="diagram-label">This diagram illustrates how users can view and compare evaluation results.</div>
+            <div class="diagram-container">
+                <img src="custom-diagrams/diagrams/atlas-results-flow.png" alt="Results Viewing and Comparison Flow" onclick="openImageOverlay(this.src)">
+                <div class="download-links">
+                    <a href="custom-diagrams/diagrams/atlas-results-flow.png" download class="download-link">Download PNG</a>
+                    <a href="custom-diagrams/diagrams/atlas-results-flow.svg" download class="download-link">Download SVG</a>
+                </div>
             </div>
-        </div>
-        
-        <h2>2. Evaluation Creation and Processing Flow</h2>
-        <div class="diagram-container">
-            <img src="custom-diagrams/diagrams/atlas-evaluation-flow.png" alt="Evaluation Creation and Processing Flow" onclick="openImageOverlay(this.src)">
-            <div class="download-links">
-                <a href="custom-diagrams/diagrams/atlas-evaluation-flow.png" download class="download-link">Download PNG</a>
-                <a href="custom-diagrams/diagrams/atlas-evaluation-flow.svg" download class="download-link">Download SVG</a>
-            </div>
-        </div>
-        
-        <h2>3. Dataset Management Flow</h2>
-        <div class="diagram-container">
-            <img src="custom-diagrams/diagrams/atlas-dataset-flow.png" alt="Dataset Management Flow" onclick="openImageOverlay(this.src)">
-            <div class="download-links">
-                <a href="custom-diagrams/diagrams/atlas-dataset-flow.png" download class="download-link">Download PNG</a>
-                <a href="custom-diagrams/diagrams/atlas-dataset-flow.svg" download class="download-link">Download SVG</a>
-            </div>
-        </div>
-        
-        <h2>4. Results Viewing and Comparison Flow</h2>
-        <div class="diagram-container">
-            <img src="custom-diagrams/diagrams/atlas-results-flow.png" alt="Results Viewing and Comparison Flow" onclick="openImageOverlay(this.src)">
-            <div class="download-links">
-                <a href="custom-diagrams/diagrams/atlas-results-flow.png" download class="download-link">Download PNG</a>
-                <a href="custom-diagrams/diagrams/atlas-results-flow.svg" download class="download-link">Download SVG</a>
-            </div>
-        </div>
-        
-        <h2>5. Complete System Architecture</h2>
-        <div class="diagram-container">
-            <img src="custom-diagrams/diagrams/atlas-architecture-resized.png" alt="Atlas App Architecture" onclick="openImageOverlay(this.src)">
-            <div class="download-links">
-                <a href="custom-diagrams/diagrams/atlas-architecture.png" download class="download-link">Download PNG</a>
-                <a href="custom-diagrams/diagrams/atlas-architecture.svg" download class="download-link">Download SVG</a>
+            
+            <h2>5. Complete System Architecture</h2>
+            <div class="diagram-label">This diagram presents the complete architecture of the Atlas application system.</div>
+            <div class="diagram-container">
+                <img src="custom-diagrams/diagrams/atlas-architecture-resized.png" alt="Atlas App Architecture" onclick="openImageOverlay(this.src)">
+                <div class="download-links">
+                    <a href="custom-diagrams/diagrams/atlas-architecture.png" download class="download-link">Download PNG</a>
+                    <a href="custom-diagrams/diagrams/atlas-architecture.svg" download class="download-link">Download SVG</a>
+                </div>
             </div>
         </div>
     </div>

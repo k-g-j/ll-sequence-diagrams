@@ -7,11 +7,43 @@
 skinparam monochrome false
 skinparam handwritten false
 skinparam shadowing false
-skinparam defaultFontName Arial
+skinparam defaultFontName "Arial"
+skinparam defaultTextAlignment center
 skinparam sequenceMessageAlign center
 skinparam linetype polyline
+skinparam maxMessageSize 250
+skinparam sequenceArrowThickness 1.2
+skinparam roundcorner 8
+skinparam padding 8
+skinparam noteBorderThickness 1
 
-' Define stereotype-based styling
+' Enhanced appearance
+skinparam backgroundColor white
+skinparam titleFontSize 16
+skinparam titleFontColor #303030
+skinparam titleFontStyle bold
+skinparam footerFontSize 10
+skinparam headerFontSize 10
+skinparam arrowColor #454545
+skinparam noteBackgroundColor #FFFFCC
+skinparam noteBorderColor #999999
+
+' Global participant style
+skinparam ParticipantPadding 15
+skinparam SequenceBoxPadding 10
+skinparam BoxPadding 10
+skinparam participantFontSize 13
+skinparam participantFontStyle bold
+skinparam sequenceStereotypeFontSize 11
+
+' Actor customization
+skinparam actor {
+  BorderColor #454545
+  BackgroundColor white
+  FontStyle bold
+}
+
+' Define stereotype-based styling with shapes
 
 ' Web/Frontend Components
 skinparam participant<<Frontend>> {
@@ -19,6 +51,7 @@ skinparam participant<<Frontend>> {
   BorderColor #27AE60
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
 ' Backend API Services
@@ -27,6 +60,7 @@ skinparam participant<<API>> {
   BorderColor #3498DB
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
 ' Authentication Services
@@ -35,6 +69,7 @@ skinparam participant<<Auth>> {
   BorderColor #E74C3C
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
 ' Database/Storage Services
@@ -43,6 +78,7 @@ skinparam participant<<Database>> {
   BorderColor #8E44AD
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
 ' External 3rd Party Services
@@ -51,6 +87,7 @@ skinparam participant<<External>> {
   BorderColor #F1C40F
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
 ' Smart Contracts
@@ -59,6 +96,7 @@ skinparam participant<<Contract>> {
   BorderColor #943126
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
 ' Message Queues
@@ -67,6 +105,7 @@ skinparam participant<<Queue>> {
   BorderColor #B7950B
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
 ' Validator/Operator Nodes
@@ -75,6 +114,7 @@ skinparam participant<<Operator>> {
   BorderColor #2E86C1
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
 ' Evaluation Services
@@ -83,6 +123,7 @@ skinparam participant<<Evaluator>> {
   BorderColor #196F3D
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
 ' Storage Services (S3, etc)
@@ -91,10 +132,38 @@ skinparam participant<<Storage>> {
   BorderColor #76448A
   BorderThickness 2
   FontStyle bold
+  StereotypeFontSize 10
 }
 
+' Note styling
+skinparam note {
+  BorderThickness 1
+  BackgroundColor #FFFFDD
+  BorderColor #999999
+}
+
+' Sequence specific styling
+skinparam sequence {
+  LifeLineBorderColor #CCCCCC
+  LifeLineBackgroundColor white
+  MessageAlignment center
+  ArrowFontSize 12
+  ArrowColor #454545
+  DividerBackgroundColor #EEEEEE
+  DividerBorderColor #CCCCCC
+  DividerBorderThickness 1
+  DividerFontStyle bold
+  GroupBackgroundColor #EEEEEE
+  GroupBorderColor #CCCCCC
+  GroupBorderThickness 1
+  GroupFontStyle bold
+}
+
+hide footbox
+hide unlinked
+
 ' Standard legend to include in diagrams
-legend
+legend right
   |= Entity Type |= Description |
   |<#E9F7EF>| Frontend - Web/UI Components |
   |<#EBF5FB>| API - Backend Services |
