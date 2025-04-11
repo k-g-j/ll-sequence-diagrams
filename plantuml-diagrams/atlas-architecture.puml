@@ -92,21 +92,21 @@ skinparam queue<<Queue>> {
 
 actor "User" as user
 
-package "Atlas Frontend" {
+package "Frontend" {
   [Atlas Web UI\n(React)] as web_ui <<Frontend>>
   [Next.js App\n(Node.js)] as nextjs <<Frontend>>
   [Authentication Module\n(NextAuth)] as auth <<Auth>>
   [Results Visualization\n(React)] as viz <<Frontend>>
 }
 
-package "API Layer" {
+package "API" {
   [API Gateway\n(Go)] as api_gw <<API>>
   [Go Backend API\n(Go)] as go_backend <<API>>
   [WebSocket Service\n(Go)] as websocket <<API>>
   [Rate Limiter\n(Go)] as rate_limiter <<API>>
 }
 
-package "Core Services" {
+package "Core" {
   [Evaluation Manager\n(Go)] as eval_manager <<API>>
   [Model Registry\n(Go)] as model_registry <<API>>
   [Dataset Manager\n(Go)] as dataset_manager <<API>>
@@ -114,20 +114,20 @@ package "Core Services" {
   [Results Processor\n(Go)] as results_processor <<API>>
 }
 
-package "Integration Layer" {
+package "Integration" {
   [Evaluation Worker\n(Go)] as worker <<Evaluator>>
   [Smart Contract Client\n(Go)] as contract_client <<Contract>>
   [Metrics Collector\n(Go)] as metrics <<Evaluator>>
 }
 
-package "Data Layer" {
+package "Data" {
   [MongoDB\n(NoSQL)] as mongodb <<Database>>
   [MariaDB\n(SQL)] as mariadb <<Database>>
   [AWS S3\n(Object Storage)] as s3 <<Storage>>
   [Message Queue\n(Kafka)] as queue <<Queue>>
 }
 
-package "External Services" {
+package "External" {
   [AWS Cognito\n(Auth)] as cognito <<Auth>>
   [LayerLens AVS\n(Service)] as avs <<Operator>>
   [LLM Providers\n(API)] as llms <<External>>

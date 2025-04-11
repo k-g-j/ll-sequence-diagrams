@@ -90,21 +90,21 @@ skinparam queue<<Queue>> {
   BorderThickness 2
 }
 
-package "Smart Contracts Layer" {
+package "Smart Contracts" {
     [EvalAvsServiceManager\n(Solidity)] as service_manager <<Contract>>
     [EvalAvsTaskManager\n(Solidity)] as task_manager <<Contract>>
     [BlsRegistryCoordinator\n(Solidity)] as bls_registry <<Contract>>
     [StakeRegistry\n(Solidity)] as stake_registry <<Contract>>
 }
 
-package "Operator Layer" {
+package "Operator" {
     [Operator Service\n(Go)] as op_service <<Operator>>
     [Operator CLI\n(Go)] as op_cli <<API>>
     [Task Queue\n(Go)] as task_queue <<Queue>>
     [BLS Signing Module\n(Go)] as bls_signer <<Operator>>
     [Config Manager\n(Go)] as config_mgr <<Operator>>
     
-    package "Go Evaluator" {
+    package "Evaluator" {
         [Model Client Factory\n(Go)] as model_factory <<Evaluator>>
         [Response Scorer\n(Go)] as scorer <<Evaluator>>
         [Result Processor\n(Go)] as processor <<Evaluator>>
@@ -112,14 +112,14 @@ package "Operator Layer" {
     }
 }
 
-package "Infrastructure Layer" {
+package "Infrastructure" {
     [Docker Container\n(Docker)] as docker <<External>>
     [Monitoring Agent\n(Go)] as monitor <<API>>
     [Health Checker\n(Go)] as health <<API>>
     [Slashing Detector\n(Go)] as slashing <<API>>
 }
 
-package "External Services" {
+package "External" {
     [EigenLayer Core\n(Ethereum)] as eigenlayer <<External>>
     [Dataset Registry\n(S3)] as s3 <<Storage>>
     [LLM API Providers\n(API)] as llm <<External>>
