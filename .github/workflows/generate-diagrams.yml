@@ -34,7 +34,7 @@ jobs:
       run: |
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
-        git add custom-diagrams/v4/
+        git add custom-diagrams/diagrams/
         git add atlas-app-sequence-diagram.md evaluation-avs-sequence-diagram.md
         git commit -m "Update diagrams" || exit 0
         git push
