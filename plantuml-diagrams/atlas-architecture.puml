@@ -90,8 +90,6 @@ skinparam queue<<Queue>> {
   BorderThickness 2
 }
 
-title LayerLens Atlas App Architecture
-
 actor "User" as user
 
 package "Atlas Frontend" {

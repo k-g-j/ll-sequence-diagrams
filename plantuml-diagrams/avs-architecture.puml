@@ -90,8 +90,6 @@ skinparam queue<<Queue>> {
   BorderThickness 2
 }
 
-title Evaluation AVS Architecture
-
 package "Smart Contracts Layer" {
     [EvalAvsServiceManager\n(Solidity)] as service_manager <<Contract>>
     [EvalAvsTaskManager\n(Solidity)] as task_manager <<Contract>>
