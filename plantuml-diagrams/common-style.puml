@@ -145,7 +145,7 @@ skinparam note {
 ' Sequence specific styling
 skinparam sequence {
   LifeLineBorderColor #000000
-  LifeLineBackgroundColor white
+  LifeLineBackgroundColor #F8F8F8
   MessageAlignment center
   ArrowFontSize 12
   ArrowColor #000000
@@ -157,9 +157,13 @@ skinparam sequence {
   GroupBorderColor #CCCCCC
   GroupBorderThickness 1
   GroupFontStyle bold
+  FootBoxBackgroundColor white
+  FootBoxBorderColor #CCCCCC
+  FootBoxBorderThickness 1
 }
 
-hide footbox
+' Show complete lifelines with footbox
+show footbox
 hide unlinked
 
 ' Standard legend to include in diagrams
