@@ -48,7 +48,12 @@ jobs:
         git add atlas-app-sequence-diagram.md evaluation-avs-sequence-diagram.md
         git status
         git commit -m "Update diagrams" || echo "No changes to commit"
+        
+        # Configure for GITHUB_TOKEN permissions
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         git push origin main || echo "No changes to push"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
         
   deploy:
     needs: generate
