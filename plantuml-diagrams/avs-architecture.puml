@@ -76,10 +76,17 @@ skinparam componentFontName Arial
 skinparam PackageStyle rectangle
 skinparam packageBackgroundColor transparent
 skinparam packageBorderColor #999999
-skinparam databaseBackgroundColor DATABASE_BG
-skinparam databaseBorderColor DATABASE_BORDER
-skinparam queueBackgroundColor QUEUE_BG
-skinparam queueBorderColor QUEUE_BORDER
+skinparam database<<Database>> {
+  BackgroundColor #F4ECF7
+  BorderColor #8E44AD
+  BorderThickness 2
+}
+
+skinparam queue<<Queue>> {
+  BackgroundColor #FCF3CF
+  BorderColor #B7950B
+  BorderThickness 2
+}
 
 title Evaluation AVS Architecture
 
@@ -114,7 +121,7 @@ package "Infrastructure Layer" {
 
 package "External Services" {
     [EigenLayer Core\n(Ethereum)] as eigenlayer <<External>>
-    database "Dataset Registry\n(S3)" as s3 <<Storage>>
+    [Dataset Registry\n(S3)] as s3 <<Storage>>
     [LLM API Providers\n(API)] as llm <<External>>
     [LayerLens API\n(API)] as api <<API>>
 }
@@ -153,16 +160,16 @@ task_manager --> api : Reports to
 ' Add color-coding legend
 legend right
   |= Component Type |= Description |
-  |<back:FRONTEND_BG>                </back>| Frontend - Web/UI Components |
-  |<back:API_BG>                </back>| API - Backend Services |
-  |<back:AUTH_BG>                </back>| Auth - Authentication Services |
-  |<back:DATABASE_BG>                </back>| Database - Data Storage |
-  |<back:EXTERNAL_BG>                </back>| External - 3rd Party Services |
-  |<back:CONTRACT_BG>                </back>| Contract - Smart Contracts |
-  |<back:QUEUE_BG>                </back>| Queue - Message Queues |
-  |<back:OPERATOR_BG>                </back>| Operator - Validator Nodes |
-  |<back:EVALUATOR_BG>                </back>| Evaluator - Evaluation Services |
-  |<back:STORAGE_BG>                </back>| Storage - Storage Services |
+  |<back:#E9F7EF>  Frontend  </back>| Web/UI Components |
+  |<back:#EBF5FB>  API  </back>| Backend Services |
+  |<back:#F9EBEA>  Auth  </back>| Authentication Services |
+  |<back:#F4ECF7>  Database  </back>| Data Storage |
+  |<back:#FEF9E7>  External  </back>| 3rd Party Services |
+  |<back:#FADBD8>  Contract  </back>| Smart Contracts |
+  |<back:#FCF3CF>  Queue  </back>| Message Queues |
+  |<back:#D6EAF8>  Operator  </back>| Validator Nodes |
+  |<back:#D4EFDF>  Evaluator  </back>| Evaluation Services |
+  |<back:#F5EEF8>  Storage  </back>| Storage Services |
 endlegend
 
 @enduml
