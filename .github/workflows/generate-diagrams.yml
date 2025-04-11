@@ -9,12 +9,17 @@ on:
       - '.github/workflows/generate-diagrams.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     
     - name: Set up Java
       uses: actions/setup-java@v3
@@ -30,14 +35,20 @@ jobs:
         chmod +x ./generate_diagrams.sh
         ./generate_diagrams.sh
         
+    - name: List generated files
+      run: |
+        ls -la custom-diagrams/diagrams/
+        
     - name: Commit and push if changed
       run: |
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
+        mkdir -p custom-diagrams/diagrams
         git add custom-diagrams/diagrams/
         git add atlas-app-sequence-diagram.md evaluation-avs-sequence-diagram.md
-        git commit -m "Update diagrams" || exit 0
-        git push
+        git status
+        git commit -m "Update diagrams" || echo "No changes to commit"
+        git push origin main || echo "No changes to push"
         
   deploy:
     needs: generate
