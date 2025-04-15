@@ -20,7 +20,7 @@ participant "GoEvaluator" as GoEvaluator <<Evaluator>>
 Admin -> TaskManager: reassignTask(taskId)
 activate TaskManager
 TaskManager -> TaskManager: Check if task is expired
-TaskManager -> TaskManager: Get next operator from queue
+TaskManager -> TaskManager: Get next operator from internal assignment queue
 TaskManager -> TaskManager: Update task with new operator
 TaskManager -> TaskManager: Emit EvalReassigned Event
 deactivate TaskManager

@@ -12,7 +12,6 @@ title Task Creation and Assignment Flow
 
 actor Admin
 participant "EvalAvsTaskManager" as TaskManager <<Contract>>
-participant "Assignment Queue" as Queue <<Queue>>
 participant "Operator" as Operator <<Operator>>
 participant "GoEvaluator" as GoEvaluator <<Evaluator>>
 participant "Dataset Registry (S3)" as S3 <<Storage>>
@@ -22,8 +21,7 @@ participant "LayerLens API" as API <<API>>
 
 Admin -> TaskManager: requestEval(modelName, datasetName, subsets)
 activate TaskManager
-TaskManager -> Queue: popNextAssignedOperator()
-Queue --> TaskManager: assignedOperator
+TaskManager -> TaskManager: popNextAssignedOperator()
 TaskManager -> TaskManager: Create EvalAvsTask
 TaskManager -> TaskManager: Emit EvalRequested Event
 deactivate TaskManager
@@ -60,7 +58,7 @@ Operator -> TaskManager: respondToEvalRequest(taskId, hash, signature)
 activate TaskManager
 TaskManager -> TaskManager: Verify signature
 TaskManager -> TaskManager: Update task state to SUBMITTED
-TaskManager -> Queue: Add operator back to queue
+TaskManager -> TaskManager: Add operator back to assignment queue
 TaskManager -> TaskManager: Emit EvalCompleted Event
 deactivate TaskManager
 deactivate Operator

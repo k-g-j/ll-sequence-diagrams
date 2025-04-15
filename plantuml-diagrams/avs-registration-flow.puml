@@ -42,7 +42,7 @@ EigenLayer --> ServiceManager: Confirm registration
 ServiceManager --> Operator: AVS registration confirmed
 
 Operator -> TaskManager: joinAssignmentQueue()
-TaskManager -> TaskManager: Add operator to queue
+TaskManager -> TaskManager: Add operator to internal assignment queue
 TaskManager --> Operator: Successfully joined queue
 deactivate Operator
 
